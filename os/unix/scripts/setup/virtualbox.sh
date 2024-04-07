@@ -3,10 +3,10 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	helper.install_and_configure 'virtualbox' 'VirtualBox' "$@"
+	helper.setup "$@"
 }
 
-install.virtualbox() {
+install.any() {
 	local dist='jammy'
 	local gpg_file="/etc/apt/keyrings/oracle-virtualbox-2016.asc"
 
@@ -19,7 +19,7 @@ install.virtualbox() {
 		'/etc/apt/sources.list.d/virtualbox.list'
 }
 
-configure.virtualbox() {
+configure.any() {
 	if [[ "$HOSTNAME" = 'nullptr' ]]; then
 		VBoxManage setproperty machinefolder '/storage/vault/rodinia/VirtualBox_Machines'
 	fi

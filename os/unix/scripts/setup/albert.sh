@@ -3,10 +3,10 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	helper.install_and_configure 'albert' 'Albert' "$@"
+	helper.setup "$@"
 }
 
-install.albert() {
+install.any() {
 	# Build from source since pre-build binaries can be very out of date
 	util.get_package_manager
 	local pkgmngr="$REPLY"
@@ -21,14 +21,14 @@ install.albert() {
 	local dir="$REPLY"
 	cd "$dir"
 	git submodule update --init lib/QHotkey
-	
+
 	(
 		if util.is_cmd 'apt'; then
 			sudo apt-get install -y intltool libtool libgmp-dev libmpfr-dev libcurl4-openssl-dev libicu-dev libxml2-dev
 		elif util.is_cmd 'dnf'; then
 			sudo dnf install -y intltool libtool libcurl-devel gmp-devel mpfr-devel libicu-devel
 		fi
-	
+
 		if [ ! -d lib/pybind11 ]; then
 			git submodule add https://github.com/pybind/pybind11 lib/pybind11
 		fi
@@ -45,7 +45,7 @@ install.albert() {
 		sudo cmake --install build
 	)
 
-	
+
 	(
 		if [ ! -d lib/Qalculate ]; then
 			git submodule add https://github.com/Qalculate/libqalculate lib/Qalculate
@@ -102,7 +102,7 @@ install.albert() {
 	# esac
 }
 
-configure.albert() {
+configure.any() {
 	mkdir -p "$XDG_CONFIG_HOME/autostart"
 	cat <<EOF > "$XDG_CONFIG_HOME/autostart/albert.desktop"
 [Desktop Entry]

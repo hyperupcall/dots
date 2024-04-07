@@ -48,7 +48,7 @@ main() {
 		util.clone_in_dotfiles 'https://github.com/huyng/bashmarks'
 
 		# Unused
-		# util.clone 'https://github.com/basherpm/basher' ~/.dotfiles/.data/repos/basher
+		# util.clone_in_dotfiles 'https://github.com/basherpm/basher'
 	fi
 
 

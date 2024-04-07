@@ -4,7 +4,7 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install ZFS?'; then
-		helper.run_for_distro "$@"
+		helper.setup "$@"
 	fi
 }
 
@@ -12,8 +12,8 @@ main() {
 
 install.debian() {
 	pkg.add_apt_repository \
-		"deb https://deb.debian.org/debian bookworm-backports main contrib
-deb-src https://deb.debian.org/debian bookworm-backports main contrib" \
+		"deb [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] https://deb.debian.org/debian bookworm-backports main contrib
+deb-src [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] https://deb.debian.org/debian bookworm-backports main contrib" \
 		'/etc/apt/sources.list.d/bookworm-backports.list'
 
     dest_file=/etc/apt/preferences.d/90_zfs

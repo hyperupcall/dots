@@ -2,22 +2,27 @@
 
 # shellcheck disable=SC2016
 {
-	# Set options
+	# Set options.
 	set -e
 	if [ -n "$BASH_VERSION" ]; then
 		# shellcheck disable=SC3044
 		shopt -s extglob globstar shift_verbose
+	elif [ -n "$ZSH_VERSION" ]; then
+		:
+	elif [ -n "$KSH_VERSION" ]; then
+		set -o globstar
 	fi
 
-	# Source libraries
+	# Source libraries.
 	source ~/.dotfiles/os/unix/scripts/xdg.sh
 	for _f in \
-		"${BASH_SOURCE[0]%/*}/../vendor/bash-core/pkg"/**/*.sh \
-		"${BASH_SOURCE[0]%/*}/../vendor/bash-term/pkg"/**/*.sh; do
+		~/.dotfiles/os/unix/vendor/bash-core/pkg/**/*.sh \
+		~/.dotfiles/os/unix/vendor/bash-term/pkg/**/*.sh \
+	do
 		source "$_f"
 	done; unset -v _f
 
-	# Assumption checks
+	# Check for assumptions.
 	if [ -z "$XDG_CONFIG_HOME" ]; then
 		printf '%s\n' 'Failed because $XDG_CONFIG_HOME is empty' >&2
 		exit 1
@@ -40,27 +45,7 @@
 # -------------------------------------------------------- #
 #                     HELPER FUNCTIONS                     #
 # -------------------------------------------------------- #
-helper.run_for_distro() {
-	# TODO: actually write
-	# TODO: arch but make it work with derivatives by default
-	if declare -f 'install.debian' &>/dev/null; then
-		install.debian "$@"
-	elif declare -f 'install.ubuntu' &>/dev/null; then
-		install.ubuntu "$@"
-	elif declare -f 'install.fedora' &>/dev/null; then
-		install.fedora "$@"
-	elif declare -f 'install.opensuse' &>/dev/null; then
-		install.opensuse "$@"
-	elif declare -f 'install.arch' &>/dev/null; then
-		install.arch "$@"
-	else
-		core.print_fatal "Distribution not supported"
-	fi
-}
-
-helper.install_and_configure() {
-	local id="$1"
-	local name="$2"
+helper.setup() {
 	local flag_force_install=no
 
 	local arg=
@@ -70,20 +55,26 @@ helper.install_and_configure() {
 		esac
 	done
 
-	if declare -f install."$id" &>/dev/null; then
-		if ! declare -f installed &>/dev/null || ! installed || [ "$flag_force_install" = yes ]; then
-			if util.confirm "Install $name?"; then
-				install."$id"
+	local distro=
+	for distro in debian ubuntu fedora opensuse arch any; do
+		if declare -f "install.$distro" &>/dev/null; then
+			if ! declare -f installed &>/dev/null || ! installed || [ "$flag_force_install" = yes ]; then
+				if util.confirm "Install $name?"; then
+					"install.$distro" "$@"
+					return
+				fi
+			else
+				core.print_info "$name already installed. Pass --force-install to run install again"
 			fi
-		else
-			core.print_info "$name already installed. Pass --force-install to run install again"
 		fi
-	else
-		core.print_info "$name has no install function"
-	fi
+	done; unset -v distro
 
-	core.print_info "Configuring $name"
-	configure."$id"
+	core.print_error "Distribution not supported"
+
+	if declare -f 'configure.any' &>/dev/null; then
+		core.print_info "Configuring..."
+		configure.any "$@"
+	fi
 }
 
 pkg.add_apt_key() {
@@ -108,10 +99,6 @@ pkg.add_apt_repository() {
 	printf '%s\n' "$source_line" | sudo tee "$dest_file" >/dev/null
 }
 
-util.req() {
-	curl --proto '=https' --tlsv1.2 -#Lf "$@"
-}
-
 util.run() {
 	core.print_info "Executing '$*'"
 	if "$@"; then
@@ -119,19 +106,6 @@ util.run() {
 	else
 		return $?
 	fi
-}
-
-util.cd() {
-	if ! cd "$1"; then
-		core.print_die "Failed to cd to '$1'"
-	fi
-}
-
-util.cd_temp() {
-	local dir=
-	dir=$(mktemp -d)
-
-	pushd "$dir" >/dev/null || exit
 }
 
 util.ensure() {
@@ -146,6 +120,27 @@ util.requires_bin() {
 	fi
 }
 
+# TODO: remove this
+util.req() {
+	curl --proto '=https' --tlsv1.2 -#Lf "$@"
+}
+
+# TODO: remove this
+util.cd() {
+	if ! cd "$1"; then
+		core.print_die "Failed to cd to '$1'"
+	fi
+}
+
+# TODO: remove this
+util.cd_temp() {
+	local dir=
+	dir=$(mktemp -d)
+
+	pushd "$dir" >/dev/null || exit
+}
+
+# TODO: remove this
 util.is_cmd() {
 	if command -v "$1" &>/dev/null; then
 		return $?
@@ -187,7 +182,14 @@ util.confirm() {
 	until [[ "$input" =~ ^[yn]$ ]]; do
 		read -rN1 -p "$message "
 		if [ -n "$BASH_VERSION" ]; then
-			input=${REPLY,,}
+			if (( ${BASH_VERSINFO[0]} >= 6 || ( ${BASH_VERSINFO[0]} == 5 && ${BASH_VERSINFO[1]} >= 1 ) )); then
+				input=${REPLY@L}
+			else
+				# Ksh fails parse without eval.
+				eval 'input=${REPLY,,}'
+			fi
+		elif [ -n "$ZSH_VERSION" ]; then
+			input=${REPLY:l}
 		elif [ -n "$KSH_VERSION" ]; then
 			# shellcheck disable=SC2034
 			typeset -M toupper input="$REPLY"
@@ -204,6 +206,7 @@ util.confirm() {
 	fi
 }
 
+# TODO: remove
 util.get_package_manager() {
 	for package_manager in pacman apt dnf zypper; do
 		if util.is_cmd "$package_manager"; then

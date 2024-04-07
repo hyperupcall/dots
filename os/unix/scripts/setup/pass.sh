@@ -4,7 +4,7 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install pass?'; then
-		helper.run_for_distro "$@"
+		helper.setup "$@"
 	fi
 
 	if util.confirm 'Clone password repository?'; then

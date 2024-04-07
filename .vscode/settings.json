@@ -30,16 +30,6 @@
 		"**/node_modules/**": true
 	},
 	"explorer.excludeGitIgnore": true,
-	"files.exclude": {
-		"**/.data/**": true,
-		"**/.git/**": true,
-		"**/.home/**": true,
-		"**/.bin/**": true,
-		"**/venv/**": true,
-		"**/.venv/**": true,
-		"**/vendor/**": true,
-		"**/node_modules/**": true
-	},
 	"errorLens.excludePatterns": [
 		"**/.data/**",
 		"**/.git/**",

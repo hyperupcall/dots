@@ -88,9 +88,12 @@ main() {
 	must.rm .mkshrc
 	must.rm .pulse-cookie
 	must.rm .pythonhist
+	must.rm .sh_history
 	must.rm .sqlite_history
+	must.rm .sudo_as_admin_successful
 	must.rm .viminfo
 	must.rm .wget-hsts
+	must.rm .xsession-errors
 	must.rm .zlogin
 	must.rm .zshenv
 	must.rm .zshrc

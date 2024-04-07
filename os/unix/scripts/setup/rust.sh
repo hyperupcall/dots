@@ -3,17 +3,17 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	helper.install_and_configure 'rust' 'Rust' "$@"
+	helper.setup "$@"
 }
 
-install.rust() {
+install.any() {
 	core.print_info "Installing rustup"
 	util.req https://sh.rustup.rs | sh -s -- --default-toolchain nightly -y || util.die
 
 	rustup default nightly
 }
 
-configure.rust() {
+configure.any() {
 	cargo install --locked starship
 	cargo install --locked cargo-binstall
 	cargo install --locked fd-find
