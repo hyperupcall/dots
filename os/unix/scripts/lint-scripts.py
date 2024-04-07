@@ -21,6 +21,14 @@ from typing import Callable, List, Dict, Any # compat
 # Check to ensure all regular expressions are working as intended:
 # $ ./scripts/checkstyle.py --internal-test-regex
 
+# TODO:
+# DEBIAN_FRONTEND=noninteractive
+# apt-get -y
+# pacman -Syuu --noconfirm
+# no apt
+# no sudo yay
+# TODO: helper.setup then "$@"
+
 Rule = Dict[str, Any]
 
 class c:

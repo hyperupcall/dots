@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install Firefox Extensions?'; then
-		install.firefox-extensions
+		helper.setup "$@"
 	fi
 }
 
-install.firefox-extensions() {
+install.any() {
 	util.cd_temp
 
 	util.get_latest_github_tag 'gorhill/uBlock'

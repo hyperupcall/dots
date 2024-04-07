@@ -4,39 +4,37 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install Maestral?'; then
-		install.maestral
+		helper.setup "$@"
 	fi
 }
 
-install.maestral() {
-	util.get_package_manager
-	local pkgmngr="$REPLY"
-	
-	util.get_os_id
-	case $REPLY in
-		neon)
-			sudo apt install cython3
-		;;
-		*)
-			if [ $pkgmngr = 'apt' ]; then
-				sudo apt install cython
-			fi
-		;;
-	esac
-	
-	case $pkgmngr in
-	apt)
-		sudo apt-get install -y python3-dev python3-venv libsystemd-dev qt5-default
-		sudo apt-get install -y libxcb-cursor0 # maestral gui
-		;;
-	dnf)
-		sudo dnf install -y python3 python3-devel systemd-devel cython qt5-qtbase-devel
-		;;
-	*)
-		core.print_warn 'Unable to automatically install venv, libsystemd, cython'
-		;;
-	esac
+install.debian() {
+	sudo apt-get install -y python3-dev python3-venv libsystemd-dev qt5-default
+	sudo apt-get install -y libxcb-cursor0 # maestral gui
+	sudo apt install cython
+	install_maestral "$@"
+}
 
+install.neon() {
+	sudo apt-get install -y python3-dev python3-venv libsystemd-dev qt5-default
+	sudo apt-get install -y libxcb-cursor0 # maestral gui
+	sudo apt-get install -y cython3
+	install_maestral "$@"
+}
+
+install.fedora() {
+	sudo dnf install -y python3 python3-devel systemd-devel cython qt5-qtbase-devel
+}
+
+install.arch() {
+	sudo pacman -S python3
+}
+
+install.any() {
+	install_maestral "$@"
+}
+
+install_maestral() {
 	mkdir -p ~/.dotfiles/.data/workspace/maestral
 	util.cd ~/.dotfiles/.data/workspace/maestral
 

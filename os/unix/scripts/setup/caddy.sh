@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install Caddy?'; then
-		install.caddy
+		helper.setup "$@"
 	fi
 }
 
-install.caddy() {
+install.any() {
 	util.get_package_manager
 	local pkgmngr="$REPLY"
 

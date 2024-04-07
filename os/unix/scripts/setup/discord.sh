@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm "Install Discord?"; then
-		install.discord "$@"
+		helper.setup "$@"
 	fi
 }
 
-install.discord() {
+install.any() {
 	if util.is_cmd 'apt'; then (
 		util.cd_temp
 		util.req -o './discord.deb' 'https://discord.com/api/download?platform=linux&format=deb'

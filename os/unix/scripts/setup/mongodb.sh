@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install MongoDB?'; then
-		install.mongodb
+		helper.setup "$@"
 	fi
 }
 
-install.mongodb() {
+install.any() {
 	util.get_package_manager
 	declare pkgmngr="$REPLY"
 

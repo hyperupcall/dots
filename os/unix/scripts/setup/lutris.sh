@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install Lutris?'; then
-		install.lutris
+		helper.setup "$@"
 	fi
 }
 
-install.lutris() {
+install.any() {
 	local gpg_file="/etc/apt/keyrings/lutris.asc"
 
 	pkg.add_apt_key \

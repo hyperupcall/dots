@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install Sublime Text?'; then
-		install.sublime_text
+		helper.setup "$@"
 	fi
 }
 
-install.sublime_text() {
+install.any() {
 	util.get_package_manager
 	local pkgmngr="$REPLY"
 

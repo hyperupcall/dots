@@ -10,38 +10,8 @@ main() {
 		fi
 	fi
 
-	# Install generally useful dependencies.
-	util.get_package_manager
-	case $REPLY in
-	pacman)
-		sudo pacman -Syyu --noconfirm
-		sudo pacman -S --noconfirm base-devel
-		sudo pacman -S --noconfirm lvm2
-		sudo pacman -S --noconfirm openssl # for starship
-		;;
-	apt)
-		sudo apt-get -y update
-		sudo apt-get -y upgrade
-		sudo apt-get -y install apt-transport-https
-		sudo apt-get -y install build-essential
-		sudo apt-get -y install lvm2
-		sudo apt-get -y install libssl-dev # for starship
-		;;
-	dnf)
-		sudo dnf -y update
-		sudo dnf -y install dnf-plugins-core # For at least Brave
-		sudo dnf -y install @development-tools
-		sudo dnf -y install lvm2
-		sudo dnf -y install openssl-devel # for starship
-		;;
-	zypper)
-		sudo zypper -y update
-		sudo zypper -y upgrade
-		sudo zypper -y install -t pattern devel_basis
-		sudo zypper -y install lvm
-		sudo zypper -y install openssl-devel # for starship
-		;;
-	esac
+	helper.setup "$@"
+
 	util.install_packages bash-completion curl rsync pass
 	util.install_packages cmake ccache vim nano jq
 	util.install_packages pkg-config # for starship
@@ -87,6 +57,44 @@ main() {
 
 	> ~/.bootstrap/done :
 	printf '%s\n' 'Done.'
+}
+
+install.arch() {
+	sudo pacman -Syyu --noconfirm
+	sudo pacman -S --noconfirm base-devel
+	sudo pacman -S --noconfirm lvm2
+	sudo pacman -S --noconfirm openssl # for starship
+	sudo pacman -S --noconfirm yay
+}
+
+install.cachyos() {
+	install.arch "$@"
+	sudo pacman -S --noconfirm cachyos-v3/linux-cachyos-zfs cachyos-v3/linux-cachyos-lto-zfs
+}
+
+install.debian() {
+	sudo apt-get -y update
+	sudo apt-get -y upgrade
+	sudo apt-get -y install apt-transport-https
+	sudo apt-get -y install build-essential
+	sudo apt-get -y install lvm2
+	sudo apt-get -y install libssl-dev # for starship
+}
+
+install.fedora() {
+	sudo dnf -y update
+	sudo dnf -y install dnf-plugins-core # For at least Brave
+	sudo dnf -y install @development-tools
+	sudo dnf -y install lvm2
+	sudo dnf -y install openssl-devel # for starship
+}
+
+install.opensuse() {
+	sudo zypper -y update
+	sudo zypper -y upgrade
+	sudo zypper -y install -t pattern devel_basis
+	sudo zypper -y install lvm
+	sudo zypper -y install openssl-devel # for starship
 }
 
 main "$@"

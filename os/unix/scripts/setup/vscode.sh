@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install VSCode and VSCode Insiders?'; then
-		install.vscode
+		helper.setup "$@"
 	fi
 }
 
-install.vscode() {
+install.any() {
 	util.get_package_manager
 	local pkgmngr="$REPLY"
 

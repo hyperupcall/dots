@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install Unity Hub?'; then
-		install.unity_hub
+		helper.setup "$@"
 	fi
 }
 
-install.unity_hub() {
+install.any() {
 	util.get_package_manager
 	local pkgmngr="$REPLY"
 

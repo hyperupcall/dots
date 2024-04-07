@@ -41,16 +41,13 @@ The `bootstrap.sh` script performs the following steps:
   - Appends `$HOME/.dotfiles/.data/bin` to `PATH`
   - Sources `~/.dotfiles/os/unix/scripts/xdg.sh`, if it exists
 
-Then, run the following:
-
-```sh
-. ~/.bootstrap/bootstrap-out.sh
-```
-
 Now, execute:
 
 ```sh
+. ~/.bootstrap/bootstrap-out.sh
+~/scripts/lifecycle/doctor.sh
 ~/scripts/lifecycle/bootstrap.sh
+dotdrop install -c ~/.dotfiles/os/unix/config/dotdrop/dotdrop.yaml -p nullptr
 ~/scripts/lifecycle/idempotent.sh
 ```
 
@@ -65,13 +62,17 @@ Some scripts should be executed. They include:
 - Setup pass (pass-browserpass, and `~/.password-store`)
 - Setup Firefox, Brave
   - Sync data
-- Setup dotdrop
 - Setup Maestral
 - Setup Mise
 - Setup Albert
   - Enable plugins
 - Setup Obsidian
 - Setup default, my-tools, hub, etc.
+- Setup Visual Studio Code
+  - Enable plugins
+- Setup Thunderbird
+  - Enable plugins
 - Configure keybindings
 - Test spellchecker
+- Add favorites to file explorer and dock
 - Run doctor

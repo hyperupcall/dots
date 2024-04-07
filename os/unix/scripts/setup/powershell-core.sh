@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install Powershell Core?'; then
-		install.powershell_core
+		helper.setup "$@"
 	fi
 }
 
-install.powershell_core() {
+install.any() {
 	util.get_package_manager
 	local pkgmngr="$REPLY"
 

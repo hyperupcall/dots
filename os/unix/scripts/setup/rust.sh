@@ -8,7 +8,7 @@ main() {
 
 install.any() {
 	core.print_info "Installing rustup"
-	util.req https://sh.rustup.rs | sh -s -- --default-toolchain nightly -y || util.die
+	util.req https://sh.rustup.rs | sh -s -- --default-toolchain nightly -y
 
 	rustup default nightly
 }

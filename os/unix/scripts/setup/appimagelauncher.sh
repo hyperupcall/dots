@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install AppImageLauncher?'; then
-		install.appimagelauncher
+		helper.setup "$@"
 	fi
 }
 
-install.appimagelauncher() {
+install.any() {
 	util.get_package_manager
 	local pkgmngr="$REPLY"
 

@@ -181,7 +181,7 @@ declare -ga g_dotfiles=(
 	cfg:'udiskie'
 	cfg:'urlwatch'
 	cfg:'urxvt'
-	# cfg:'user-dirs.dirs' # Handled by 'dotmgr action idempotent'
+	# cfg:'user-dirs.dirs' # Handled by '~/scripts/lifecycle/idempotent.sh'.
 	cfg:'viewnior'
 	cfg:'vim'
 	cfg:'wget'

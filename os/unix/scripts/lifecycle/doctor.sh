@@ -22,7 +22,6 @@ main() {
 	printf '\n'
 
 	printf '%s\n' "BINARIES:"
-	check.command dotmgr
 	check.command dotdrop
 	check.command clang-format
 	check.command clang-tidy
@@ -40,7 +39,7 @@ main() {
 	printf '\n'
 
 	printf '%s\n' "DROPBOX:"
-	check.process dropbox
+	check.process maestral
 	printf '\n'
 
 	printf '%s\n' "LATEX:"
@@ -110,7 +109,7 @@ check.process() {
 		success "$process is running"
 	else
 		if (($? == 1)); then
-			failure "$process not installed"
+			failure "$process not running"
 		else
 			failure "Syntax or memory error when calling pgrep"
 		fi

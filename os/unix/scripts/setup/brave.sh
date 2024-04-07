@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install Brave?'; then
-		install.brave
+		helper.setup "$@"
 	fi
 }
 
-install.brave() {
+install.any() {
 	util.get_package_manager
 	local pkgmngr="$REPLY"
 

@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 main() {
-	source "$DOTMGR_ROOT/src/util/source.sh"
-
+	# TODO: source
 	# -------------------------------------------------------- #
 	#                    COPY ROOT DOTFILES                    #
 	# -------------------------------------------------------- #

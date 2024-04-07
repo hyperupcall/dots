@@ -13,10 +13,6 @@ install.debian() {
 	sudo apt-get -y install btrfs-progs
 }
 
-install.ubuntu() {
-	install.debian "$@"
-}
-
 install.fedora() {
 	sudo dnf -y update
 	sudo dnf -y install btrfs-progs
@@ -27,8 +23,8 @@ install.opensuse() {
 	sudo zypper -y install btrfs-progs
 }
 
-install.pacman() {
-	yay -Syu btrfs-progs
+install.arch() {
+	yay -Syu --noconfirm btrfs-progs
 }
 
 main "$@"

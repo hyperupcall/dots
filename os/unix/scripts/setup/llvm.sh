@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install LLVM?'; then
-		install.llvm
+		helper.setup "$@"
 	fi
 }
 
-install.llvm() {
+install.any() {
 	util.get_package_manager
 	local pkgmngr="$REPLY"
 

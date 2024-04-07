@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install Docker?'; then
-		install.docker
+		helper.setup "$@"
 	fi
 }
 
-install.docker() {
+install.any() {
 	sudo apt-get -y install \
 		ca-certificates \
 		curl \

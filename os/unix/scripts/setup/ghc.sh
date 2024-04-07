@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install GHC?'; then
-		install.ghc
+		helper.setup "$@"
 	fi
 }
 
-install.ghc() {
+install.any() {
 	core.print_info "Installing haskell"
 
 	mkdir -p "$XDG_DATA_HOME/ghcup"

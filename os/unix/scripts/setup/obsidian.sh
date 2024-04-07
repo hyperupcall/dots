@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install Obsidian?'; then
-		install.obsidian
+		helper.setup "$@"
 	fi
 }
 
-install.obsidian() {
+install.any() {
 	if ! command -v appimagelauncherd &>/dev/null; then
 		core.print_die "This scripts depends on the installation of AppImageLauncher"
 	fi

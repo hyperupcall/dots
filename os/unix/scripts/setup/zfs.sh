@@ -8,8 +8,6 @@ main() {
 	fi
 }
 
-# DEBIAN_FRONTEND=noninteractive # TODO
-
 install.debian() {
 	pkg.add_apt_repository \
 		"deb [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] https://deb.debian.org/debian bookworm-backports main contrib
@@ -21,7 +19,7 @@ deb-src [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] https://deb.d
 Pin: release n=bookworm-backports
 Pin-Priority: 990" | sudo tee "$dest_file" >/dev/null
 
-    sudo apt update
+    sudo apt-get update
     sudo apt-get install -y dpkg-dev linux-headers-generic linux-image-generic
     sudo apt-get install -y zfs-dkms zfsutils-linux
 }
@@ -38,6 +36,14 @@ install.fedora() {
 	sudo modprobe zfs
 	printf '%s\n' zfs | sudo tee /etc/modules-load.d/zfs.conf >/dev/null
 	printf '%s\n' zfs | sudo tee /etc/dnf/protected.d/zfs.conf >/dev/null
+}
+
+install.arch() {
+	 sudo pacman -Syu --noconfirm zfs-linux zfs-linux-lts zfs-dkms
+}
+
+install.cachyos() {
+	sudo pacman -Syu --noconfirm zfs-dkms
 }
 
 main "$@"

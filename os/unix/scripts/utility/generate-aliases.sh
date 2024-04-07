@@ -43,7 +43,7 @@ main() {
 	generated_dir="$XDG_STATE_HOME/dotshellextract"
 	profile_dir="$XDG_CONFIG_HOME/shell"
 
-	mkdir -p "$generated_dir"
+	mkdir -p "$generated_dir" "$profile_dir"
 
 	# ------------------------- Main ------------------------- #
 	# user Functions

@@ -27,10 +27,6 @@ install.debian() {
 	sudo apt-get -y install pass
 }
 
-install.ubuntu() {
-	install.debian "$@"
-}
-
 install.fedora() {
 	sudo dnf -y update
 	sudo dnf -y install pass
@@ -41,8 +37,8 @@ install.opensuse() {
 	sudo zypper -y install pass
 }
 
-install.pacman() {
-	yay -Syu pass
+install.arch() {
+	yay -Syu --noconfirm pass
 }
 
 main "$@"

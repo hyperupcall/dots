@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install Git?'; then
-		install.git
+		helper.setup "$@"
 	fi
 }
 
-install.git() {
+install.any() {
 	sudo add-apt-repository ppa:git-core/ppa
 	sudo apt-get update
 	sudo apt-get install git

@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install OBS?'; then
-		install.obs
+		helper.setup "$@"
 	fi
 }
 
-install.obs() {
+install.any() {
 	if util.is_cmd 'apt'; then
 		sudo add-apt-repository ppa:obsproject/obs-studio
 		sudo apt update -y

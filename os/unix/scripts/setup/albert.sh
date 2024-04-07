@@ -15,6 +15,8 @@ install.any() {
 		sudo apt-get install -y libarchive-dev autoconf
 	elif util.is_cmd 'dnf'; then
 		sudo dnf install -y libarchive-devel autoconf
+	elif util.is_cmd 'pacman'; then
+		sudo pacman -S --noconfirm libarchive autoconf
 	fi
 
 	util.clone_in_dotfiles 'https://github.com/albertlauncher/albert' --recursive
@@ -27,6 +29,8 @@ install.any() {
 			sudo apt-get install -y intltool libtool libgmp-dev libmpfr-dev libcurl4-openssl-dev libicu-dev libxml2-dev
 		elif util.is_cmd 'dnf'; then
 			sudo dnf install -y intltool libtool libcurl-devel gmp-devel mpfr-devel libicu-devel
+		elif util.is_cmd 'pacman'; then
+			sudo pacman -S --noconfirm intltool
 		fi
 
 		if [ ! -d lib/pybind11 ]; then
@@ -61,8 +65,10 @@ install.any() {
 	if util.is_cmd 'apt'; then
 		sudo apt install qt6-base-dev qt6-tools-dev qt6-5compat-dev libqt6svg6-dev
 	elif util.is_cmd 'dnf'; then
-		sudo dnf install -y qt6-qtbase-devel qt6-qttools-devel qt6-qt5compat-devel qt6-qtsvg-devel qt6-linguist qt6-qtscxml
-
+		sudo dnf install -y qt6-qtbase-devel qt6-qttools-devel qt6-qt5compat-devel qt6-qtsvg-devel qt6-qtscxml
+		# TODO: qt6-linguist
+	elif util.is_cmd 'pacman'; then
+		sudo pacman -S --noconfirm qt6-base qt6-tools qt6-5compat qt6-scxml
 	fi
 	mise install cmake
 	PATH="$XDG_DATA_HOME/mise/shims:$PATH"

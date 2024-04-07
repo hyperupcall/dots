@@ -3,11 +3,11 @@
 source "${0%/*}/../source.sh"
 main() {
 	if util.confirm 'Install Mise?'; then
-		install.mise
+		helper.setup "$@"
 	fi
 }
 
-install.mise() {
+install.any() {
 	curl https://mise.jdx.dev/install.sh | sh
 }
 

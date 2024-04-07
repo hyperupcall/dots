@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install Borg?'; then
-		install.borg
+		helper.setup "$@"
 	fi
 }
 
-install.borg() {
+install.any() {
 	util.get_package_manager
 	local pkgmngr="$REPLY"
 

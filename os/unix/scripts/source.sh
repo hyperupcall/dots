@@ -17,7 +17,7 @@
 	source ~/.dotfiles/os/unix/scripts/xdg.sh
 	for _f in \
 		~/.dotfiles/os/unix/vendor/bash-core/pkg/**/*.sh \
-		~/.dotfiles/os/unix/vendor/bash-term/pkg/**/*.sh \
+		~/.dotfiles/os/unix/vendor/bash-term/pkg/**/*.sh; \
 	do
 		source "$_f"
 	done; unset -v _f
@@ -55,26 +55,44 @@ helper.setup() {
 		esac
 	done
 
-	local distro=
-	for distro in debian ubuntu fedora opensuse arch any; do
-		if declare -f "install.$distro" &>/dev/null; then
-			if ! declare -f installed &>/dev/null || ! installed || [ "$flag_force_install" = yes ]; then
-				if util.confirm "Install $name?"; then
-					"install.$distro" "$@"
-					return
+	(
+		# A list of 'os-release' files can be found at https://github.com/which-distro/os-release.
+		# In some distros, like CachyOS, /usr/lib/os-release has the wrong contents.
+		source /etc/os-release
+
+		# Normalize values that are missing or have bad capitalization.
+		[ "$ID" = +(arch|blackarch) ] && ID_LIKE=arch
+		[ "$ID" = 'debian' ] && ID_LIKE=debian
+		[ "$ID" = 'Deepin' ] && ID=deepin
+		[[ "$ID_LIKE" == +(*debian*|*ubuntu*) ]] && ID_LIKE=debian
+		[[ "$ID_LIKE" == +(*fedora*|*centos*|*rhel*) ]] && ID_LIKE=fedora
+		[[ "$ID_LIKE" == +(*opensuse*|*suse*) ]] && ID_LIKE=opensuse
+
+		local has_function=no
+		local id=
+		for id in "$ID" "$ID_LIKE" any; do
+			if declare -f "install.$id" &>/dev/null; then
+				has_function=yes
+				if ! declare -f installed &>/dev/null || ! installed || [ "$flag_force_install" = yes ]; then
+					if util.confirm "Install $id?"; then
+						"install.$id" "$@"
+						break
+					fi
+				else
+					core.print_warn "Application has already been setup. Pass --force-install to run setup again"
 				fi
-			else
-				core.print_info "$name already installed. Pass --force-install to run install again"
 			fi
+		done; unset -v id
+		if [ "$has_function" = no ] && ! declare -f install.any &>/dev/null; then
+			core.print_warn "Application has no installation function for this distribution"
 		fi
-	done; unset -v distro
 
-	core.print_error "Distribution not supported"
 
-	if declare -f 'configure.any' &>/dev/null; then
-		core.print_info "Configuring..."
-		configure.any "$@"
-	fi
+		if declare -f 'configure.any' &>/dev/null; then
+			core.print_info "Configuring..."
+			configure.any "$@"
+		fi
+	)
 }
 
 pkg.add_apt_key() {
@@ -149,6 +167,36 @@ util.is_cmd() {
 	fi
 }
 
+# TODO: remove
+util.get_package_manager() {
+	for package_manager in pacman apt dnf zypper; do
+		if util.is_cmd "$package_manager"; then
+			REPLY="$package_manager"
+
+			return
+		fi
+	done
+
+	core.print_die 'Failed to get the system package manager'
+}
+
+# TODO: Remove this
+util.get_os_id() {
+	unset -v REPLY; REPLY=
+
+	# shellcheck disable=SC1007
+	local key= value=
+	while IFS='=' read -r key value; do
+		if [ "$key" = 'ID' ]; then
+			REPLY=$value
+		fi
+	done < /etc/os-release; unset -v key value
+
+	if [ -z "$REPLY" ]; then
+		core.print_die "Failed to determine OS id"
+	fi
+}
+
 util.clone() {
 	local repo="$1"
 	local dir="$2"
@@ -206,19 +254,6 @@ util.confirm() {
 	fi
 }
 
-# TODO: remove
-util.get_package_manager() {
-	for package_manager in pacman apt dnf zypper; do
-		if util.is_cmd "$package_manager"; then
-			REPLY="$package_manager"
-
-			return
-		fi
-	done
-
-	core.print_die 'Failed to get the system package manager'
-}
-
 util.install_packages() {
 	if util.is_cmd 'pacman'; then
 		util.ensure sudo pacman -S --noconfirm "$@"
@@ -256,18 +291,3 @@ util.get_latest_github_tag() {
 	REPLY=$tag_name
 }
 
-util.get_os_id() {
-	unset -v REPLY; REPLY=
-
-	# shellcheck disable=SC1007
-	local key= value=
-	while IFS='=' read -r key value; do
-		if [ "$key" = 'ID' ]; then
-			REPLY=$value
-		fi
-	done < /etc/os-release; unset -v key value
-
-	if [ -z "$REPLY" ]; then
-		core.print_die "Failed to determine OS id"
-	fi
-}

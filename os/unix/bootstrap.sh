@@ -28,7 +28,7 @@ main() {
 	esac
 	installcmd 'curl' 'curl'
 	installcmd 'git' 'git'
-	installcmd 'nvim' 'vim'
+	installcmd 'vim' 'vim'
 
 	# Install hyperupcall/dotfiles
 	clonerepo 'github.com/hyperupcall/dotfiles' ~/.dotfiles
@@ -69,6 +69,7 @@ EOF
 	. ~/.bootstrap/bootstrap-out.sh
 	~/scripts/lifecycle/doctor.sh
 	~/scripts/lifecycle/bootstrap.sh
+	dotdrop install -c ~/.dotfiles/os/unix/config/dotdrop/dotdrop.yaml -p nullptr
 	~/scripts/lifecycle/idempotent.sh
 	---
 	EOF
@@ -107,8 +108,9 @@ iscmd() {
 updatesystem() {
 	if iscmd 'pacman'; then
 		sudo pacman -Syyu --noconfirm
-		# shellcheck disable=SC2046
-		sudo pacman -R $(pacman -Qdtq)
+		local orphaned_dependencies=
+		orphaned_dependencies=$(pacman -Qdtq)
+		sudo pacman -R $orphaned_dependencies
 	elif iscmd 'apt-get'; then
 		sudo apt-get -y update
 		if ! iscmd 'pkcon'; then # KDE Neon

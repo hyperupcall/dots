@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install Dropbox?'; then
-		install.dropbox
+		helper.setup "$@"
 	fi
 }
 
-install.dropbox() {
+install.any() {
 	util.cd_temp
 
 	core.print_info 'Downloading'

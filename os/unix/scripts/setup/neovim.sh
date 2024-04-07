@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install Neovim latest?'; then
-		install.neovim
+		helper.setup "$@"
 	fi
 }
 
-install.neovim() {
+install.any() {
 	# TODO: install gettext
 	util.clone_in_dotfiles 'https://github.com/neovim/neovim'
 	local dir="$REPLY"
@@ -31,6 +31,10 @@ install.neovim() {
 	make deps
 	make CMAKE_BUILD_TYPE=Release
 	sudo make install
+}
+
+install.arch() {
+	yay -S --noconfirm neovim
 }
 
 main "$@"

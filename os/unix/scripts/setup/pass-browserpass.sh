@@ -4,11 +4,11 @@ source "${0%/*}/../source.sh"
 
 main() {
 	if util.confirm 'Install Browserpass?'; then
-		install.browserpass
+		helper.setup "$@"
 	fi
 }
 
-install.browserpass() {
+install.any() {
 	util.get_latest_github_tag 'browserpass/browserpass-native'
 	local version="$REPLY"
 	local system='linux64'
