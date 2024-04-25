@@ -321,9 +321,6 @@ _path_prepend "$CARGO_HOME/bin"
 # ruby-build
 export RUBY_BUILD_CACHE_PATH="$XDG_CACHE_HOME/ruby-build"
 
-# rvm
-# _path_prepend "$XDG_DATA_HOME/rvm/bin"
-
 # sage
 export DOT_SAGE="$XDG_CONFIG_HOME/sage"
 

@@ -10,14 +10,10 @@ cd() {
 
 	if command -v autoenv_init >/dev/null 2>&1; then
 		autoenv_init || :
-	else
-		_shell_util_log_warn "cd: Function is not defined: autoenv_init"
 	fi
 
 	if command -v __woof_cd_hook >/dev/null 2>&1; then
 		__woof_cd_hook || :
-	else
-		_shell_util_log_warn "cd: Function is not defined: __woof_cd_hook"
 	fi
 
 	_shell_dir=
@@ -26,7 +22,7 @@ cd() {
 		*) _shell_dir=$arg ;;
 	esac done
 
-	builtin cd -P "$@" || _shell_util_die "cd: cd to '$_shell_dir' failed with code $?"
+	builtin cd -P "$@"
 	unset -v _shell_dir
 }
 

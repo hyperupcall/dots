@@ -5,7 +5,6 @@ use warnings;
 use File::Find;
 use feature qw(say);
 
-
 my %find_args = (
 	wanted => \&wanted,
 	no_chdir => 1
@@ -35,9 +34,14 @@ sub wanted {
 		say(STDERR "Error: Should not be empty: $pass_name");
 	}
 
+	# TODO: should have login:
+
 	# TODO
 	my $last_char = substr($pass_content, -1);
 	if ($last_char ne "\n") {
 		say(STDERR "Error: Should have ending newline: $pass_name");
 	}
+
+	# TODO: statistics
+	# number with old email
 }

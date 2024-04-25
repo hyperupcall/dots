@@ -89,9 +89,6 @@ if command -v register-python-argcomplete &>/dev/null; then
     eval "$(register-python-argcomplete pipx)"
 fi
 
-# repomgr.bash
-_path_prepend "$HOME/.local/state/repomgr/bin"
-
 # rho.bash
 if command -v rho &>/dev/null; then
     eval "$(rho shell-init)"

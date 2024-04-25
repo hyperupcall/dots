@@ -1,1 +1,1 @@
-. "$HOME/.cargo/env.fish"
+. "$XDG_DATA_HOME/cargo/env.fish"

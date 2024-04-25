@@ -17,7 +17,7 @@ main() {
 	# -------------------------------------------------------- #
 	#     REMOVE AUTOAPPENDED LINES IN SHELL STARTUP FILES     #
 	# -------------------------------------------------------- #
-	for file in ~/.profile ~/.bashrc ~/.bash_profile "${ZDOTDIR:-$HOME}/.zshrc" "$XDG_CONFIG_HOME/fish/config.fish"; do
+	for file in ~/.profile ~/.bashrc ~/.bash_profile "${ZDOTDIR:-$HOME}/.zshrc" "${ZDOTDIR:-$HOME}/.zshenv" "$XDG_CONFIG_HOME/fish/config.fish"; do
 		if [ ! -f "$file" ]; then
 			continue
 		fi

@@ -68,6 +68,9 @@ SDIRS="$XDG_DATA_HOME/bashmarks.sh.db"
 # _path_prepend "$RBENV_ROOT/bin"
 # _path_prepend "$RBENV_ROOT/shims"
 
+# rvm
+# _path_prepend "$XDG_DATA_HOME/rvm/bin"
+
 # swift
 # export SWIFTENV_ROOT="$XDG_DATA_HOME/swiftenv"
 # _path_prepend "$SWIFTENV_ROOT/bin"

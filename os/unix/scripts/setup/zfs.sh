@@ -5,6 +5,9 @@ source "${0%/*}/../source.sh"
 main() {
 	if util.confirm 'Install ZFS?'; then
 		helper.setup "$@"
+
+		sudo zpool set cachefile=/etc/zfs/zpool.cache vault
+		sudo systemctl enable --now zfs-import-cache.service zfs.target zfs-import.target zfs-mount.service
 	fi
 }
 
