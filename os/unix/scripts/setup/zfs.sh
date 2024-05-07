@@ -6,6 +6,9 @@ main() {
 	if util.confirm 'Install ZFS?'; then
 		helper.setup "$@"
 
+		if ! sudo zpool status vault &>/dev/null; then
+			sudo zpool import -f vault
+		fi
 		sudo zpool set cachefile=/etc/zfs/zpool.cache vault
 		sudo systemctl enable --now zfs-import-cache.service zfs.target zfs-import.target zfs-mount.service
 	fi

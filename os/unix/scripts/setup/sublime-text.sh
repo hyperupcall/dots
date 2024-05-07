@@ -24,7 +24,7 @@ install.any() {
 			"deb [signed-by=$gpg_file] https://download.sublimetext.com/ apt/stable/" \
 			'/etc/apt/sources.list.d/sublime-text.list'
 
-		sudo apt update
+		sudo apt-get update
 		sudo apt-get install -y sublime-text
 		;;
 	esac

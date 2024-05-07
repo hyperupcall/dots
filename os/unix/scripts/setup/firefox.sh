@@ -9,7 +9,7 @@ main() {
 }
 
 install.debian() {
-	sudo apt-get install firefox
+	sudo apt-get install -y firefox
 }
 
 install.fedora() {

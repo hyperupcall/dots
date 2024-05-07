@@ -8,37 +8,38 @@ main() {
 	fi
 }
 
-install.any() {
-	util.get_package_manager
-	local pkgmngr="$REPLY"
+install.arch() {
+	yay -S appimagelauncher
+}
 
-	util.get_os_id
-	local os_id="$REPLY"
+install.manjaro() {
+	: # Installed by default.
+}
 
-	case $pkgmngr in
-	pacman)
-		if [ "$os_id" = 'manjaro' ]; then
-			# Installed by default
-			:
-		else
-			yay -S appimagelauncher
-		fi
-		;;
-	apt) (
-		util.cd_temp
+install.debian() {
+	(
+		local temp_dir=
+		temp_dir=$(mktemp -d)
+		cd "$temp_dir"
 		util.req -o 'appimagelauncher.deb' 'https://github.com/TheAssassin/AppImageLauncher/releases/download/v2.2.0/appimagelauncher_2.2.0-travis995.0f91801.bionic_amd64.deb'
 		sudo dpkg -i './appimagelauncher.deb'
 		rm -f './appimagelauncher.deb'
-		) ;;
-	dnf|zypper) (
-		util.cd_temp
+	)
+}
+
+install.fedora() {
+	(
+		local temp_dir=
+		temp_dir=$(mktemp -d)
+		cd "$temp_dir"
 		util.req -o 'appimagelauncher.rpm' 'https://github.com/TheAssassin/AppImageLauncher/releases/download/v2.2.0/appimagelauncher-2.2.0-travis995.0f91801.x86_64.rpm'
 		sudo rpm -i  'appimagelauncher.rpm'
 		rm -f './appimagelauncher.rpm'
-		) ;;
-	*)
-		core.print_fatal "Pakage manager '$pkgmngr' not supported"
-	esac
+	)
+}
+
+install.opensuse() {
+	install.fedora "$@"
 }
 
 main "$@"

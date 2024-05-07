@@ -19,38 +19,42 @@ install.any() {
 
 	local url="https://github.com/browserpass/browserpass-native/releases/download/$version/browserpass-$system-$version.tar.gz"
 
-	util.cd_temp
+	(
+		local temp_dir=
+		temp_dir=$(mktemp -d)
+		cd "$temp_dir"
 
-	util.req -o ./browserpass.tar.gz "$url"
-	tar xf ./browserpass.tar.gz
-	cd "./browserpass-linux64-$version"
+		util.req -o ./browserpass.tar.gz "$url"
+		tar xf ./browserpass.tar.gz
+		cd "./browserpass-linux64-$version"
 
-	util.run make BIN="browserpass-$system" PREFIX="$install_dir" configure
-	util.run sudo make BIN="browserpass-$system" PREFIX="$install_dir" install
+		make BIN="browserpass-$system" PREFIX="$install_dir" configure
+		sudo make BIN="browserpass-$system" PREFIX="$install_dir" install
 
-	# Symlink messaging host definition
-	local dir=
-	for dir in \
-		"$XDG_CONFIG_HOME"/{BraveSoftware/Brave-Browser{,-Beta,-Nightly},vivaldi{,-snapshot},microsoft-edge{,-beta,-dev},google-chrome{,-beta,-unstable},opera{,-beta,-developer},sidekick,wavebox}/
-	do
-		# local browser_dir="${f%/*}"
-		# browser_dir=${browser_dir%/*}
+		# Symlink messaging host definition
+		local dir=
+		for dir in \
+			"$XDG_CONFIG_HOME"/{BraveSoftware/Brave-Browser{,-Beta,-Nightly},vivaldi{,-snapshot},microsoft-edge{,-beta,-dev},google-chrome{,-beta,-unstable},opera{,-beta,-developer},sidekick,wavebox}/
+		do
+			# local browser_dir="${f%/*}"
+			# browser_dir=${browser_dir%/*}
 
-		if [ -d "$dir" ]; then
-			mkdir -p "$dir/NativeMessagingHosts"
-			ln -sfv  "$install_dir/lib/browserpass/hosts/chromium/$app_id" "$dir/NativeMessagingHosts/$app_id"
-			
-			mkdir -p "$dir/policies/managed"
-			ln -sfv "$install_dir/lib/browserpass/policies/chromium/$app_id" "$dir/policies/managed/$app_id"
-		fi
-	done
+			if [ -d "$dir" ]; then
+				mkdir -p "$dir/NativeMessagingHosts"
+				ln -sfv  "$install_dir/lib/browserpass/hosts/chromium/$app_id" "$dir/NativeMessagingHosts/$app_id"
 
-	# # Firefox
-	mkdir -p "${HOME}/.mozilla/native-messaging-hosts"
-	ln -sfv "$install_dir/lib/browserpass/hosts/firefox/$app_id" "${HOME}/.mozilla/native-messaging-hosts/$app_id"
+				mkdir -p "$dir/policies/managed"
+				ln -sfv "$install_dir/lib/browserpass/policies/chromium/$app_id" "$dir/policies/managed/$app_id"
+			fi
+		done
 
-	# browserpass-extension
-	core.print_warn "Not installing browserpass-extension, only the native client"
+		# # Firefox
+		mkdir -p "${HOME}/.mozilla/native-messaging-hosts"
+		ln -sfv "$install_dir/lib/browserpass/hosts/firefox/$app_id" "${HOME}/.mozilla/native-messaging-hosts/$app_id"
+
+		# browserpass-extension
+		core.print_warn "Not installing browserpass-extension, only the native client"
+	)
 }
 
 main "$@"

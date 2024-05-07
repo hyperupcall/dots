@@ -186,9 +186,6 @@ dotfiles:
   '.config/discocss':
     src: '{{@@ cfg_src @@}}/discocss'
     dst: '{{@@ cfg_dst @@}}/discocss'
-  '.config/dotshellgen':
-    src: '{{@@ cfg_src @@}}/dotshellgen'
-    dst: '{{@@ cfg_dst @@}}/dotshellgen'
   '.config/dunst':
     src: '{{@@ cfg_src @@}}/dunst'
     dst: '{{@@ cfg_dst @@}}/dunst'
@@ -561,9 +558,6 @@ dotfiles:
   '.local/share/albert/python/plugins':
     src: '{{@@ data_src @@}}/albert/python/plugins'
     dst: '{{@@ data_dst @@}}/albert/python/plugins'
-  '.local/state/dotshellgen':
-    src: '{{@@ state_src @@}}/dotshellgen'
-    dst: '{{@@ state_dst @@}}/dotshellgen'
   'pam':
     src: '{{@@ home_src @@}}/.pam_environment/xdg-default.conf'
     dst: '{{@@ home_dst @@}}/.pam_environment'

@@ -3,7 +3,7 @@
 source "${0%/*}/../source.sh"
 
 mkdir -p ~/.dotfiles/.data/workspace/dotdrop
-util.cd ~/.dotfiles/.data/workspace/dotdrop
+cd ~/.dotfiles/.data/workspace/dotdrop
 
 if [ -d ./repository ]; then
 	core.print_info 'Found dotdrop repository'
@@ -11,8 +11,8 @@ else
 	core.print_info 'Downloading dotdrop repository'
 	git clone https://github.com/deadc0de6/dotdrop ./repository
 fi
-util.cd ./repository
-
+cd ./repository
+# TODO: apt-get install -y python3-venv
 if [ -f ./venv/bin/activate ]; then
 	core.print_info 'Found virtualenv'
 else

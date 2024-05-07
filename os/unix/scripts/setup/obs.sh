@@ -9,9 +9,9 @@ main() {
 }
 
 install.any() {
-	if util.is_cmd 'apt'; then
+	if command -v 'apt' &>/dev/null; then
 		sudo add-apt-repository ppa:obsproject/obs-studio
-		sudo apt update -y
+		sudo apt-get update -y
 		sudo apt-get install -y obs-studio
 	else
 		#flatpak install flathub TODO

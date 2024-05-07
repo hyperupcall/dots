@@ -27,7 +27,7 @@ install.any() {
 		'/etc/apt/sources.list.d/docker.list'
 
 	sudo apt-get update
-	sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+	sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 	sudo groupadd --force docker
 	sudo usermod -aG docker "$USER"
 }

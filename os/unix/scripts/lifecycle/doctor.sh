@@ -88,7 +88,7 @@ main() {
 	else
 		failure "Does not have GitHub private SSH key"
 	fi
-	for dir in ~/.ssh/ ~/.gnupg/; do
+	for dir in ~/.ssh/ ~/.gnupg/; do # TODO move to idempotent
 		if [ -d "$dir" ]; then
 			find "$dir" -type d -exec chmod 700 {} \;
 			find "$dir" -type f -exec chmod 600 {} \;
@@ -107,7 +107,7 @@ failure() {
 check.command() {
 	local cmd="$1"
 
-	if util.is_cmd "$cmd"; then
+	if command -v "$cmd" &>/dev/null; then
 		success "Is installed: $cmd"
 	else
 		failure "Not installed: $cmd"

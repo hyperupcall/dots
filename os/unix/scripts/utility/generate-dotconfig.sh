@@ -73,7 +73,6 @@ declare -ga g_dotfiles=(
 	cfg:'ddcutil'
 	cfg:'dircolors'
 	cfg:'discocss'
-	cfg:'dotshellgen'
 	cfg:'dunst'
 	cfg:'dxhd'
 	cfg:'emptty'
@@ -200,7 +199,6 @@ declare -ga g_dotfiles=(
 	data:'applications/FoxBlender.desktop'
 	data:'sdkman/etc/config'
 	data:'albert/python/plugins'
-	state:'dotshellgen'
 )
 {
 	# Print dotfiles programatically

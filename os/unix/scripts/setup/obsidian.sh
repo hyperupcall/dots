@@ -16,16 +16,18 @@ install.any() {
 	util.get_latest_github_tag 'obsidianmd/obsidian-releases'
 	local latest_tag="$REPLY"
 
-	util.cd_temp
+	(
+		local temp_dir=
+		temp_dir=$(mktemp -d)
+		cd "$temp_dir"
 
-	core.print_info 'Downloading and Installing Obsidian AppImage'
-	local latest_version="${latest_tag#v}"
-	local file='Obsidian.AppImage'
-	util.req -o "$file" "https://github.com/obsidianmd/obsidian-releases/releases/download/$latest_tag/Obsidian-$latest_version.AppImage"
-	chmod +x "$file"
-	nohup 2>/dev/null ./"$file" & # TODO (does not work)
-
-	popd >/dev/null
+		core.print_info 'Downloading and Installing Obsidian AppImage'
+		local latest_version="${latest_tag#v}"
+		local file='Obsidian.AppImage'
+		util.req -o "$file" "https://github.com/obsidianmd/obsidian-releases/releases/download/$latest_tag/Obsidian-$latest_version.AppImage"
+		chmod +x "$file"
+		nohup 2>/dev/null ./"$file" & # TODO (does not work)
+	)
 }
 
 main "$@"

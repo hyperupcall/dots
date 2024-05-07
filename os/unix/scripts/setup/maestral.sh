@@ -11,7 +11,14 @@ main() {
 install.debian() {
 	sudo apt-get install -y python3-dev python3-venv libsystemd-dev qt5-default
 	sudo apt-get install -y libxcb-cursor0 # maestral gui
-	sudo apt install cython
+	sudo apt-get install -y cython
+	install_maestral "$@"
+}
+
+install.pop() {
+	sudo apt-get install -y python3-dev python3-venv libsystemd-dev
+	sudo apt-get install -y libxcb-cursor0 # maestral gui
+	sudo apt-get install -y cython3
 	install_maestral "$@"
 }
 
@@ -36,7 +43,7 @@ install.any() {
 
 install_maestral() {
 	mkdir -p ~/.dotfiles/.data/workspace/maestral
-	util.cd ~/.dotfiles/.data/workspace/maestral
+	cd ~/.dotfiles/.data/workspace/maestral
 
 	if [ -f ./venv/bin/activate ]; then
 		core.print_info 'Found virtualenv'

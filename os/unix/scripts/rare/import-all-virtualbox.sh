@@ -8,7 +8,7 @@ source "${0%/*}/../source.sh"
 main() {
     local virtualbox_dir=/storage/bigfiles/VirtualBox_Machines
 
-	if util.is_cmd VBoxManage; then
+	if command -v VBoxManage &>/dev/null; then
 		VBoxManage setproperty machinefolder "$virtualbox_dir"
 	else
 		core.print_die "Must have command 'VBoxManage' installed"

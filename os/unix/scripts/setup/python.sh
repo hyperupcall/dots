@@ -9,7 +9,7 @@ main() {
 }
 
 configure.python() {
-	if ! util.is_cmd 'pip'; then
+	if ! command -v 'pip' &>/dev/null; then
 		core.print_info "Installing pip"
 		python3 -m ensurepip --upgrade
 	fi
@@ -17,7 +17,7 @@ configure.python() {
 	python3 -m pip install --upgrade wheel
 
 
-	if ! util.is_cmd 'pipx'; then
+	if ! command -v 'pipx' &>/dev/null; then
 		core.print_info "Installing pipx"
 		python3 -m pip install --user pipx
 		python3 -m pipx ensurepath

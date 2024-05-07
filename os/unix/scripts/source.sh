@@ -117,21 +117,6 @@ pkg.add_apt_repository() {
 	printf '%s\n' "$source_line" | sudo tee "$dest_file" >/dev/null
 }
 
-util.run() {
-	core.print_info "Executing '$*'"
-	if "$@"; then
-		return $?
-	else
-		return $?
-	fi
-}
-
-util.ensure() {
-	if "$@"; then :; else
-		core.print_die "'$*' failed (code $?)"
-	fi
-}
-
 util.requires_bin() {
 	if ! command -v "$1" &>/dev/null; then
 		core.print_die "Command '$1' does not exist"
@@ -143,34 +128,10 @@ util.req() {
 	curl --proto '=https' --tlsv1.2 -#Lf "$@"
 }
 
-# TODO: remove this
-util.cd() {
-	if ! cd "$1"; then
-		core.print_die "Failed to cd to '$1'"
-	fi
-}
-
-# TODO: remove this
-util.cd_temp() {
-	local dir=
-	dir=$(mktemp -d)
-
-	pushd "$dir" >/dev/null || exit
-}
-
-# TODO: remove this
-util.is_cmd() {
-	if command -v "$1" &>/dev/null; then
-		return $?
-	else
-		return $?
-	fi
-}
-
 # TODO: remove
 util.get_package_manager() {
-	for package_manager in pacman apt dnf zypper; do
-		if util.is_cmd "$package_manager"; then
+	for package_manager in pacman apt-get dnf zypper; do
+		if command -v "$package_manager" &>/dev/null; then
 			REPLY="$package_manager"
 
 			return
@@ -178,23 +139,6 @@ util.get_package_manager() {
 	done
 
 	core.print_die 'Failed to get the system package manager'
-}
-
-# TODO: Remove this
-util.get_os_id() {
-	unset -v REPLY; REPLY=
-
-	# shellcheck disable=SC1007
-	local key= value=
-	while IFS='=' read -r key value; do
-		if [ "$key" = 'ID' ]; then
-			REPLY=$value
-		fi
-	done < /etc/os-release; unset -v key value
-
-	if [ -z "$REPLY" ]; then
-		core.print_die "Failed to determine OS id"
-	fi
 }
 
 util.clone() {
@@ -255,18 +199,18 @@ util.confirm() {
 }
 
 util.install_packages() {
-	if util.is_cmd 'pacman'; then
-		util.ensure sudo pacman -S --noconfirm "$@"
-	elif util.is_cmd 'apt-get'; then
-		util.ensure sudo apt-get -y install "$@"
-	elif util.is_cmd 'dnf'; then
-		util.ensure sudo dnf -y install "$@"
-	elif util.is_cmd 'zypper'; then
-		util.ensure sudo zypper -y install "$@"
-	elif util.is_cmd 'eopkg'; then
-		util.ensure sudo eopkg -y install "$@"
+	if command -v 'pacman' &>/dev/null; then
+		sudo pacman -S --noconfirm "$@"
+	elif command -v 'apt-get' &>/dev/null; then
+		sudo apt-get -y install "$@"
+	elif command -v 'dnf' &>/dev/null; then
+		sudo dnf -y install "$@"
+	elif command -v 'zypper' &>/dev/null; then
+		sudo zypper -y install "$@"
+	elif command -v 'eopkg' &>/dev/null; then
+		sudo eopkg -y install "$@"
 	elif iscmd 'brew'; then
-		util.ensure brew install "$@"
+		brew install "$@"
 	else
 		core.print_die 'Failed to determine package manager'
 	fi

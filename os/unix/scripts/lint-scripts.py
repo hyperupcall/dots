@@ -23,11 +23,10 @@ from typing import Callable, List, Dict, Any # compat
 
 # TODO:
 # DEBIAN_FRONTEND=noninteractive
-# apt-get -y
 # pacman -Syuu --noconfirm
-# no apt
 # no sudo yay
 # TODO: helper.setup then "$@"
+# TODO: test install. regex positive lookahead
 
 Rule = Dict[str, Any]
 
@@ -49,6 +48,29 @@ def utilGetStrs(line: Any, m: Any):
 		line[m.start('match'):m.end('match')],
 		line[m.end('match'):]
 	)
+
+# Before: apt install
+# After: apt-get install
+def noAptCommand(line: str, m: Any) -> str:
+	prestr, _, poststr = utilGetStrs(line, m)
+
+	return f'{prestr}apt-get {poststr}'
+
+# Before: apt-get install
+# After: apt-get -y install
+def noAptCommand2(line: str, m: Any) -> str:
+	prestr, _, poststr = utilGetStrs(line, m)
+
+	subcmd = m.group('subcommand')
+	return f'{prestr}apt-get {subcmd} -y {poststr}'
+
+# Before: sudo yay -S
+# After: yay -S
+def noAptCommand3(line: str, m: Any) -> str:
+	prestr, _, poststr = utilGetStrs(line, m)
+
+	return f'{prestr}yay {poststr}'
+
 
 # Before: printf '%s\\n' '^w^'
 # After: printf '%s\n' '^w^'
@@ -143,80 +165,43 @@ def lintfile(file: Path, rules: List[Rule], options: Dict[str, Any]):
 def main():
 	rules: List[Rule] = [
 		{
-			'name': 'no-double-backslash',
-			'regex': '".*?(?P<match>\\\\\\\\[abeEfnrtv\'"?xuUc]).*?(?<!\\\\)"',
-			'reason': 'Backslashes are only required if followed by a $, `, ", \\, or <newline>',
+			'name': 'no-apt-command',
+			'regex': '(?P<match>apt )',
+			'reason': 'Use apt-get',
 			'fileTypes': ['bash', 'sh'],
-			'fixerFn': noDoubleBackslashFixer,
+			'fixerFn': noAptCommand,
 			'testPositiveMatches': [
-				'printf "%s\\\\n" "Hai"',
-				'echo -n "Hello\\\\n"'
+				'apt install',
+				'apt update'
 			],
 			'testNegativeMatches': [
-				'printf "%s\\n" "Hai"',
-				'echo -n "Hello\\n"'
+				'apt-get install'
 			],
 		},
 		{
-			'name': 'no-pwd-capture',
-			'regex': '(?P<match>\\$\\(pwd\\))',
-			'reason': '$PWD is essentially equivalent to $(pwd) without the overhead of a subshell',
+			'name': 'apt-must-have-y',
+			'regex': '(?P<match>apt-get (?P<subcommand>install|update|upgrade) (?!-y))',
+			'reason': 'To make sure it is automated',
 			'fileTypes': ['bash', 'sh'],
-			'fixerFn': noPwdCaptureFixer,
+			'fixerFn': noAptCommand2,
 			'testPositiveMatches': [
-				'$(pwd)'
+				'apt-get install'
 			],
 			'testNegativeMatches': [
-				'$PWD'
+				'apt-get -y install'
 			],
 		},
 		{
-			'name': 'no-test-double-equals',
-			'regex': '(?<!\\[)\\[ (?:[^]]|](?=}))*?(?P<match>==).*?]',
-			'reason': 'Disallow double equals in places where they are not necessary for consistency',
+			'name': 'no-sudo-yay',
+			'regex': '(?P<match>(?<=sudo )yay )',
+			'reason': 'yay should not be ran with sudo',
 			'fileTypes': ['bash', 'sh'],
-			'fixerFn': noTestDoubleEqualsFixer,
+			'fixerFn': noAptCommand3,
 			'testPositiveMatches': [
-				'[ a == b ]',
-				'[ "${lines[0]}" == blah ]',
+				'apt-get install'
 			],
 			'testNegativeMatches': [
-				'[ a = b ]',
-				'[[ a = b ]]',
-				'[[ a == b ]]',
-				'[ a = b ] || [[ a == b ]]',
-				'[[ a = b ]] || [[ a == b ]]',
-				'[[ "${lines[0]}" == \'usage: \'* ]]',
-				'[ "${lines[0]}" = blah ]',
-			],
-		},
-		{
-			'name': 'no-function-keyword',
-			'regex': '^[ \\t]*(?P<match>function .*?(?:\\([ \\t]*\\))?[ \\t]*){',
-			'reason': 'Only allow functions declared like `fn_name() {{ :; }}` for consistency (see ' + c.LINK('https://www.shellcheck.net/wiki/SC2113', 'ShellCheck SC2113') + ')',
-			'fileTypes': ['bash', 'sh'],
-			'fixerFn': noFunctionKeywordFixer,
-			'testPositiveMatches': [
-				'function fn() { :; }',
-				'function fn { :; }',
-			],
-			'testNegativeMatches': [
-				'fn() { :; }',
-			],
-		},
-		{
-			'name': 'no-verbose-redirection',
-			'regex': '(?P<match>(>/dev/null 2>&1|2>/dev/null 1>&2))',
-			'reason': 'Use `&>/dev/null` instead of `>/dev/null 2>&1` or `2>/dev/null 1>&2` for consistency',
-			'fileTypes': ['bash'],
-			'fixerFn': noVerboseRedirectionFixer,
-			'testPositiveMatches': [
-				'echo woof >/dev/null 2>&1',
-				'echo woof 2>/dev/null 1>&2',
-			],
-			'testNegativeMatches': [
-				'echo woof &>/dev/null',
-				'echo woof >&/dev/null',
+				'apt-get -y install'
 			],
 		},
 		# TODO: curl
@@ -275,7 +260,7 @@ def main():
 			if p.is_file():
 				lintfile(p, rules, options)
 	else:
-		for file in Path.cwd().glob('~/scripts'):
+		for file in Path(os.path.expanduser('~/scripts')).rglob('*'):
 			if '.git' in str(file.absolute()):
 				continue
 

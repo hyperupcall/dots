@@ -17,13 +17,13 @@ main() {
 	util.install_packages pkg-config # for starship
 
 	# Ensure prerequisites.
-	util.ensure mkdir -p "$XDG_CONFIG_HOME"
+	mkdir -p "$XDG_CONFIG_HOME"
 
 	# Remove distribution-specific dotfiles.
-	util.ensure mkdir -p ~/.bootstrap/distro-dots
+	mkdir -p ~/.bootstrap/distro-dots
 	for file in ~/.bash_login ~/.bash_logout ~/.bash_profile ~/.bashrc ~/.profile; do
 		if [[ ! -L "$file" && -f "$file" ]]; then
-			util.ensure mv "$file" ~/.bootstrap/distro-dots
+			mv "$file" ~/.bootstrap/distro-dots
 		fi
 	done
 
@@ -37,6 +37,7 @@ main() {
 			printf '%s' "System profile? ($options): "
 			read -er cur
 		done
+		mkdir -p ~/.dotfiles/.data
 		printf '%s\n' "$cur" > ~/.dotfiles/.data/profile
 	fi
 

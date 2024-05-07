@@ -7,15 +7,15 @@ main() {
 }
 
 install.any() {
-	# Build from source since pre-build binaries can be very out of date
+	# Build from source since pre-build binaries can be very out of date.
 	util.get_package_manager
 	local pkgmngr="$REPLY"
 
-	if util.is_cmd 'apt'; then
+	if command -v 'apt' &>/dev/null; then
 		sudo apt-get install -y libarchive-dev autoconf
-	elif util.is_cmd 'dnf'; then
+	elif command -v 'dnf' &>/dev/null; then
 		sudo dnf install -y libarchive-devel autoconf
-	elif util.is_cmd 'pacman'; then
+	elif command -v 'pacman' &>/dev/null; then
 		sudo pacman -S --noconfirm libarchive autoconf
 	fi
 
@@ -25,11 +25,11 @@ install.any() {
 	git submodule update --init lib/QHotkey
 
 	(
-		if util.is_cmd 'apt'; then
+		if command -v 'apt' &>/dev/null; then
 			sudo apt-get install -y intltool libtool libgmp-dev libmpfr-dev libcurl4-openssl-dev libicu-dev libxml2-dev
-		elif util.is_cmd 'dnf'; then
+		elif command -v 'dnf' &>/dev/null; then
 			sudo dnf install -y intltool libtool libcurl-devel gmp-devel mpfr-devel libicu-devel
-		elif util.is_cmd 'pacman'; then
+		elif command -v 'pacman' &>/dev/null; then
 			sudo pacman -S --noconfirm intltool
 		fi
 
@@ -62,12 +62,12 @@ install.any() {
 		sudo make install
 	)
 
-	if util.is_cmd 'apt'; then
-		sudo apt install qt6-base-dev qt6-tools-dev qt6-5compat-dev libqt6svg6-dev
-	elif util.is_cmd 'dnf'; then
+	if command -v 'apt' &>/dev/null; then
+		sudo apt-get install -y qt6-base-dev qt6-tools-dev qt6-5compat-dev libqt6svg6-dev
+	elif command -v 'dnf' &>/dev/null; then
 		sudo dnf install -y qt6-qtbase-devel qt6-qttools-devel qt6-qt5compat-devel qt6-qtsvg-devel qt6-qtscxml
 		# TODO: qt6-linguist
-	elif util.is_cmd 'pacman'; then
+	elif command -v 'pacman' &>/dev/null; then
 		sudo pacman -S --noconfirm qt6-base qt6-tools qt6-5compat qt6-scxml
 	fi
 	mise install cmake
@@ -99,7 +99,7 @@ install.any() {
 	# 		"deb [signed-by=$gpg_file] http://download.opensuse.org/repositories/home:/manuelschneid3r/xUbuntu_$version/ /" \
 	# 		'/etc/apt/sources.list.d/albert.list'
 
-	# 	sudo apt update
+	# 	sudo apt-get update
 	# 	sudo apt-get install -y albert
 	# 	;;
 	# *)
