@@ -3,9 +3,7 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	if util.confirm 'Install MongoDB?'; then
-		helper.setup "$@"
-	fi
+	helper.setup 'MongoDB' "$@"
 }
 
 install.any() {

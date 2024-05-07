@@ -3,9 +3,7 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	if util.confirm 'Install Firefox Extensions?'; then
-		helper.setup "$@"
-	fi
+	helper.setup 'Firefox Extensions' "$@"
 }
 
 install.any() {

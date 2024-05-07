@@ -3,15 +3,13 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	if util.confirm 'Install ZFS?'; then
-		helper.setup "$@"
+	helper.setup 'ZFS' "$@"
 
-		if ! sudo zpool status vault &>/dev/null; then
-			sudo zpool import -f vault
-		fi
-		sudo zpool set cachefile=/etc/zfs/zpool.cache vault
-		sudo systemctl enable --now zfs-import-cache.service zfs.target zfs-import.target zfs-mount.service
+	if ! sudo zpool status vault &>/dev/null; then
+		sudo zpool import -f vault
 	fi
+	sudo zpool set cachefile=/etc/zfs/zpool.cache vault
+	sudo systemctl enable --now zfs-import-cache.service zfs.target zfs-import.target zfs-mount.service
 }
 
 install.debian() {

@@ -3,9 +3,7 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	if util.confirm "Install Discord?"; then
-		helper.setup "$@"
-	fi
+	helper.setup 'Discord' "$@"
 }
 
 install.any() {

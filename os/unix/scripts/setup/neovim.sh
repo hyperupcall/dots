@@ -3,9 +3,7 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	if util.confirm 'Install Neovim latest?'; then
-		helper.setup "$@"
-	fi
+	helper.setup 'Neovim' "$@"
 }
 
 install.any() {

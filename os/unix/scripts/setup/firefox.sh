@@ -3,9 +3,7 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	if util.confirm 'Install Firefox?'; then
-		helper.setup "$@"
-	fi
+	helper.setup 'Firefox' "$@"
 }
 
 install.debian() {

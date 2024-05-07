@@ -3,9 +3,7 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	if util.confirm 'Install Sublime Text?'; then
-		helper.setup "$@"
-	fi
+	helper.setup 'Sublime Text' "$@"
 }
 
 install.any() {

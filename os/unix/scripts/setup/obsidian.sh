@@ -3,9 +3,7 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	if util.confirm 'Install Obsidian?'; then
-		helper.setup "$@"
-	fi
+	helper.setup 'Obsidian' "$@"
 }
 
 install.any() {

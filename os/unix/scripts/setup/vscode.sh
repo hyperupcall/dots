@@ -3,9 +3,7 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	if util.confirm 'Install VSCode and VSCode Insiders?'; then
-		helper.setup "$@"
-	fi
+	helper.setup 'VSCode and VSCode Insiders' "$@"
 }
 
 install.any() {

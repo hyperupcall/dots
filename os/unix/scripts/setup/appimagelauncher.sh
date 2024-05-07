@@ -3,9 +3,7 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	if util.confirm 'Install AppImageLauncher?'; then
-		helper.setup "$@"
-	fi
+	helper.setup 'AppImageLauncher' "$@"
 }
 
 install.arch() {

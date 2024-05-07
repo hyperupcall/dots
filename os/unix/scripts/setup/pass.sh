@@ -3,9 +3,7 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	if util.confirm 'Install pass?'; then
-		helper.setup "$@"
-	fi
+	helper.setup 'pass' "$@"
 
 	if util.confirm 'Clone password repository?'; then
 		local dir="${PASSWORD_STORE_DIR:-$HOME/.password-store}"

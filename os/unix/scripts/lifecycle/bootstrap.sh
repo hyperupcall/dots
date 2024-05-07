@@ -10,7 +10,7 @@ main() {
 		fi
 	fi
 
-	helper.setup "$@"
+	helper.setup 'Bootstrap' "$@"
 
 	util.install_packages bash-completion curl rsync pass
 	util.install_packages cmake ccache vim nano jq

@@ -3,7 +3,7 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	helper.setup "$@"
+	helper.setup 'VirtualBox' "$@"
 }
 
 install.any() {

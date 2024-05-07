@@ -51,9 +51,15 @@ helper.setup() {
 	local arg=
 	for arg; do
 		case $arg in
-			--force-install) flag_force_install=yes ;;
+			--force-install)
+				flag_force_install=yes
+				shift
+				;;
 		esac
 	done
+
+	local program_name="$1"
+	shift
 
 	(
 		# A list of 'os-release' files can be found at https://github.com/which-distro/os-release.
@@ -74,7 +80,7 @@ helper.setup() {
 			if declare -f "install.$id" &>/dev/null; then
 				has_function=yes
 				if ! declare -f installed &>/dev/null || ! installed || [ "$flag_force_install" = yes ]; then
-					if util.confirm "Install $id?"; then
+					if util.confirm "Install $program_name?"; then
 						"install.$id" "$@"
 						break
 					fi

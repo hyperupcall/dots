@@ -3,9 +3,7 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	if util.confirm 'Install Lutris?'; then
-		helper.setup "$@"
-	fi
+	helper.setup 'Lutris' "$@"
 }
 
 install.any() {

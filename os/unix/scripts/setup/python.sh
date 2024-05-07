@@ -3,12 +3,10 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	if util.confirm 'Configure Python?'; then
-		configure.python
-	fi
+	helper.setup 'Python' "$@"
 }
 
-configure.python() {
+install.any() {
 	if ! command -v 'pip' &>/dev/null; then
 		core.print_info "Installing pip"
 		python3 -m ensurepip --upgrade

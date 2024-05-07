@@ -3,9 +3,7 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	if util.confirm 'Install GHC?'; then
-		helper.setup "$@"
-	fi
+	helper.setup 'GHC' "$@"
 }
 
 install.any() {

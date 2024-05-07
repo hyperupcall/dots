@@ -3,9 +3,7 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	if util.confirm 'Install Powershell Core?'; then
-		helper.setup "$@"
-	fi
+	helper.setup 'PowerShell Core' "$@"
 }
 
 install.any() {

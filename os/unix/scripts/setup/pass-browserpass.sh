@@ -3,9 +3,7 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	if util.confirm 'Install Browserpass?'; then
-		helper.setup "$@"
-	fi
+	helper.setup 'Browserpass' "$@"
 }
 
 install.any() {

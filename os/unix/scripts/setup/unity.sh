@@ -3,9 +3,7 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	if util.confirm 'Install Unity Hub?'; then
-		helper.setup "$@"
-	fi
+	helper.setup 'Unity Hub' "$@"
 }
 
 install.any() {

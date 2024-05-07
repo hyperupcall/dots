@@ -3,12 +3,10 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	if util.confirm 'Setup my tools?'; then
-		setup.tools
-	fi
+	helper.setup 'My tools' "$@"
 }
 
-setup.tools() {
+install.any() {
 	cargo install \
 		fox-template \
 		fox-dotfile \

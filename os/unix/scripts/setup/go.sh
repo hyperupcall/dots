@@ -3,12 +3,10 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	if util.confirm 'Configure Go?'; then
-		configure.go
-	fi
+	helper.setup 'Go' "$@"
 }
 
-configure.go() {
+install.any() {
 	go install golang.org/x/tools/gopls@latest
 	go install golang.org/x/tools/cmd/godoc@latest
 
