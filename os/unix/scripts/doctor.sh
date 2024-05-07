@@ -88,12 +88,6 @@ main() {
 	else
 		failure "Does not have GitHub private SSH key"
 	fi
-	for dir in ~/.ssh/ ~/.gnupg/; do # TODO move to idempotent
-		if [ -d "$dir" ]; then
-			find "$dir" -type d -exec chmod 700 {} \;
-			find "$dir" -type f -exec chmod 600 {} \;
-		fi
-	done
 }
 
 success() {

@@ -129,7 +129,6 @@ declare -ga g_dotfiles=(
 	cfg:'nu'
 	cfg:'nvchecker'
 	cfg:'nvim'
-	# cfg:'obs-studio/themes' # TODO
 	cfg:'openbox'
 	cfg:'OpenSCAD'
 	cfg:'ox'

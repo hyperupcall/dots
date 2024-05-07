@@ -12,9 +12,10 @@ main() {
 
 	helper.setup 'Bootstrap' "$@"
 
-	util.install_packages bash-completion curl rsync pass
-	util.install_packages cmake ccache vim nano jq
-	util.install_packages pkg-config # for starship
+	util.install_packages \
+		bash-completion curl rsync pass \
+		cmake ccache vim nano jq \
+		pkg-config # for starship
 
 	# Ensure prerequisites.
 	mkdir -p "$XDG_CONFIG_HOME"

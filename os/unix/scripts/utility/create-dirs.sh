@@ -69,8 +69,12 @@ main() {
 	must.file "$XDG_CONFIG_HOME/yarn/config"
 	must.file "$XDG_STATE_HOME/tig/history"
 	must.file "$XDG_STATE_HOME/history/zsh_history" # ZSH's $HISTFILE
-	chmod 0700 "$HOME/.gnupg"
-	chmod 0700 "$HOME/.ssh"
+	for dir in ~/.ssh/ ~/.gnupg/; do
+		if [ -d "$dir" ]; then
+			find "$dir" -type d -exec chmod 700 {} \;
+			find "$dir" -type f -exec chmod 600 {} \;
+		fi
+	done
 
 
 	# -------------------------------------------------------- #

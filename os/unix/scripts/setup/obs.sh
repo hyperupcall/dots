@@ -12,7 +12,7 @@ install.any() {
 		sudo apt-get update -y
 		sudo apt-get install -y obs-studio
 	else
-		#flatpak install flathub TODO
+		flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 		flatpak install com.obsproject.Studio
 	fi
 }

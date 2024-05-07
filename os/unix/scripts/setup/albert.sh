@@ -6,33 +6,32 @@ main() {
 	helper.setup 'Albert' "$@"
 }
 
-install.any() {
-	# Build from source since pre-build binaries can be very out of date.
-	util.get_package_manager
-	local pkgmngr="$REPLY"
+install.debian() {
+	sudo apt-get install -y libarchive-dev autoconf
+	sudo apt-get install -y intltool libtool libgmp-dev libmpfr-dev libcurl4-openssl-dev libicu-dev libxml2-dev # pybind11
+	sudo apt-get install -y qt6-base-dev qt6-tools-dev qt6-5compat-dev libqt6svg6-dev # albert
+}
 
-	if command -v 'apt' &>/dev/null; then
-		sudo apt-get install -y libarchive-dev autoconf
-	elif command -v 'dnf' &>/dev/null; then
-		sudo dnf install -y libarchive-devel autoconf
-	elif command -v 'pacman' &>/dev/null; then
-		sudo pacman -S --noconfirm libarchive autoconf
-	fi
+install.fedora() {
+	sudo dnf install -y libarchive-devel autoconf
+	sudo dnf install -y intltool libtool libcurl-devel gmp-devel mpfr-devel libicu-devel # pybind11
+	sudo dnf install -y qt6-qtbase-devel qt6-qttools-devel qt6-qt5compat-devel qt6-qtsvg-devel qt6-qtscxml # albert
+}
 
+install.arch() {
+	sudo pacman -S --noconfirm libarchive autoconf
+	sudo pacman -S --noconfirm intltool # pybind11
+	sudo pacman -S --noconfirm qt6-base qt6-tools qt6-5compat qt6-scxml # albert
+}
+
+
+install_albert() {
 	util.clone_in_dotfiles 'https://github.com/albertlauncher/albert' --recursive
 	local dir="$REPLY"
 	cd "$dir"
 	git submodule update --init lib/QHotkey
 
 	(
-		if command -v 'apt' &>/dev/null; then
-			sudo apt-get install -y intltool libtool libgmp-dev libmpfr-dev libcurl4-openssl-dev libicu-dev libxml2-dev
-		elif command -v 'dnf' &>/dev/null; then
-			sudo dnf install -y intltool libtool libcurl-devel gmp-devel mpfr-devel libicu-devel
-		elif command -v 'pacman' &>/dev/null; then
-			sudo pacman -S --noconfirm intltool
-		fi
-
 		if [ ! -d lib/pybind11 ]; then
 			git submodule add https://github.com/pybind/pybind11 lib/pybind11
 		fi
@@ -62,14 +61,6 @@ install.any() {
 		sudo make install
 	)
 
-	if command -v 'apt' &>/dev/null; then
-		sudo apt-get install -y qt6-base-dev qt6-tools-dev qt6-5compat-dev libqt6svg6-dev
-	elif command -v 'dnf' &>/dev/null; then
-		sudo dnf install -y qt6-qtbase-devel qt6-qttools-devel qt6-qt5compat-devel qt6-qtsvg-devel qt6-qtscxml
-		# TODO: qt6-linguist
-	elif command -v 'pacman' &>/dev/null; then
-		sudo pacman -S --noconfirm qt6-base qt6-tools qt6-5compat qt6-scxml
-	fi
 	mise install cmake
 	PATH="$XDG_DATA_HOME/mise/shims:$PATH"
 	cmake -B build -S . -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=Debug

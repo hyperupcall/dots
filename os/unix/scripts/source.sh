@@ -42,9 +42,6 @@
 	core.trap_add 'err_handler' SIGINT
 }
 
-# -------------------------------------------------------- #
-#                     HELPER FUNCTIONS                     #
-# -------------------------------------------------------- #
 helper.setup() {
 	local flag_force_install=no
 
@@ -132,19 +129,6 @@ util.requires_bin() {
 # TODO: remove this
 util.req() {
 	curl --proto '=https' --tlsv1.2 -#Lf "$@"
-}
-
-# TODO: remove
-util.get_package_manager() {
-	for package_manager in pacman apt-get dnf zypper; do
-		if command -v "$package_manager" &>/dev/null; then
-			REPLY="$package_manager"
-
-			return
-		fi
-	done
-
-	core.print_die 'Failed to get the system package manager'
 }
 
 util.clone() {

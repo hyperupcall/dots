@@ -16,7 +16,6 @@ install.any() {
 
 	core.print_info 'Installing'
 	bash
-	# TODO: sudo XPPenLinux*/install.sh
 }
 
 main "$@"

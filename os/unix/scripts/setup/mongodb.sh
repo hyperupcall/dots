@@ -6,12 +6,7 @@ main() {
 	helper.setup 'MongoDB' "$@"
 }
 
-install.any() {
-	util.get_package_manager
-	declare pkgmngr="$REPLY"
-
-	case $pkgmngr in
-	apt)
+install.debian() {
 		local gpg_file="/etc/apt/keyrings/mongodb.asc"
 		local dist='jammy'
 
@@ -25,14 +20,6 @@ install.any() {
 
 		sudo apt-get -y update
 		sudo apt-get install -y mongodb-org
-		;;
-	dnf)
-		:
-		;;
-	zypper)
-		:
-		;;
-	esac
 }
 
 main "$@"
