@@ -8,10 +8,6 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	util.requires_bin expect
-	util.requires_bin age
-	util.requires_bin age-keygen
-
 	sudo -v
 
 	find_mnt_usb '6044-5CC1' # DUPLICATED

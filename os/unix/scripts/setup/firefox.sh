@@ -15,7 +15,7 @@ install.fedora() {
 }
 
 install.arch() {
-	sudo pacman -S --noconfirm firefox
+	sudo pacman -Syu --noconfirm firefox
 }
 
 install.opensuse() {

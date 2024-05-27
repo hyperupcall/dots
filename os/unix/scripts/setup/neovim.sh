@@ -8,7 +8,7 @@ main() {
 
 install.any() {
 	# TODO: install gettext
-	util.clone_in_dotfiles 'https://github.com/neovim/neovim'
+	util.clone ~/.dotfiles/.data/repos/neovim 'https://github.com/neovim/neovim'
 	local dir="$REPLY"
 
 	cd "$dir"

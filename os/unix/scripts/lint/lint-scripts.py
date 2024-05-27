@@ -3,31 +3,28 @@ import re
 import os
 import argparse
 from pathlib import Path
-from typing import Callable, List, Dict, Any # compat
+from typing import Callable
 
 # This file checks Bash and Shell scripts for violations not found with
 # shellcheck or existing methods. You can use it in several ways:
 #
 # Lint all .bash, .sh, .bats files along with 'bin/asdf' and print out violations:
-# $ ./scripts/checkstyle.py
+# $ lint-scripts.py
 #
 # The former, but also fix all violations. This must be ran until there
 # are zero violations since any line can have more than one violation:
-# $ ./scripts/checkstyle.py --fix
+# $ lint-scripts.py --fix
 #
 # Lint a particular file:
-# $ ./scripts/checkstyle.py ./lib/functions/installs.bash
+# $ lint-scripts.py ./lib/functions/installs.bash
 #
 # Check to ensure all regular expressions are working as intended:
-# $ ./scripts/checkstyle.py --internal-test-regex
+# $ lint-scripts.py --internal-test-regex
 
-# TODO:
-# pacman -Syuu --noconfirm
-# TODO: helper.setup then "$@"
-# TODO: test install. regex positive lookahead
-# curl
+# TODO: Generalize -y flag for all package managers
+# TODO: curl
 
-Rule = Dict[str, Any]
+Rule = dict[str, any]
 
 class c:
 	RED = '\033[91m'
@@ -41,14 +38,14 @@ class c:
 	UNDERLINE = '\033[4m'
 	LINK: Callable[[str, str], str] = lambda href, text: f'\033]8;;{href}\a{text}\033]8;;\a'
 
-def utilGetStrs(line: Any, m: Any):
+def utilGetStrs(line: any, m: any):
 	return (
 		line[0:m.start('match')],
 		line[m.start('match'):m.end('match')],
 		line[m.end('match'):]
 	)
 
-def lintfile(file: Path, rules: List[Rule], options: Dict[str, Any]):
+def lintfile(file: Path, rules: list[Rule], options: dict[str, any]):
 	content_arr = file.read_text().split('\n')
 
 	for line_i, line in enumerate(content_arr):
@@ -91,11 +88,11 @@ def lintfile(file: Path, rules: List[Rule], options: Dict[str, Any]):
 		file.write_text('\n'.join(content_arr))
 
 def main():
-	rules: List[Rule] = []
+	rules: list[Rule] = []
 
 	# Before: apt install
 	# After: apt-get install
-	def aptUseAptGet(line: str, m: Any) -> str:
+	def aptUseAptGet(line: str, m: any) -> str:
 		prestr, _, poststr = utilGetStrs(line, m)
 
 		return f'{prestr}apt-get {poststr}'
@@ -117,7 +114,7 @@ def main():
 
 	# Before: apt-get install
 	# After: apt-get -y install
-	def aptMustHaveY(line: str, m: Any) -> str:
+	def aptMustHaveY(line: str, m: any) -> str:
 		prestr, _, poststr = utilGetStrs(line, m)
 
 		subcmd = m.group('subcommand')
@@ -125,7 +122,7 @@ def main():
 
 	rules.append({
 		'name': 'apt-must-have-y',
-		'regex': '(?P<match>apt-get (?P<subcommand>install|update|upgrade) (?!-y))',
+		'regex': '(?P<match>apt-get (?P<subcommand>install|update|upgrade)(?! -y))',
 		'reason': 'To make sure it is automated',
 		'fileTypes': ['bash', 'sh'],
 		'fixerFn': aptMustHaveY,
@@ -133,13 +130,35 @@ def main():
 			'apt-get install'
 		],
 		'testNegativeMatches': [
-			'apt-get -y install'
+			'apt-get install -y'
+		],
+	})
+
+	# Before: pacman -S
+	# After: pacman -Syu --noconfirm
+	def pacmanMustNoConfirm(line: str, m: any) -> str:
+		prestr, _, poststr = utilGetStrs(line, m)
+
+		return f'{prestr}pacman -Syu --noconfirm{poststr}'
+
+	rules.append({
+		'name': 'pacman-must-noconfirm',
+		'regex': '(?P<match>pacman -S(?!yy)(?!yu --noconfirm)(?: --noconfirm)?)',
+		'reason': 'To make sure it is automated',
+		'fileTypes': ['bash', 'sh'],
+		'fixerFn': pacmanMustNoConfirm,
+		'testPositiveMatches': [
+			'pacman -S pkg',
+			'sudo pacman -S pkg'
+		],
+		'testNegativeMatches': [
+			'pacman -Q'
 		],
 	})
 
 	# Before: sudo yay -S
 	# After: yay -S
-	def yayNoSudo(line: str, m: Any) -> str:
+	def yayNoSudo(line: str, m: any) -> str:
 		prestr, _, poststr = utilGetStrs(line, m)
 
 		return f'{prestr}yay {poststr}'
@@ -151,10 +170,44 @@ def main():
 		'fileTypes': ['bash', 'sh'],
 		'fixerFn': yayNoSudo,
 		'testPositiveMatches': [
-			'apt-get install'
+			'sudo yay -S pkg'
 		],
 		'testNegativeMatches': [
-			'apt-get -y install'
+			'yay -S pkg'
+		],
+	})
+
+	# Before: helper.setup
+	# After: N/A
+	rules.append({
+		'name': 'helper-setup-assert-arguments',
+		'regex': '(?P<match>helper\\.setup(?! \'[a-zA-Z0-9 ._-]+\' "\\$@")(?!\\(\\)))',
+		'reason': 'Add required arguments',
+		'fileTypes': ['bash', 'sh'],
+		'fixerFn': None,
+		'testPositiveMatches': [
+			'helper.setup',
+			'helper.setup "value" "$@"'
+		],
+		'testNegativeMatches': [
+			'helper.setup \'param\' "$@"'
+		],
+	})
+
+	# Before: install.random
+	# After: N/A
+	rules.append({
+		'name': 'install-check-function-exists',
+		'regex': '(?P<match>install\\.(?!arch|debian|any|cachyos|ubuntu|opensuse|fedora|pop|manjaro|neon))(.*?)\\(\\)',
+		'reason': 'Function must exist',
+		'fileTypes': ['bash', 'sh'],
+		'fixerFn': None,
+		'testPositiveMatches': [
+			'install.not_exist()'
+		],
+		'testNegativeMatches': [
+			'install.fedora()',
+			'curl https://mise.jdx.dev/install.sh | sh'
 		],
 	})
 
@@ -170,14 +223,14 @@ def main():
 	if args.internal_test_regex:
 		for rule in rules:
 			for positiveMatch in rule['testPositiveMatches']:
-				m: Any = re.search(rule['regex'], positiveMatch)
+				m: any = re.search(rule['regex'], positiveMatch)
 				if m is None or m.group('match') is None:
 					print(f'{c.MAGENTA}{rule["name"]}{c.RESET}: Failed {c.CYAN}positive{c.RESET} test:')
 					print(f'=> {positiveMatch}')
 					print()
 
 			for negativeMatch in rule['testNegativeMatches']:
-				m: Any = re.search(rule['regex'], negativeMatch)
+				m: any = re.search(rule['regex'], negativeMatch)
 				if m is not None and m.group('match') is not None:
 					print(f'{c.MAGENTA}{rule["name"]}{c.RESET}: Failed {c.YELLOW}negative{c.RESET} test:')
 					print(f'=> {negativeMatch}')

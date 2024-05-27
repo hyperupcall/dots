@@ -32,7 +32,7 @@ install.fedora() {
 }
 
 install.arch() {
-	sudo pacman -S python3
+	sudo pacman -Syu --noconfirm python3
 }
 
 install.any() {

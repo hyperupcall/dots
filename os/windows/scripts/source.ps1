@@ -27,6 +27,7 @@ function util.install_command([string]$command) {
 		}
 	}
 }
+
 function util.die([string]$message) {
 	util.error "$message"
 	[Console]::Error.WriteLine("=> Exiting")

@@ -17,7 +17,7 @@ install.debian() {
 		"deb [signed-by=$gpg_file] https://hub.unity3d.com/linux/repos/deb stable main" \
 		'/etc/apt/sources.list.d/unityhub.list'
 
-	sudo apt-get update
+	sudo apt-get update -y 
 	sudo apt-get install -y unityhub
 }
 

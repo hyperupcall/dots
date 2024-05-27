@@ -46,18 +46,6 @@ function Symlink-RelativePath {
 	return 0
 }
 
-foreach ($relativePath in @(
-		'.config/git/attributes',
-		'.config/git/config',
-		'Documents/PowerShell/Microsoft.PowerShell_profile.ps1',
-		'Documents/PowerShell/Modules/Dots',
-		'Documents/WindowsPowershell/Microsoft.PowerShell_profile.ps1'
-		'AppData/Roaming/gnupg/gpg-agent.conf'
-	)) {
-	[void](Symlink-RelativePath -RelativePath "$relativePath")
-}
-
-
 function Assert-ScoopBucket {
 	[CmdletBinding()]
 	Param (
@@ -121,6 +109,17 @@ function Test-RegistryKeyValue {
 	}
 
 	return $true
+}
+
+foreach ($relativePath in @(
+		'.config/git/attributes',
+		'.config/git/config',
+		'Documents/PowerShell/Microsoft.PowerShell_profile.ps1',
+		'Documents/PowerShell/Modules/Dots',
+		'Documents/WindowsPowershell/Microsoft.PowerShell_profile.ps1'
+		'AppData/Roaming/gnupg/gpg-agent.conf'
+	)) {
+	[void](Symlink-RelativePath -RelativePath "$relativePath")
 }
 
 # TODO

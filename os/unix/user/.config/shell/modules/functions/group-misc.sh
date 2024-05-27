@@ -75,8 +75,15 @@ edit() {
 	_edit_file="$(echo "$_edit_grep_result" | awk -F ':' '{ print $1 }')"
 	_edit_line="$(echo "$_edit_grep_result" | awk -F ':' '{ print $2 }')"
 
-	# TODO: use _v_editor and choose
-	nvim "+$_edit_line" "$_edit_file"
+	# TODO: Use 'default'
+	if command -v 'nvim' &>/dev/null; then
+		nvim "+$_edit_line" "$_edit_file"
+	elif command -v 'vim' &>/dev/null; then
+		vim "+$_edit_line" "$_edit_file"
+	else
+		_shell_util_die "edit: Editor not found"
+		return
+	fi
 	unset -v _edit_grep_result _edit_file _edit_line
 }
 

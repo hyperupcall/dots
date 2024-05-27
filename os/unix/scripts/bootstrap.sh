@@ -12,11 +12,6 @@ main() {
 
 	helper.setup 'Bootstrap' "$@"
 
-	util.install_packages \
-		bash-completion curl rsync pass \
-		cmake ccache vim nano jq \
-		pkg-config # for starship
-
 	# Ensure prerequisites.
 	mkdir -p "$XDG_CONFIG_HOME"
 
@@ -63,40 +58,34 @@ main() {
 
 install.arch() {
 	sudo pacman -Syyu --noconfirm
-	sudo pacman -S --noconfirm base-devel
-	sudo pacman -S --noconfirm lvm2
-	sudo pacman -S --noconfirm openssl # for starship
-	sudo pacman -S --noconfirm yay
-}
-
-install.cachyos() {
-	install.arch "$@"
-	sudo pacman -S --noconfirm cachyos-v3/linux-cachyos-zfs cachyos-v3/linux-cachyos-lto-zfs
+	sudo pacman -Syu --noconfirm base-devl lvm2 openssl yay
 }
 
 install.debian() {
 	sudo apt-get -y update
 	sudo apt-get -y upgrade
-	sudo apt-get -y install apt-transport-https
-	sudo apt-get -y install build-essential
-	sudo apt-get -y install lvm2
-	sudo apt-get -y install libssl-dev # for starship
+
+	sudo apt-get -y install apt-transport-https build-essential lvm2
+	sudo apt-get -y install bash-completion curl rsync pass cmake ccache vim nano jq
+	sudo apt-get -y install pkg-config libssl-dev # For starship
 }
 
 install.fedora() {
 	sudo dnf -y update
+
+	sudo dnf -y install @development-tools lvm2
+	sudo dnf -y install bash-completion curl rsync pass cmake ccache vim nano jq
+	sudo dnf -y install pkg-config openssl-devel # For starship
 	sudo dnf -y install dnf-plugins-core # For at least Brave
-	sudo dnf -y install @development-tools
-	sudo dnf -y install lvm2
-	sudo dnf -y install openssl-devel # for starship
 }
 
 install.opensuse() {
 	sudo zypper -y update
 	sudo zypper -y upgrade
-	sudo zypper -y install -t pattern devel_basis
-	sudo zypper -y install lvm
-	sudo zypper -y install openssl-devel # for starship
+
+	sudo zypper -y install -t pattern devel_basis lvm
+	sudo zypper -y install bash-completion curl rsync pass cmake ccache vim nano jq
+	sudo zypper -y install pkg-config openssl-devel # For starship
 }
 
 main "$@"

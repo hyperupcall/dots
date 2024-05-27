@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "dotfiles"
+private = true
+version = "0.1.0"
+description = ""
+authors = ["Edwin Kofler <edwin@kofler.dev>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+yamllint = "^1.35.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

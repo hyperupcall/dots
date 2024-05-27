@@ -120,12 +120,6 @@ pkg.add_apt_repository() {
 	printf '%s\n' "$source_line" | sudo tee "$dest_file" >/dev/null
 }
 
-util.requires_bin() {
-	if ! command -v "$1" &>/dev/null; then
-		core.print_die "Command '$1' does not exist"
-	fi
-}
-
 # TODO: remove this
 util.req() {
 	curl --proto '=https' --tlsv1.2 -#Lf "$@"
@@ -134,10 +128,11 @@ util.req() {
 util.clone() {
 	local repo="$1"
 	local dir="$2"
+	shift 2
 
 	if [ ! -d "$dir" ]; then
 		core.print_info "Cloning '$repo' to $dir"
-		git clone "$repo" "$dir"
+		git clone "$repo" "$dir" "$@"
 
 		git_remote=$(git -C "$dir" remote)
 		if [ "$git_remote" = 'origin' ]; then
@@ -145,16 +140,6 @@ util.clone() {
 		fi
 		unset -v git_remote
 	fi
-}
-
-util.clone_in_dotfiles() {
-	unset -v REPLY; REPLY=
-	local repo="$1"
-
-	local dir="$HOME/.dotfiles/.data/repos/${repo##*/}"
-	util.clone "$repo" "$dir" "${@:2}"
-
-	REPLY=$dir
 }
 
 util.confirm() {
@@ -185,24 +170,6 @@ util.confirm() {
 		return 0
 	else
 		return 1
-	fi
-}
-
-util.install_packages() {
-	if command -v 'pacman' &>/dev/null; then
-		sudo pacman -S --noconfirm "$@"
-	elif command -v 'apt-get' &>/dev/null; then
-		sudo apt-get -y install "$@"
-	elif command -v 'dnf' &>/dev/null; then
-		sudo dnf -y install "$@"
-	elif command -v 'zypper' &>/dev/null; then
-		sudo zypper -y install "$@"
-	elif command -v 'eopkg' &>/dev/null; then
-		sudo eopkg -y install "$@"
-	elif iscmd 'brew'; then
-		brew install "$@"
-	else
-		core.print_die 'Failed to determine package manager'
 	fi
 }
 

@@ -572,5 +572,6 @@
 		}
 	},
 	"latex-utilities.message.update.show": false,
-	"git.openRepositoryInParentFolders": "never"
+	"git.openRepositoryInParentFolders": "never",
+	"github.copilot.editor.enableAutoCompletions": true
 }

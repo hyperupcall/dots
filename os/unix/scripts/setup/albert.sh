@@ -19,14 +19,14 @@ install.fedora() {
 }
 
 install.arch() {
-	sudo pacman -S --noconfirm libarchive autoconf
-	sudo pacman -S --noconfirm intltool # pybind11
-	sudo pacman -S --noconfirm qt6-base qt6-tools qt6-5compat qt6-scxml # albert
+	sudo pacman -Syu --noconfirm libarchive autoconf
+	sudo pacman -Syu --noconfirm intltool # pybind11
+	sudo pacman -Syu --noconfirm qt6-base qt6-tools qt6-5compat qt6-scxml # albert
 }
 
 
 install_albert() {
-	util.clone_in_dotfiles 'https://github.com/albertlauncher/albert' --recursive
+	util.clone ~/.dotfiles/.data/repos/albert 'https://github.com/albertlauncher/albert' --recursive
 	local dir="$REPLY"
 	cd "$dir"
 	git submodule update --init lib/QHotkey
@@ -90,7 +90,7 @@ install_albert() {
 	# 		"deb [signed-by=$gpg_file] http://download.opensuse.org/repositories/home:/manuelschneid3r/xUbuntu_$version/ /" \
 	# 		'/etc/apt/sources.list.d/albert.list'
 
-	# 	sudo apt-get update
+	# 	sudo apt-get update -y
 	# 	sudo apt-get install -y albert
 	# 	;;
 	# *)

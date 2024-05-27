@@ -110,7 +110,9 @@ updatesystem() {
 		sudo pacman -Syyu --noconfirm
 		local orphaned_dependencies=
 		orphaned_dependencies=$(pacman -Qdtq)
-		sudo pacman -R $orphaned_dependencies
+		if [ -n "$orphaned_dependencies" ]; then
+			sudo pacman -R $orphaned_dependencies
+		fi
 	elif iscmd 'apt-get'; then
 		sudo apt-get -y update
 		if ! iscmd 'pkcon'; then # KDE Neon

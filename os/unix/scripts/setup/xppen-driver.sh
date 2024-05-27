@@ -3,7 +3,7 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	helper.setup 'Install XP-Pen Driver?' "$@"
+	helper.setup 'XP-Pen Driver' "$@"
 }
 
 install.any() {

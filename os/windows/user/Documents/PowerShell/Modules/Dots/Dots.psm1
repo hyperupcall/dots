@@ -10,6 +10,7 @@ function New-TemporaryDirectory {
 }
 
 function mkt() {
+	# TODO
 	# $randomfile = [System.IO.Path]::GetRandomFileName()
 	# Out-File "$randomFile"
 
