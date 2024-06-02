@@ -8,12 +8,12 @@ main() {
 
 install.any() {
 	if command -v 'apt' &>/dev/null; then
-		sudo add-apt-repository ppa:obsproject/obs-studio
+		sudo add-apt-repository -y ppa:obsproject/obs-studio
 		sudo apt-get update -y
 		sudo apt-get install -y obs-studio
 	else
 		flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-		flatpak install com.obsproject.Studio
+		flatpak install -y com.obsproject.Studio
 	fi
 }
 

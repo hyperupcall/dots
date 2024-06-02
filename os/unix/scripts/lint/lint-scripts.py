@@ -21,7 +21,7 @@ from typing import Callable
 # Check to ensure all regular expressions are working as intended:
 # $ lint-scripts.py --internal-test-regex
 
-# TODO: Generalize -y flag for all package managers
+# TODO: Generalize -y flag for all package managers, add-apt-repository, flatpak
 # TODO: curl
 
 Rule = dict[str, any]

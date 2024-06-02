@@ -463,7 +463,7 @@
 	"cSpell.dictionaryDefinitions": [
 		{
 			"name": "custom-words",
-			"path": "~/.dotfiles/os/unix/config/custom-words.txt",
+			"path": "~/.dotfiles/config/custom-words.txt",
 			"addWords": true
 		}
 	],

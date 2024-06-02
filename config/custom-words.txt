@@ -6,6 +6,7 @@ Bashisms
 builtins
 checkstyle
 cmds
+CODEOWNERS
 Containerfile
 Cygwin
 Deno
@@ -45,6 +46,7 @@ quazipanacea
 redirecter
 roadmap
 rushstack
+schemastore
 selectability
 shellcheck
 shelltest
@@ -63,4 +65,3 @@ wasmtime
 webext
 xopp
 Xournalpp
-schemastore

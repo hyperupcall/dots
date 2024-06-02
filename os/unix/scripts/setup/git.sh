@@ -7,8 +7,8 @@ main() {
 }
 
 install.any() {
-	sudo add-apt-repository ppa:git-core/ppa
-	sudo apt-get update -y 
+	sudo add-apt-repository -y ppa:git-core/ppa
+	sudo apt-get update -y
 	sudo apt-get install -y git
 }
 
