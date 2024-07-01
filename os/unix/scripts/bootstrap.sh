@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "${0%/*}/../source.sh"
+source "${0%/*}/source.sh"
 
 main() {
 	if [ -f ~/.bootstrap/done ]; then

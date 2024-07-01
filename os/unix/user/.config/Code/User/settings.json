@@ -573,5 +573,8 @@
 	},
 	"latex-utilities.message.update.show": false,
 	"git.openRepositoryInParentFolders": "never",
-	"github.copilot.editor.enableAutoCompletions": true
+	"github.copilot.editor.enableAutoCompletions": true,
+	"[javascript]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	}
 }

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "${0%/*}/../source.sh"
+source "${0%/*}/source.sh"
 
 # TODO: hub.woof, nerdfonts
 # TODO: git smuge etc filters are in use
