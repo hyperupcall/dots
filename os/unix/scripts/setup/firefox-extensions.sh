@@ -33,7 +33,7 @@ util.install() {
 	local url="$1"
 
 	rm -f './extension.xpi'
-	util.req -o './extension.xpi' "$url"
+	curl -K "$CURL_CONFIG" -o './extension.xpi' "$url"
 	firefox -install -extension ./extension.xpi
 }
 

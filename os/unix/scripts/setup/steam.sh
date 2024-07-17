@@ -11,7 +11,7 @@ install.debian() {
 	temp_dir="$(mktemp -d)"
 	cd "$temp_dir"
 
-	curl -fsSLo ./steam.deb 'https://cdn.akamai.steamstatic.com/client/installer/steam.deb'
+	curl -K "$CURL_CONFIG" -o ./steam.deb 'https://cdn.akamai.steamstatic.com/client/installer/steam.deb'
 	sudo apt-get install -y ./steam.deb
 }
 

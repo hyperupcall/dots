@@ -16,7 +16,7 @@ install.any() {
 		temp_dir=$(mktemp -d)
 		cd "$temp_dir"
 
-		util.req -o 'gh.tar.gz' "https://github.com/cli/cli/releases/download/v$version/gh_${version}_linux_amd64.tar.gz"
+		curl -K "$CURL_CONFIG" -o 'gh.tar.gz' "https://github.com/cli/cli/releases/download/v$version/gh_${version}_linux_amd64.tar.gz"
 		tar xf 'gh.tar.gz'
 		cp "gh_${version}_linux_amd64/bin/gh" ~/.local/bin
 		mkdir -p "$XDG_DATA_HOME/man/man1"

@@ -40,6 +40,8 @@
 		core.print_stacktrace
 	}
 	core.trap_add 'err_handler' SIGINT
+
+	CURL_CONFIG="$HOME/.dotfiles/os/unix/config/curl_config.conf"
 }
 
 helper.setup() {
@@ -120,11 +122,6 @@ pkg.add_apt_repository() {
 	printf '%s\n' "$source_line" | sudo tee "$dest_file" >/dev/null
 }
 
-# TODO: remove this
-util.req() {
-	curl --proto '=https' --tlsv1.2 -#Lf "$@"
-}
-
 util.clone() {
 	local repo="$1"
 	local dir="$2"
@@ -187,7 +184,7 @@ util.get_latest_github_tag() {
 	token="$(<~/.dotfiles/.data/github_token)"
 	local url="https://api.github.com/repos/$repo/releases/latest"
 	local tag_name=
-	tag_name=$(curl -fsSLo- -H "Authorization: token: $token" "$url" | jq -r '.tag_name')
+	tag_name=$(curl -K "$CURL_CONFIG" -H "Authorization: token: $token" "$url" | jq -r '.tag_name')
 
 	REPLY=$tag_name
 }

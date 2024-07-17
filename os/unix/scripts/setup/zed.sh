@@ -3,11 +3,12 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	helper.setup 'Mise' "$@"
+	helper.setup 'Zed' "$@"
 }
 
 install.any() {
-	curl -K "$CURL_CONFIG" https://mise.jdx.dev/install.sh | sh
+	curl -K "$CURL_CONFIG" https://zed.dev/install.sh | sh
+
 }
 
 main "$@"

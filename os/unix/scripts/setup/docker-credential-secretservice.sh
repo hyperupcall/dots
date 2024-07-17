@@ -14,7 +14,7 @@ install.any() {
 		temp_dir=$(mktemp -d)
 		cd "$temp_dir"
 
-		curl -o 'docker-credential-secretservice.tar.gz' "https://github.com/docker/docker-credential-helpers/releases/download/$version/docker-credential-secretservice-$version-amd64.tar.gz"
+		curl -K "$CURL_CONFIG" -o 'docker-credential-secretservice.tar.gz' "https://github.com/docker/docker-credential-helpers/releases/download/$version/docker-credential-secretservice-$version-amd64.tar.gz"
 		tar xf 'docker-credential-secretservice.tar.gz'
 		mv './docker-credential-secretservice' "$HOME/bin"
 	)

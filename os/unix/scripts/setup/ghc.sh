@@ -12,9 +12,8 @@ install.any() {
 	mkdir -p "$XDG_DATA_HOME/ghcup"
 	ln -s "$XDG_DATA_HOME"/{,ghcup/.}ghcup
 
-	util.req 'https://get-ghcup.haskell.org' | sh
-
-	util.req 'https://get.haskellstack.org' | sh
+	curl -K "$CURL_CONFIG" 'https://get-ghcup.haskell.org' | sh
+	curl -K "$CURL_CONFIG" 'https://get.haskellstack.org' | sh
 }
 
 main "$@"

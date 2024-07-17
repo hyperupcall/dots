@@ -7,7 +7,7 @@ main() {
 }
 
 install.any() {
-	curl -sSL https://install.python-poetry.org | python3 -
+	curl -K "$CURL_CONFIG" https://install.python-poetry.org | python3 -
 }
 
 main "$@"

@@ -13,7 +13,7 @@ install.any() {
 		cd "$temp_dir"
 
 		core.print_info 'Downloading'
-		util.req -o ./dropbox.tar.gz 'https://www.dropbox.com/download?plat=lnx.x86_64'
+		curl -K "$CURL_CONFIG" -o ./dropbox.tar.gz 'https://www.dropbox.com/download?plat=lnx.x86_64'
 
 		core.print_info 'Extracting'
 		tar xzf ./dropbox.tar.gz

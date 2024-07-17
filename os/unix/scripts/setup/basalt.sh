@@ -7,7 +7,7 @@ main() {
 }
 
 install.any() {
-	util.req -o- https://raw.githubusercontent.com/hyperupcall/basalt/main/scripts/install.sh | sh
+	curl -K "$CURL_CONFIG" https://raw.githubusercontent.com/hyperupcall/basalt/main/scripts/install.sh | sh
 }
 
 configure.any() {

@@ -6,11 +6,7 @@ use File::Find;
 use feature qw(say);
 
 my $total_passwords = 0;
-my %property_counts = (
-	'a' => 1,
-	'c' => 3,
-	'b' => 2,
-);
+my %property_counts = ();
 
 my %find_args = (
 	wanted => \&wanted,
@@ -72,17 +68,18 @@ sub wanted {
 			say(STDERR "Error: Key should not have spaces: $pass_name");
 		}
 
-		if ($key ne 'login' and $key ne 'email') {
-			say("UNLIKELY KEY: ${pass_name}: $key => $value");
-		}
-
-		if ($key =~ /^security_/) {
+		if ($key =~ /^login$/) {
+			$property_counts{'login'} += 1;
+		} elsif ($key =~ /^email$/) {
+			$property_counts{'email'} += 1;
+		} elsif ($key =~ /^security_/) {
 			$property_counts{'security_'} += 1;
 		} elsif ($key =~ /^id/) {
 			$property_counts{'id_'} += 1;
 		} elsif ($key =~ /^pin/) {
 			$property_counts{'pin_'} += 1;
 		} else {
+			say("UNLIKELY KEY: ${pass_name}: $key => $value");
 			$property_counts{$key} += 1;
 		}
 	}

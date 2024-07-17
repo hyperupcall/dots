@@ -127,7 +127,7 @@
 	"workbench.startupEditor": "none",
 	"workbench.tips.enabled": false,
 	"workbench.tree.indent": 12,
-	"workbench.colorTheme": "Quiet Light",
+	"workbench.colorTheme": "Ayu Light Bordered",
 
 	//
 	// EXPLORER
@@ -153,12 +153,16 @@
 	// JAVASCRIPT
 	"[javascript][javascriptreact]": {
 		"editor.codeActionsOnSave": {
-			"source.organizeImports": "never"
+			"source.organizeImports": "never",
+			"source.fixAll": "never",
+			"source.fixAll.eslint": "always"
 		},
 		"editor.defaultFormatter": "esbenp.prettier-vscode",
 		"editor.formatOnSave": true
 	},
 	"javascript.autoClosingTags": true,
+	"javascript.format.indentSwitchCase": false,
+	"javascript.format.semicolons": "remove",
 	"javascript.referencesCodeLens.enabled": true,
 	"javascript.referencesCodeLens.showOnAllFunctions": true,
 	"javascript.suggest.autoImports": true,
@@ -168,21 +172,23 @@
 	//
 	// TYPESCRIPT
 	"[typescript][typescriptreact]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode",
-		"editor.formatOnSave": true
-	},
-	"[typescriptreact]": {
+		"editor.codeActionsOnSave": {
+			"source.fixAll": "never",
+			"source.fixAll.eslint": "always"
+		},
 		"editor.defaultFormatter": "esbenp.prettier-vscode",
 		"editor.formatOnSave": true
 	},
 	"typescript.autoClosingTags": true,
-	"typescript.implementationsCodeLens.enabled": true,
+	"typescript.format.indentSwitchCase": false,
+	"typescript.format.semicolons": "remove",
 	"typescript.referencesCodeLens.enabled": true,
 	"typescript.referencesCodeLens.showOnAllFunctions": true,
 	"typescript.suggest.autoImports": true,
 	"typescript.suggest.completeFunctionCalls": true,
 	"typescript.updateImportsOnFileMove.enabled": "always",
 
+	"typescript.implementationsCodeLens.enabled": true,
 	"typescript.inlayHints.enumMemberValues.enabled": false,
 	"typescript.inlayHints.functionLikeReturnTypes.enabled": false,
 	"typescript.inlayHints.parameterNames.enabled": "none",
@@ -412,6 +418,7 @@
 
 	//
 	// GITLENS
+	"gitlens.advanced.blame.customArguments": ["-M", "-C"],
 	"gitlens.advanced.maxListItems": 300,
 	"gitlens.advanced.maxSearchItems": 300,
 	"gitlens.codeLens.includeSingleLineSymbols": true,
@@ -573,8 +580,5 @@
 	},
 	"latex-utilities.message.update.show": false,
 	"git.openRepositoryInParentFolders": "never",
-	"github.copilot.editor.enableAutoCompletions": true,
-	"[javascript]": {
-		"editor.defaultFormatter": "vscode.typescript-language-features"
-	}
+	"github.copilot.editor.enableAutoCompletions": true
 }

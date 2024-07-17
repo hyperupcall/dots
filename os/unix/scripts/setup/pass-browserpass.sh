@@ -22,7 +22,7 @@ install.any() {
 		temp_dir=$(mktemp -d)
 		cd "$temp_dir"
 
-		util.req -o ./browserpass.tar.gz "$url"
+		curl -K "$CURL_CONFIG" -o ./browserpass.tar.gz "$url"
 		tar xf ./browserpass.tar.gz
 		cd "./browserpass-linux64-$version"
 

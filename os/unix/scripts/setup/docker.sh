@@ -9,9 +9,9 @@ main() {
 install.any() {
 	sudo apt-get -y install \
 		ca-certificates \
-		curl \
 		gnupg \
-		lsb-release
+		lsb-release \
+		curl # lint-ignore
 
 	local dist='focal'
 	local gpg_file="/etc/apt/keyrings/docker.asc"
@@ -24,7 +24,7 @@ install.any() {
 		"deb [arch=$(dpkg --print-architecture) signed-by=$gpg_file] https://download.docker.com/linux/ubuntu $dist stable" \
 		'/etc/apt/sources.list.d/docker.list'
 
-	sudo apt-get update -y 
+	sudo apt-get update -y
 	sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 	sudo groupadd --force docker
 	sudo usermod -aG docker "$USER"

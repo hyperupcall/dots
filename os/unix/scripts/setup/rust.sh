@@ -8,7 +8,7 @@ main() {
 
 install.any() {
 	core.print_info "Installing rustup"
-	util.req https://sh.rustup.rs | sh -s -- --default-toolchain nightly -y
+	curl -K "$CURL_CONFIG" https://sh.rustup.rs | sh -s -- --default-toolchain nightly -y
 
 	rustup default nightly
 }

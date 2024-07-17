@@ -21,7 +21,6 @@ from typing import Callable
 # Check to ensure all regular expressions are working as intended:
 # $ lint-scripts.py --internal-test-regex
 
-# TODO: Generalize -y flag for all package managers, add-apt-repository, flatpak
 # TODO: curl
 
 Rule = dict[str, any]
@@ -49,7 +48,8 @@ def lintfile(file: Path, rules: list[Rule], options: dict[str, any]):
 	content_arr = file.read_text().split('\n')
 
 	for line_i, line in enumerate(content_arr):
-		if 'checkstyle-ignore' in line:
+		# TODO: Only allow ignoring specified rules
+		if 'lint-ignore' in line:
 			continue
 
 		for rule in rules:
@@ -122,7 +122,7 @@ def main():
 
 	rules.append({
 		'name': 'apt-must-have-y',
-		'regex': '(?P<match>apt-get (?P<subcommand>install|update|upgrade)(?! -y))',
+		'regex': '(?P<match>apt-get (?P<subcommand>install|update|upgrade|remove)(?! -y))',
 		'reason': 'To make sure it is automated',
 		'fileTypes': ['bash', 'sh'],
 		'fixerFn': aptMustHaveY,
@@ -131,6 +131,94 @@ def main():
 		],
 		'testNegativeMatches': [
 			'apt-get install -y'
+		],
+	})
+
+	# Before: add-apt-repository install
+	# After: add-apt-repository -y install
+	def addAptRepositoryMustHaveY(line: str, m: any) -> str:
+		prestr, _, poststr = utilGetStrs(line, m)
+
+		subcmd = m.group('subcommand')
+		return f'{prestr}add-apt-repository -y {poststr}'
+
+	rules.append({
+		'name': 'apt-must-have-y',
+		'regex': '(?P<match>add-apt-repository(?! -y))',
+		'reason': 'To make sure it is automated',
+		'fileTypes': ['bash', 'sh'],
+		'fixerFn': addAptRepositoryMustHaveY,
+		'testPositiveMatches': [
+			'add-apt-repository'
+		],
+		'testNegativeMatches': [
+			'add-apt-repository -y'
+		],
+	})
+
+	# Before: dnf install
+	# After: dnf install -y
+	def dnfMustHaveY(line: str, m: any) -> str:
+		prestr, _, poststr = utilGetStrs(line, m)
+
+		subcmd = m.group('subcommand')
+		return f'{prestr}dnf {subcmd} -y {poststr}'
+
+	rules.append({
+		'name': 'dnf-must-have-y',
+		'regex': '(?P<match>dnf (?P<subcommand>install|update|upgrade|remove)(?! -y))',
+		'reason': 'To make sure it is automated',
+		'fileTypes': ['bash', 'sh'],
+		'fixerFn': dnfMustHaveY,
+		'testPositiveMatches': [
+			'dnf install'
+		],
+		'testNegativeMatches': [
+			'dnf install -y'
+		],
+	})
+
+	# Before: zypper install
+	# After: zypper install -y
+	def zypperMustHaveY(line: str, m: any) -> str:
+		prestr, _, poststr = utilGetStrs(line, m)
+
+		subcmd = m.group('subcommand')
+		return f'{prestr}zypper {subcmd} -y {poststr}'
+
+	rules.append({
+		'name': 'zypper-must-have-y',
+		'regex': '(?P<match>zypper (?P<subcommand>install|update|upgrade|remove)(?! -y))',
+		'reason': 'To make sure it is automated',
+		'fileTypes': ['bash', 'sh'],
+		'fixerFn': zypperMustHaveY,
+		'testPositiveMatches': [
+			'zypper install'
+		],
+		'testNegativeMatches': [
+			'zypper install -y'
+		],
+	})
+
+	# Before: flatpak install
+	# After: flatpak install -y
+	def flatpakMustHaveY(line: str, m: any) -> str:
+		prestr, _, poststr = utilGetStrs(line, m)
+
+		subcmd = m.group('subcommand')
+		return f'{prestr}flatpak {subcmd} -y {poststr}'
+
+	rules.append({
+		'name': 'flatpak-must-have-y',
+		'regex': '(?P<match>flatpak (?P<subcommand>install|update|uninstall)(?! -y))',
+		'reason': 'To make sure it is automated',
+		'fileTypes': ['bash', 'sh'],
+		'fixerFn': flatpakMustHaveY,
+		'testPositiveMatches': [
+			'flatpak install'
+		],
+		'testNegativeMatches': [
+			'flatpak install -y'
 		],
 	})
 
@@ -191,6 +279,44 @@ def main():
 		],
 		'testNegativeMatches': [
 			'helper.setup \'param\' "$@"'
+		],
+	})
+
+	# Before: No banned commands
+	# After: N/A
+	rules.append({
+		'name': 'no-banned-commands',
+		'regex': '(?P<match>yum|snap) ',
+		'reason': 'Function must exist',
+		'fileTypes': ['bash', 'sh'],
+		'fixerFn': None,
+		'testPositiveMatches': [
+			'yum install libtool',
+		],
+		'testNegativeMatches': [
+			'apt-get install libtool',
+		],
+	})
+
+	# Before: curl
+	# After: curl
+	def curlMustHaveArgs(line: str, m: any) -> str:
+		prestr, _, poststr = utilGetStrs(line, m)
+
+		subcmd = m.group('subcommand')
+		return f'{prestr}curl {subcmd} -K "$CURL_CONFIG" {poststr}'
+
+	rules.append({
+		'name': 'curl-must-have-args',
+		'regex': '(?P<match>curl (?!-K "\\$CURL_CONFIG"))',
+		'reason': 'To ensure curl has the best arguments',
+		'fileTypes': ['bash', 'sh'],
+		'fixerFn': curlMustHaveArgs,
+		'testPositiveMatches': [
+			'curl | sh'
+		],
+		'testNegativeMatches': [
+			'curl -K "$CURL_CONFIG" | sh'
 		],
 	})
 
