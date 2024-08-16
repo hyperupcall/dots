@@ -14,7 +14,7 @@ main() {
 
 	run mkdir -p ~/.bootstrap
 
-	# Install essential commands
+	# Install essential commands.
 	updatesystem
 	case $(uname) in darwin*)
 		if iscmd 'brew'; then
@@ -30,22 +30,17 @@ main() {
 	installcmd 'git' 'git'
 	installcmd 'vim' 'vim'
 
-	# Install hyperupcall/dotfiles
+	# Install hyperupcall/dotfiles.
 	clonerepo 'github.com/hyperupcall/dotfiles' ~/.dotfiles
 	run cd ~/.dotfiles
 		run git remote set-url me 'git@github.com:hyperupcall/dotfiles'
 		run ./bake init
 	run cd
 
-	# Symlink ~/scripts
+	# Symlink ~/scripts.
 	run ln -fs ~/.dotfiles/os/unix/scripts ~/
 
-	# Asserts
-	if [ ! -f ~/.dotfiles/os/unix/scripts/xdg.sh ]; then
-		die 'Failed to find file at ~/.dotfiles/os/unix/scripts/xdg.sh'
-	fi
-
-	# Export variables
+	# Export variables.
 	cat > ~/.bootstrap/bootstrap-out.sh <<EOF
 # shellcheck shell=sh
 
@@ -63,7 +58,7 @@ else
 fi
 EOF
 
-	# Next steps
+	# Print next steps.
 	cat <<-"EOF"
 	---
 	. ~/.bootstrap/bootstrap-out.sh

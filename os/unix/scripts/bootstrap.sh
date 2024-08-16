@@ -12,7 +12,6 @@ main() {
 
 	helper.setup 'Bootstrap' "$@"
 
-	# Ensure prerequisites.
 	mkdir -p "$XDG_CONFIG_HOME"
 
 	# Remove distribution-specific dotfiles.
