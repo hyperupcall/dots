@@ -13,6 +13,9 @@ main() {
 }
 
 install.debian() {
+	sudo apt-get update -y
+	sudo apt-get install -y debian-archive-keyring
+
 	pkg.add_apt_repository \
 		"deb [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] https://deb.debian.org/debian bookworm-backports main contrib
 deb-src [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] https://deb.debian.org/debian bookworm-backports main contrib" \

@@ -30,7 +30,7 @@ Then, run the following:
 Now, execute:
 
 ```powershell
-~/scripts/lifecycle/doctor.ps1
-~/scripts/lifecycle/bootstrap.ps1
-~/scripts/lifecycle/idempotent.ps1
+~/scripts/doctor.ps1
+~/scripts/bootstrap.ps1
+~/scripts/idempotent.ps1
 ```

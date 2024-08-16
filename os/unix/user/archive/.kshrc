@@ -1,6 +1,4 @@
-#
 # ~/.kshrc
-#
 
 test -x ~/.profile && . ~/.profile
 

@@ -6,17 +6,17 @@
 
 ## XDG
 # asdf
-export ASDF_DATA_DIR="$XDG_DATA_HOME/asdf"
-ASDF_DIR="$XDG_DATA_HOME/asdf"
+# export ASDF_DATA_DIR="$XDG_DATA_HOME/asdf"
+# ASDF_DIR="$XDG_DATA_HOME/asdf"
 # export ASDF_CONFIG_FILE="$XDG_CONFIG_HOME/asdf/asdfrc"
-_path_prepend "$ASDF_DIR/bin"
-_path_prepend "$ASDF_DATA_DIR/shims"
+# _path_prepend "$ASDF_DIR/bin"
+# _path_prepend "$ASDF_DATA_DIR/shims"
 
 # atom
 # export ATOM_HOME="$XDG_DATA_HOME/atom"
 
 # bashmarks
-SDIRS="$XDG_DATA_HOME/bashmarks.sh.db"
+# SDIRS="$XDG_DATA_HOME/bashmarks.sh.db"
 
 # crenv
 # export CRENV_ROOT="$XDG_DATA_HOME/crenv"
@@ -81,3 +81,9 @@ SDIRS="$XDG_DATA_HOME/bashmarks.sh.db"
 # volta
 # export VOLTA_HOME="$XDG_STATE_HOME/volta"
 # _path_prepend "$XDG_STATE_HOME/volta/bin"
+
+# X11
+# export XCURSOR_PATH="$XDG_CONFIG_HOME/icons:$XCURSOR_PATH"
+# export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+# export XCOMPOSEFILE="$XDG_CONFIG_HOME/X11/Xcompose"
+# export XCOMPOSECACHE="$XDG_CACHE_HOME/X11/Xcompose"
