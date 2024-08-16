@@ -18,7 +18,7 @@ install.fedora() {
 
 install.opensuse() {
 	sudo zypper refresh
-	sudo zypper -y install btrfs-progs
+	sudo zypper -n install btrfs-progs
 }
 
 install.arch() {

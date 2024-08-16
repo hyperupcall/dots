@@ -8,8 +8,8 @@ main() {
 
 install.any() {
 	# TODO: install gettext
-	util.clone ~/.dotfiles/.data/repos/neovim 'https://github.com/neovim/neovim'
-	local dir="$REPLY"
+	local dir="$HOME/.dotfiles/.data/repos/neovim"
+	util.clone "$dir" 'https://github.com/neovim/neovim'
 
 	cd "$dir"
 	git switch master

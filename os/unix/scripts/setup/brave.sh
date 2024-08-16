@@ -47,12 +47,12 @@ install.fedora() {
 
 install.opensuse() {
 	sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-	sudo zypper -y addrepo https://brave-browser-rpm-release.s3.brave.com/x86_64/ brave-browser
+	sudo zypper -n addrepo https://brave-browser-rpm-release.s3.brave.com/x86_64/ brave-browser
 	sudo rpm --import https://brave-browser-rpm-beta.s3.brave.com/brave-core-nightly.asc
 	sudo zypper addrepo https://brave-browser-rpm-beta.s3.brave.com/x86_64/ brave-browser-beta
 
 	sudo zypper refresh
-	sudo zypper -y install brave-browser brave-browser-beta
+	sudo zypper -n install brave-browser brave-browser-beta
 }
 
 install.manjaro() {

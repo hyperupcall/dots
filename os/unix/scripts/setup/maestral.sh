@@ -7,28 +7,30 @@ main() {
 }
 
 install.debian() {
-	sudo apt-get install -y python3-dev python3-venv libsystemd-dev qt5-default
+	sudo apt-get install -y python3-dev python3-venv cython libsystemd-dev qt5-default
 	sudo apt-get install -y libxcb-cursor0 # maestral gui
-	sudo apt-get install -y cython
 	install_maestral "$@"
 }
 
 install.pop() {
-	sudo apt-get install -y python3-dev python3-venv libsystemd-dev
+	sudo apt-get install -y python3-dev python3-venv cython3 libsystemd-dev
 	sudo apt-get install -y libxcb-cursor0 # maestral gui
-	sudo apt-get install -y cython3
 	install_maestral "$@"
 }
 
 install.neon() {
-	sudo apt-get install -y python3-dev python3-venv libsystemd-dev qt5-default
+	sudo apt-get install -y python3-dev python3-venv cython3 libsystemd-dev qt5-default
 	sudo apt-get install -y libxcb-cursor0 # maestral gui
-	sudo apt-get install -y cython3
 	install_maestral "$@"
 }
 
 install.fedora() {
-	sudo dnf install -y python3 python3-devel systemd-devel cython qt5-qtbase-devel
+	sudo dnf install -y python3 python3-devel cython systemd-devel qt5-qtbase-devel
+}
+
+install.opensuse() {
+	sudo zypper -n install python311 python-devel python311-cython systemd-devel libqt5-qtbase-devel
+	install_maestral "$@"
 }
 
 install.arch() {

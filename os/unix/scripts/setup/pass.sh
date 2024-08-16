@@ -31,8 +31,8 @@ install.fedora() {
 }
 
 install.opensuse() {
-	sudo zypper refresh
-	sudo zypper -y install pass
+	sudo zypper -n refresh
+	sudo zypper -n install password-store
 }
 
 install.arch() {

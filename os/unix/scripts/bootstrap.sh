@@ -65,27 +65,26 @@ install.debian() {
 	sudo apt-get -y update
 	sudo apt-get -y upgrade
 
-	sudo apt-get -y install apt-transport-https build-essential lvm2
-	sudo apt-get -y install bash-completion curl rsync pass cmake ccache vim nano jq # lint-ignore
+	sudo apt-get -y install apt-transport-https build-essential
+	sudo apt-get -y install bash-completion curl rsync cmake ccache vim nano jq lvm2 # lint-ignore
 	sudo apt-get -y install pkg-config libssl-dev # For starship
 }
 
 install.fedora() {
 	sudo dnf -y update
 
-	sudo dnf -y install @development-tools lvm2
-	sudo dnf -y install bash-completion curl rsync pass cmake ccache vim nano jq # lint-ignore
+	sudo dnf -y install @development-tools
+	sudo dnf -y install bash-completion curl rsync cmake ccache vim nano jq lvm2 # lint-ignore
 	sudo dnf -y install pkg-config openssl-devel # For starship
 	sudo dnf -y install dnf-plugins-core # For at least Brave
 }
 
 install.opensuse() {
-	sudo zypper -y update
-	sudo zypper -y upgrade
+	sudo zypper -n update
 
-	sudo zypper -y install -t pattern devel_basis lvm
-	sudo zypper -y install bash-completion curl rsync pass cmake ccache vim nano jq # lint-ignore
-	sudo zypper -y install pkg-config openssl-devel # For starship
+	sudo zypper -n install -t pattern devel_basis
+	sudo zypper -n install bash-completion curl rsync cmake ccache vim nano jq lvm2 # lint-ignore
+	sudo zypper -n install pkg-config openssl-devel # For starship
 }
 
 main "$@"

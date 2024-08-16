@@ -42,6 +42,19 @@ install.fedora() {
 	printf '%s\n' zfs | sudo tee /etc/dnf/protected.d/zfs.conf >/dev/null
 }
 
+install.opensuse() {
+	source /etc/os-release
+	if [ "$ID" = 'opensuse-tumbleweed' ]; then
+		if [ ! -f /etc/zypp/repos.d/filesystems.repo ]; then
+			sudo zypper -n addrepo https://download.opensuse.org/repositories/filesystems/openSUSE_Tumbleweed/filesystems.repo
+		fi
+		sudo zypper --gpg-auto-import-keys refresh
+		sudo zypper -n install zfs
+	else
+		core.print_die "Not implemented"
+	fi
+}
+
 install.arch() {
 	 sudo pacman -Syu --noconfirm zfs-linux zfs-linux-lts zfs-dkms
 }

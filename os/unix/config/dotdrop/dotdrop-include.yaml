@@ -11,8 +11,6 @@ dotfiles:
   - '.gnupg/gpg.conf'
   - '.gnupg/gpg-agent.conf'
   - '.hushlogin'
-  - 'xinitrc'
-  - 'xmodmap'
   - 'xresources'
   - 'bash_profile'
   - 'bash_logout'
