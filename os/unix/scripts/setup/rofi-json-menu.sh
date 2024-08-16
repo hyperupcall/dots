@@ -3,8 +3,9 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	util.clone ~/.dotfiles/.data/repos/rofi-json-menu 'https://github.com/marvinkreis/rofi-json-menu'
-	cd ~/.dotfiles/.data/repos/rofi-json-menu
+	local dir="$HOME/.dotfiles/.data/repos/rofi-json-menu"
+	util.clone "$dir" 'https://github.com/marvinkreis/rofi-json-menu'
+
 	make
 	sudo make install
 }

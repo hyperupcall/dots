@@ -127,7 +127,7 @@
 	"workbench.startupEditor": "none",
 	"workbench.tips.enabled": false,
 	"workbench.tree.indent": 12,
-	"workbench.colorTheme": "Ayu Light Bordered",
+	"workbench.colorTheme": "Solarized Light",
 
 	//
 	// EXPLORER
@@ -203,6 +203,8 @@
 	"[json][jsonc]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode",
 		"editor.formatOnSave": true,
+		"editor.insertSpaces": true,
+		"editor.tabSize": 3,
 		"editor.defaultFoldingRangeProvider": "esbenp.prettier-vscode"
 	},
 	"[jsonnet]": {
@@ -342,10 +344,12 @@
 	"shellcheck.run": "onType",
 	"shellcheck.customArgs": ["--external-sources"],
 	"[shellscript]": {
-		"editor.formatOnSave": false,
 		"editor.codeActionsOnSave": {
 			"source.fixAll": "never"
-		}
+		},
+		"editor.insertSpaces": false,
+		"editor.formatOnSave": false,
+		"editor.tabSize": 3
 	},
 
 	//
@@ -431,16 +435,6 @@
 	"vscord.behaviour.suppressNotifications": true,
 
 	//
-	// CODE-RUNNER
-	"code-runner.executorMap": {
-		"cpp": "cd $dir && g++ -std=c++20 -Wall -Wextra -Wpedantic -Wconversion $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
-	},
-	"code-runner.saveFileBeforeRun": true,
-	"code-runner.showRunCommandInExplorerContextMenu": false,
-	"code-runner.showRunCommandInEditorContextMenu": false,
-	"code-runner.runInTerminal": true,
-
-	//
 	// UNSORTED EDITOR
 	"diffEditor.ignoreTrimWhitespace": false,
 	"merge-conflict.autoNavigateNextConflict.enabled": true,
@@ -494,7 +488,7 @@
 	"C_Cpp.inlayHints.autoDeclarationTypes.enabled": true,
 	"C_Cpp.inlayHints.parameterNames.enabled": true,
 	"C_Cpp.inlayHints.referenceOperator.enabled": true,
-	"C_Cpp.codeAnalysis.runAutomatically": true,
+	"C_Cpp.codeAnalysis.runAutomatically": false,
 	"C_Cpp.codeAnalysis.clangTidy.enabled": true,
 	"C_Cpp.codeAnalysis.clangTidy.fallbackConfig": "{ Checks: 'bugprone-*,cert-*,clang-analyzer-*,concurrency-*,cppcoreguidelines-*,google-*,hicpp-*,misc-*,modernize-*,performance-*,portability-*,readability-*,-bugprone-easily-swappable-parameters,-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling,-clang-analyzer-deadcode.DeadStores,-concurrency-mt-unsafe,-cppcoreguidelines-avoid-c-arrays,-cppcoreguidelines-avoid-magic-numbers,-cppcoreguidelines-avoid-non-const-global-variables,-cppcoreguidelines-macro-usage,-cppcoreguidelines-owning-memory,-cppcoreguidelines-pro-bounds-pointer-arithmetic,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-google-readability-braces-around-statements,-google-readability-casting,-google-readability-todo,-google-runtime-references,-modernize-avoid-c-arrays,-modernize-use-trailing-return-type,-readability-braces-around-statements,-readability-convert-member-functions-to-static,-readability-else-after-return,-readability-identifier-length,-readability-isolate-declaration,-readability-magic-numbers,-misc-unused-parameters'}",
 	"C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: LLVM, UseTab: ForIndentation, IndentWidth: 3, TabWidth: 3, AlignEscapedNewlines: Left, AllowShortFunctionsOnASingleLine: Empty, AlwaysBreakTemplateDeclarations: Yes, ColumnLimit: 120 }",
@@ -580,5 +574,6 @@
 	},
 	"latex-utilities.message.update.show": false,
 	"git.openRepositoryInParentFolders": "never",
-	"github.copilot.editor.enableAutoCompletions": true
+	"github.copilot.editor.enableAutoCompletions": true,
+	"cmake.showOptionsMovedNotification": false
 }

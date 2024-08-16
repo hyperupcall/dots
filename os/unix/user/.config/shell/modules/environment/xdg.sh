@@ -6,6 +6,7 @@ _path_prepend "$ANDROID_HOME/emulator"
 _path_prepend "$ANDROID_HOME/tools"
 _path_prepend "$ANDROID_HOME/tools/bin"
 _path_prepend "$ANDROID_HOME/platform-tools"
+export ANDROID_USER_HOME="$XDG_STATE_HOME/Android/User"
 
 # antigen
 export _ANTIGEN_INSTALL_DIR="$XDG_STATE_HOME/antigen"
@@ -52,7 +53,6 @@ export CONAN_USER_HOME="$XDG_STATE_HOME"
 
 # conda
 export CONDA_ROOT="$XDG_CONFIG_HOME/conda"
-# _path_prepend "$XDG_DATA_HOME/miniconda3/bin"
 
 # cookiecutter
 export COOKIECUTTER_CONFIG="$XDG_CONFIG_HOME/cookiecutter/cookiecutterrc"
@@ -360,8 +360,13 @@ export TASKDATA="$XDG_DATA_HOME/taskwarrior"
 # export TERMINFO="$XDG_DATA_HOME"/terminfo
 # export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo
 
-# texmf
+# TeXmf
 export TEXMFHOME="$XDG_DATA_HOME/textmf"
+export TEXMFVAR="$XDG_CACHE_HOME/texlive/texmf-var"
+export TEXMFCONFIG="$XDG_CONFIG_HOME/texlive/texmf-config"
+
+# TeXmacs
+export TEXMACS_HOME_PATH="$XDG_STATE_HOME/texmacs"
 
 # tree-sitter
 export TREE_SITTER_DIR="$XDG_CONFIG_HOME/tree-sitter"
@@ -410,11 +415,6 @@ export WINEPREFIX="$XDG_DATA_HOME/wine"
 # wolfram mathematica
 export MATHEMATICA_BASE="/usr/share/mathematica"
 export MATHEMATICA_USERBASE="$XDG_DATA_HOME/mathematica"
-
-# X11
-# export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
-# export XCOMPOSEFILE="$XDG_CONFIG_HOME/X11/Xcompose"
-# export XCOMPOSECACHE="$XDG_CACHE_HOME/X11/Xcompose"
 
 # xsel
 alias xsel='xsel -l "$XDG_DATA_HOME/xsel/xsel.log'

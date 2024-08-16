@@ -1,6 +1,4 @@
-#
 # ~/.zshrc
-#
 
 # Stop execution if zsh is non-interactive
 [[ $- != *i* ]] && [ ! -t 0 ] && return
