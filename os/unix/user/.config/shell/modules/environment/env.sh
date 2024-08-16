@@ -64,7 +64,7 @@ export CMD_ENV='linux'
 
 # qt
 export QT_ACCESSIBILITY='1'
-export QT_QPA_PLATFORMTHEME="qt5ct"
+# export QT_QPA_PLATFORMTHEME="qt5ct"
 
 # ranger
 # export RANGER_LOAD_DEFAULT_RC='FALSE'
@@ -84,9 +84,6 @@ export SXHKD_SHELL='/bin/sh'
 
 # vim
 export VIMINIT="if has('nvim') | source $XDG_CONFIG_HOME/nvim/init.lua | else | source $XDG_CONFIG_HOME/vim/vimrc | endif"
-
-# X11
-export XCURSOR_PATH="$XDG_CONFIG_HOME/icons:$XCURSOR_PATH"
 
 # zsh
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"

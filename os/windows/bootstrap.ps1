@@ -42,9 +42,9 @@ function main() {
 	Write-Host @"
 ---
 . "`$HOME/.bootstrap/bootstrap-out.ps1"
-~/scripts/lifecycle/doctor.ps1
-~/scripts/lifecycle/bootstrap.ps1
-~/scripts/lifecycle/idempotent.ps1
+~/scripts/doctor.ps1
+~/scripts/bootstrap.ps1
+~/scripts/idempotent.ps1
 ---
 "@
 }

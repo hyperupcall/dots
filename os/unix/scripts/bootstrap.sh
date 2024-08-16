@@ -10,7 +10,7 @@ main() {
 		fi
 	fi
 
-	helper.setup 'Bootstrap' "$@"
+	helper.setup --no-confirm 'Bootstrap' "$@"
 
 	mkdir -p "$XDG_CONFIG_HOME"
 

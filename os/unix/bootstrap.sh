@@ -62,10 +62,10 @@ EOF
 	cat <<-"EOF"
 	---
 	. ~/.bootstrap/bootstrap-out.sh
-	~/scripts/lifecycle/doctor.sh
-	~/scripts/lifecycle/bootstrap.sh
+	~/scripts/doctor.sh
+	~/scripts/bootstrap.sh
 	dotdrop install -c ~/.dotfiles/os/unix/config/dotdrop/dotdrop.yaml -p nullptr
-	~/scripts/lifecycle/idempotent.sh
+	~/scripts/idempotent.sh
 	---
 	EOF
 }

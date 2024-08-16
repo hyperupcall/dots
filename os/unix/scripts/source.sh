@@ -46,12 +46,17 @@
 
 helper.setup() {
 	local flag_force_install=no
+	local flag_no_confirm=no
 
 	local arg=
 	for arg; do
 		case $arg in
 			--force-install)
 				flag_force_install=yes
+				shift
+				;;
+			--no-confirm)
+				flag_no_confirm=yes
 				shift
 				;;
 		esac
@@ -79,7 +84,7 @@ helper.setup() {
 			if declare -f "install.$id" &>/dev/null; then
 				has_function=yes
 				if ! declare -f installed &>/dev/null || ! installed || [ "$flag_force_install" = yes ]; then
-					if util.confirm "Install $program_name?"; then
+					if util.confirm "Install $program_name?" || [ "$flag_no_confirm" = yes ]; then
 						"install.$id" "$@"
 						break
 					fi

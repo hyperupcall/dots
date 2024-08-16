@@ -26,8 +26,9 @@ install.arch() {
 
 
 install_albert() {
-	util.clone ~/.dotfiles/.data/repos/albert 'https://github.com/albertlauncher/albert' --recursive
-	local dir="$REPLY"
+	local dir="$HOME/.dotfiles/.data/repos/albert"
+	util.clone "$dir" 'https://github.com/albertlauncher/albert' --recursive
+
 	cd "$dir"
 	git submodule update --init lib/QHotkey
 

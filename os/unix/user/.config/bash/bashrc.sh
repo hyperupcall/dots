@@ -1,7 +1,5 @@
 # shellcheck shell=bash
-#
 # ~/.bashrc
-#
 
 # Stop execution if bash is non-interactive
 [[ $- != *i* ]] && [ ! -t 0 ] && return

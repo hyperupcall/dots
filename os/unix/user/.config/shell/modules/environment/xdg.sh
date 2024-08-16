@@ -416,11 +416,6 @@ export WINEPREFIX="$XDG_DATA_HOME/wine"
 export MATHEMATICA_BASE="/usr/share/mathematica"
 export MATHEMATICA_USERBASE="$XDG_DATA_HOME/mathematica"
 
-# X11
-# export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
-# export XCOMPOSEFILE="$XDG_CONFIG_HOME/X11/Xcompose"
-# export XCOMPOSECACHE="$XDG_CACHE_HOME/X11/Xcompose"
-
 # xsel
 alias xsel='xsel -l "$XDG_DATA_HOME/xsel/xsel.log'
 
