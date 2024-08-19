@@ -34,12 +34,12 @@ main() {
 		fi
 	else
 		# Not WSL
-		local gpg_dir='/storage/ur/storage_other/gnupg'
+		local gpg_dir='/storage/short/storage_other/gnupg'
 		if [ -d "$gpg_dir" ]; then
 			gpg --homedir "$gpg_dir" "${fingerprints[@]}" --export-ownertrust | gpg --import-ownertrust
 			gpg --homedir "$gpg_dir" --armor --export-secret-key "${fingerprints[@]}" | gpg --import
 		else
-			core.print_warn "Skipping importing GPG keys from /storage/ur subdirectory"
+			core.print_warn "Skipping importing GPG keys from /storage/short subdirectory"
 
 			find_mnt_usb '6044-5CC1' # DUPLICATED
 			local block_dev_target=$REPLY

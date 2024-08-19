@@ -123,7 +123,7 @@ foreach ($relativePath in @(
 }
 
 # TODO
-# $__dirname = Split-Path -Parent "$PSCommandPath"
+# $_dirname = Split-Path -Parent "$PSCommandPath"
 
 # winget install --id GNUPG.Gpg4win --source winget
 # winget install --id PuTTY.PuTTY --source winget
@@ -138,7 +138,7 @@ foreach ($relativePath in @(
 # Assert-ScoopBucket -Name java
 # Assert-ScoopBucket -Name games
 
-# Get-Content "$(Join-Path -Path "$__dirname" -ChildPath 'packages.conf')" | ForEach-Object {
+# Get-Content "$(Join-Path -Path "$_dirname" -ChildPath 'packages.conf')" | ForEach-Object {
 # 	if (!$_) {
 # 		return
 # 	}

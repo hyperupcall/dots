@@ -10,4 +10,8 @@ install.debian() {
 	sudo apt-get install -y borgbackup
 }
 
+install.opensuse() {
+	sudo zypper -n install borgbackup
+}
+
 main "$@"
