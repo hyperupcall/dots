@@ -21,7 +21,7 @@ from typing import Callable
 # Check to ensure all regular expressions are working as intended:
 # $ lint-scripts.py --internal-test-regex
 
-# TODO: curl
+# TODO: git clone
 
 Rule = dict[str, any]
 

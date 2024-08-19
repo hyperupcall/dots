@@ -59,7 +59,7 @@ Some scripts should be executed. They include:
   - Modify `/etc/fstab`
 - Retrieve SSH, PGP keys
 - Setup neovim
-- Setup pass (pass-browserpass, and `~/.password-store`)
+- Setup pass
 - Setup Firefox, Brave
   - Sync data
 - Setup Maestral

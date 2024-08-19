@@ -47,6 +47,7 @@
 helper.setup() {
 	local flag_force_install=no
 	local flag_no_confirm=no
+	local flag_fn_prefix=install
 
 	local arg=
 	for arg; do
@@ -57,6 +58,10 @@ helper.setup() {
 				;;
 			--no-confirm)
 				flag_no_confirm=yes
+				shift
+				;;
+			--fn-prefix)
+				flag_fn_prefix=${arg#*=}
 				shift
 				;;
 		esac
@@ -81,11 +86,11 @@ helper.setup() {
 		local has_function=no
 		local id=
 		for id in "$ID" "$ID_LIKE" any; do
-			if declare -f "install.$id" &>/dev/null; then
+			if declare -f "$flag_fn_prefix.$id" &>/dev/null; then
 				has_function=yes
 				if ! declare -f installed &>/dev/null || ! installed || [ "$flag_force_install" = yes ]; then
 					if util.confirm "Install $program_name?" || [ "$flag_no_confirm" = yes ]; then
-						"install.$id" "$@"
+						"$flag_fn_prefix.$id" "$@"
 						break
 					fi
 				else
@@ -109,10 +114,10 @@ pkg.add_apt_key() {
 	local source_url=$1
 	local dest_file="$2"
 
-	if [ ! -f "$dest_file" ]; then
+	if [ ! -f "$dest_file" ] || [ ! -s "$dest_file" ]; then
 		core.print_info "Downloading and writing key to $dest_file"
 		sudo mkdir -p "${dest_file%/*}"
-		util.req "$source_url" \
+		curl -K "$CURL_CONFIG" "$source_url" \
 			| sudo tee "$dest_file" >/dev/null
 	fi
 }
@@ -136,6 +141,7 @@ util.clone() {
 		core.print_info "Cloning '$repo' to $dir"
 		git clone "$repo" "$dir" "$@"
 
+		local git_remote=
 		git_remote=$(git -C "$dir" remote)
 		if [ "$git_remote" = 'origin' ]; then
 			git -C "$dir" remote rename origin me
