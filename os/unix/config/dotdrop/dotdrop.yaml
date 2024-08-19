@@ -60,6 +60,9 @@ dotfiles:
   '.hushlogin':
     src: '{{@@ home_src @@}}/.hushlogin'
     dst: '{{@@ home_dst @@}}/.hushlogin'
+  'xresources':
+    src: '{{@@ cfg_src @@}}/X11/Xresources'
+    dst: '{{@@ home_dst @@}}/.Xresources'
   'bash_profile':
     src: '{{@@ cfg_src @@}}/bash/bash_profile.sh'
     dst: '{{@@ home_dst @@}}/.bash_profile'

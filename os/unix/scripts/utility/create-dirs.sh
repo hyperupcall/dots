@@ -163,8 +163,8 @@ main() {
 	)
 
 	if [ "$profile" = 'desktop' ]; then
-		local -r storage_home='/storage/ur/storage_home'
-		local -r storage_other='/storage/ur/storage_other'
+		local -r storage_home='/storage/short/storage_home'
+		local -r storage_other='/storage/short/storage_other'
 		must.link "$storage_home/Desktop" "$HOME/Desktop"
 		must.link "$storage_home/Dls" "$HOME/Dls"
 		must.link "$storage_home/Other/Templates" "$HOME/Other/Templates"

@@ -128,8 +128,8 @@ pkg.add_apt_repository() {
 }
 
 util.clone() {
-	local repo="$1"
-	local dir="$2"
+	local dir="$1"
+	local repo="$2"
 	shift 2
 
 	if [ ! -d "$dir" ]; then

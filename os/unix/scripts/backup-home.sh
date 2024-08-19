@@ -6,7 +6,7 @@ main() {
 	local backup_dir="/storage/vault/rodinia/Backups/backup_storage_home"
 
 	# shellcheck disable=SC2059
-	printf "Backing up\n  from: /storage/ur/storage_{home,other}\n  to:   $backup_dir\n"
+	printf "Backing up\n  from: /storage/short/storage_{home,other}\n  to:   $backup_dir\n"
 	if util.confirm; then
 		if [ ! -d "$backup_dir" ]; then
 			core.print_die "Backup directory does not exist"
@@ -39,9 +39,9 @@ main() {
 			--exclude '**/.hg' \
 			--exclude '**/.svn' \
 			"$backup_dir"::'backup-{now}' \
-			'/storage/ur/storage_home' \
-			'/storage/ur/storage_other' \
+			'/storage/short/storage_home' \
 			"${XDG_STATE_HOME:?}/history"
+			#'/storage/short/storage_other' \
 	fi
 }
 

@@ -31,6 +31,7 @@ declare -ga g_dotfiles=(
 	home:'.gnupg/gpg.conf'
 	home:'.gnupg/gpg-agent.conf'
 	home:'.hushlogin'
+	xresources"|cfg:X11/Xresources|home:.Xresources"
 	bash_profile"|cfg:bash/bash_profile.sh|home:.bash_profile"
 	bash_logout"|cfg:bash/bash_logout.sh|home:.bash_logout"
 	bashrc"|cfg:bash/bashrc.sh|home:.bashrc"
