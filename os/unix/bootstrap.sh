@@ -119,8 +119,7 @@ updatesystem() {
 		sudo dnf -y update
 		sudo dnf -y autoremove
 	elif iscmd 'zypper'; then
-		sudo zypper -y update
-		sudo zypper -y upgrade
+		sudo zypper -n update
 	else
 		die 'Failed to determine package manager'
 	fi
@@ -139,7 +138,7 @@ installcmd() {
 		elif iscmd 'dnf'; then
 			run sudo dnf -y install "$2"
 		elif iscmd 'zypper'; then
-			run sudo zypper -y install "$2"
+			run sudo zypper -n install "$2"
 		elif iscmd 'eopkg'; then
 			run sudo eopkg -y install "$2"
 		elif iscmd 'brew'; then

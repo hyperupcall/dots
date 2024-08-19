@@ -79,12 +79,12 @@ install.fedora() {
 }
 
 install.opensuse() {
-	sudo zypper -y update
-	sudo zypper -y upgrade
+	sudo zypper -n update
+	sudo zypper -n upgrade
 
-	sudo zypper -y install -t pattern devel_basis lvm
-	sudo zypper -y install bash-completion curl rsync pass cmake ccache vim nano jq # lint-ignore
-	sudo zypper -y install pkg-config openssl-devel # For starship
+	sudo zypper -n install -t pattern devel_basis lvm
+	sudo zypper -n install bash-completion curl rsync pass cmake ccache vim nano jq # lint-ignore
+	sudo zypper -n install pkg-config openssl-devel # For starship
 }
 
 main "$@"

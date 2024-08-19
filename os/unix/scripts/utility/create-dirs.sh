@@ -184,7 +184,7 @@ main() {
 	fi
 
 	# Must be last as they are dependent on previous symlinking
-	must.dir "$HOME/.dotfiles/.home/Documents/Applications/IntegratedAppImages"
+	must.dir "$HOME/.dotfiles/.home/Documents/AppImages"
 }
 
 must.rm() {

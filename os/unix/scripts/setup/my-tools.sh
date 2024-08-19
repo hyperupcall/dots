@@ -7,6 +7,10 @@ main() {
 }
 
 install.any() {
+	if ! command -v cargo &>/dev/null; then
+		~/scripts/setup/rust.sh
+	fi
+
 	cargo install \
 		fox-template \
 		fox-dotfile \

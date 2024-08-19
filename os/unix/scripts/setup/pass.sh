@@ -32,7 +32,7 @@ install.fedora() {
 
 install.opensuse() {
 	sudo zypper refresh
-	sudo zypper -y install pass
+	sudo zypper -n install pass
 }
 
 install.arch() {

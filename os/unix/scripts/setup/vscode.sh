@@ -40,7 +40,7 @@ install.opensuse() {
 			| sudo tee '/etc/zypp/repos.d/vscode.repo' >/dev/null
 
 	sudo zypper refresh
-	sudo zypper -y install code code-insiders
+	sudo zypper -n install code code-insiders
 }
 
 main "$@"

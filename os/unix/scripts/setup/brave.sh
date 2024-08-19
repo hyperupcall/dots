@@ -36,10 +36,11 @@ install.debian() {
 }
 
 install.fedora() {
-	sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
 	sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-	sudo dnf config-manager --add-repo https://brave-browser-rpm-beta.s3.brave.com/x86_64/
 	sudo rpm --import https://brave-browser-rpm-beta.s3.brave.com/brave-core-nightly.asc
+
+	sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
+	sudo dnf config-manager --add-repo https://brave-browser-rpm-beta.s3.brave.com/x86_64/
 
 	sudo dnf -y update
 	sudo dnf -y install brave-browser brave-browser-beta
@@ -47,12 +48,13 @@ install.fedora() {
 
 install.opensuse() {
 	sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-	sudo zypper -y addrepo https://brave-browser-rpm-release.s3.brave.com/x86_64/ brave-browser
 	sudo rpm --import https://brave-browser-rpm-beta.s3.brave.com/brave-core-nightly.asc
+
+	sudo zypper -n addrepo https://brave-browser-rpm-release.s3.brave.com/x86_64/ brave-browser
 	sudo zypper addrepo https://brave-browser-rpm-beta.s3.brave.com/x86_64/ brave-browser-beta
 
 	sudo zypper refresh
-	sudo zypper -y install brave-browser brave-browser-beta
+	sudo zypper -n install brave-browser brave-browser-beta
 }
 
 install.manjaro() {
@@ -60,7 +62,7 @@ install.manjaro() {
 }
 
 install.arch() {
-	yay -S brave brave-bin brave-beta-bin
+	yay -S brave-bin brave-beta-bin
 }
 
 main "$@"

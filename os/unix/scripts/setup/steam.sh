@@ -12,7 +12,8 @@ install.debian() {
 	cd "$temp_dir"
 
 	curl -K "$CURL_CONFIG" -o ./steam.deb 'https://cdn.akamai.steamstatic.com/client/installer/steam.deb'
-	sudo apt-get install -y ./steam.deb
+	# With `apt-get install`, it might automatically choose 'steam-launcher' from repository.
+	sudo dpkg -i ./steam.deb
 }
 
 main "$@"

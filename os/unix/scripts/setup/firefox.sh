@@ -19,7 +19,7 @@ install.arch() {
 }
 
 install.opensuse() {
-	sudo zypper -y install firefox
+	sudo zypper -n install firefox
 }
 
 main "$@"
