@@ -118,7 +118,7 @@ unlink() {
 
 	_exit_code=0
 	for _file; do
-		command unlink "$file"
+		command unlink "$_file"
 		_code=$?
 		if (($_code > 0)); then
 			_exit_code=$_code
@@ -127,6 +127,7 @@ unlink() {
 	done
 
 	unset -v _arg _file
+	return $_exit_code
 }
 
 #clone(user, root)

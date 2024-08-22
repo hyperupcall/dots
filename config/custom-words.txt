@@ -27,6 +27,7 @@ entrypoint
 entrypoints
 errexit
 eval
+execa
 foxxy
 frontmatter
 fuzzers
@@ -48,6 +49,7 @@ NOLINT
 NOLINTNEXTLINE
 nounset
 Overconstraint
+Positionals
 posix
 prettierrc
 printk
