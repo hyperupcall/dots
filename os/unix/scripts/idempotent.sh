@@ -19,6 +19,12 @@ main() {
 	# 	fi
 	# fi
 
+	util.add_user_to_group "$USER" 'docker'
+	util.add_user_to_group "$USER" 'vboxusers'
+	util.add_user_to_group "$USER" 'libvirt'
+	util.add_user_to_group "$USER" 'kvm'
+	util.add_user_to_group "$USER" 'input'
+
 	~/.dotfiles/os/unix/scripts/utility/create-dirs.sh
 	~/.dotfiles/os/unix/scripts/utility/generate-aliases.sh
 	~/.dotfiles/os/unix/scripts/utility/generate-dotgen.sh

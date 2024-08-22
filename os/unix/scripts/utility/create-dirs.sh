@@ -109,7 +109,6 @@ main() {
 	#                 CREATE HOME DIR SYMLINKS                 #
 	# -------------------------------------------------------- #
 	if [ "$profile" = 'desktop' ]; then
-		must.link "$HOME/.dotfiles/os/unix/scripts" "$HOME/scripts"
 		must.link "$HOME/.dotfiles/.home/Documents/Projects/Programming/Organizations/fox-forks" "$HOME/forks"
 		must.link "$HOME/.dotfiles/.home/Documents/Projects/Programming/Git" "$HOME/git"
 		must.link "$HOME/.dotfiles/.home/Documents/Projects/Programming/Organizations" "$HOME/repositories"
@@ -132,15 +131,16 @@ main() {
 		unset -v filename
 	}
 
-	# Create XDG user directories.
-	source "$XDG_CONFIG_HOME/user-dirs.dirs"
-	for dir in "$XDG_DESKTOP_DIR" "$XDG_DOWNLOAD_DIR" "$XDG_TEMPLATES_DIR" "$XDG_PUBLICSHARE_DIR" "$XDG_DOCUMENTS_DIR" "$XDG_MUSIC_DIR" "$XDG_PICTURES_DIR" "$XDG_VIDEOS_DIR"; do
-			must.dir "$dir"
-	done; unset -v dir
-
-	# Populate ~/.dotfiles/.home/.
+	# Create XDG user directories and symlink them to ~/.dotfiles/.home/.
 	(
 		source "$XDG_CONFIG_HOME/user-dirs.dirs"
+
+		for dir in "$XDG_DESKTOP_DIR" "$XDG_DOWNLOAD_DIR" "$XDG_TEMPLATES_DIR" "$XDG_PUBLICSHARE_DIR" "$XDG_DOCUMENTS_DIR" "$XDG_MUSIC_DIR" "$XDG_PICTURES_DIR" "$XDG_VIDEOS_DIR"; do
+			if [ -n "$dir" ]; then
+				must.dir "$dir"
+			fi
+		done; unset -v dir
+
 		must.link "$XDG_DESKTOP_DIR" "$HOME/.dotfiles/.home/Desktop"
 		must.link "$XDG_DOWNLOAD_DIR" "$HOME/.dotfiles/.home/Downloads"
 		must.link "$XDG_TEMPLATES_DIR" "$HOME/.dotfiles/.home/Templates"

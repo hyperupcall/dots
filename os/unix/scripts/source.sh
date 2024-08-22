@@ -68,7 +68,9 @@ helper.setup() {
 	done
 
 	local program_name="$1"
-	shift
+	if [ -n "$program_name" ]; then
+		shift
+	fi
 
 	(
 		# A list of 'os-release' files can be found at https://github.com/which-distro/os-release.
@@ -89,7 +91,7 @@ helper.setup() {
 			if declare -f "$flag_fn_prefix.$id" &>/dev/null; then
 				has_function=yes
 				if ! declare -f installed &>/dev/null || ! installed || [ "$flag_force_install" = yes ]; then
-					if util.confirm "Install $program_name?" || [ "$flag_no_confirm" = yes ]; then
+					if [ "$flag_no_confirm" = yes ] || util.confirm "Install $program_name?"; then
 						"$flag_fn_prefix.$id" "$@"
 						break
 					fi
@@ -200,3 +202,46 @@ util.get_latest_github_tag() {
 	REPLY=$tag_name
 }
 
+util.add_user_to_group() {
+	local user="$1"
+	local group="$2"
+
+	if id -nG "$user" | grep -qw "$group"; then
+		return
+	fi
+
+	local output=
+	if output=$(sudo groupadd "$group" 2>&1); then
+		core.print_info "Creating group \"$group\""
+	else
+		local code=$?
+		if ((code != 9)); then
+			core.print_warn "Failed to create group \"$group\""
+			printf '%s\n' "  -> $output"
+		fi
+	fi
+
+	if sudo usermod -aG "$group" "$user"; then
+		core.print_info "Added user \"$user\" to group \"$group\""
+	else
+		core.print_warn "Failed to add user \"$user\" to group \"$group\""
+	fi
+}
+
+util.update_system() {
+	helper.system --no-confirm --fn-prefix=update_system
+
+	update_system.debian() {
+		sudo apt-get -y update
+		sudo apt-get -y upgrade
+	}
+	update_system.fedora() {
+		sudo dnf -y update
+	}
+	update_system.opensuse() {
+		sudo zypper -n update
+	}
+	update_system.arch() {
+		sudo pacman -Syyu --noconfirm
+	}
+}

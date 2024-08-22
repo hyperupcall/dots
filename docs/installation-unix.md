@@ -58,6 +58,8 @@ Some scripts should be executed. They include:
 - Setup ZFS, BTRFS
   - Modify `/etc/fstab`
 - Retrieve SSH, PGP keys
+- `~/scripts/doctor.sh`
+  - Install Git if current version is out of date
 - Setup neovim
 - Setup pass
 - Setup Firefox, Brave
