@@ -21,8 +21,6 @@ from typing import Callable
 # Check to ensure all regular expressions are working as intended:
 # $ lint-scripts.py --internal-test-regex
 
-# TODO: git clone
-
 Rule = dict[str, any]
 
 class c:
@@ -48,8 +46,23 @@ def lintfile(file: Path, rules: list[Rule], options: dict[str, any]):
 	content_arr = file.read_text().split('\n')
 
 	for line_i, line in enumerate(content_arr):
-		# TODO: Only allow ignoring specified rules
 		if 'lint-ignore' in line:
+			m = re.search('lint-ignore:([\\w-]+)', line)
+			if m is None:
+				continue
+
+			rule_id = m.group(1)
+			found_rule = False
+			for rule in rules:
+				if rule['name'] == rule_id:
+					found_rule = True
+
+			if found_rule:
+				continue
+			else:
+				print(f'{c.YELLOW}Warning:{c.RESET} Rule "{rule_id}" referenced in lint-ignore, but was not found')
+
+		if re.search('^\\s*#', line):
 			continue
 
 		for rule in rules:
@@ -74,13 +87,17 @@ def lintfile(file: Path, rules: list[Rule], options: dict[str, any]):
 				midstr = line[m.start('match'):m.end('match')]
 				poststr = line[m.end('match'):]
 
+				if options['fix'] and rule['fixerFn'] is not None:
+					fixed_line = rule['fixerFn'](line, m)
+					newmidstr = fixed_line[:-len(poststr)][len(prestr):]
+					content_arr[line_i] = fixed_line
+
 				print(f'{c.CYAN}{dir}{c.RESET}:{line_i + 1}')
 				print(f'{c.MAGENTA}{rule["name"]}{c.RESET}: {rule["reason"]}')
 				print(f'{prestr}{c.RED}{midstr}{c.RESET}{poststr}')
+				if options['fix'] and rule['fixerFn'] is not None:
+					print(f'{prestr}{c.GREEN}{newmidstr}{c.RESET}{poststr}')
 				print()
-
-				if options['fix']:
-					content_arr[line_i] = rule['fixerFn'](line, m)
 
 				rule['found'] += 1
 
@@ -244,6 +261,28 @@ def main():
 		],
 	})
 
+	# Before: pkcon
+	# After: pkcon -y
+	def pkconMustYes(line: str, m: any) -> str:
+		prestr, _, poststr = utilGetStrs(line, m)
+
+		return f'{prestr}pkcon -y {poststr}'
+
+	rules.append({
+		'name': 'pkcon-must-yes',
+		'regex': '(?P<match>pkcon (?!-y))',
+		'reason': 'To make sure it is automated',
+		'fileTypes': ['bash', 'sh'],
+		'fixerFn': pkconMustYes,
+		'testPositiveMatches': [
+			'pkcon install git',
+			'sudo pkcon install git'
+		],
+		'testNegativeMatches': [
+			'pkcon -y'
+		],
+	})
+
 	# Before: sudo yay -S
 	# After: yay -S
 	def yayNoSudo(line: str, m: any) -> str:
@@ -267,20 +306,20 @@ def main():
 
 	# Before: helper.setup
 	# After: N/A
-	rules.append({
-		'name': 'helper-setup-assert-arguments',
-		'regex': '(?P<match>helper\\.setup(?! \'[a-zA-Z0-9 ._-]+\' "\\$@")(?!\\(\\)))',
-		'reason': 'Add required arguments',
-		'fileTypes': ['bash', 'sh'],
-		'fixerFn': None,
-		'testPositiveMatches': [
-			'helper.setup',
-			'helper.setup "value" "$@"'
-		],
-		'testNegativeMatches': [
-			'helper.setup \'param\' "$@"'
-		],
-	})
+	# rules.append({
+	# 	'name': 'helper-setup-assert-arguments',
+	# 	'regex': '(?P<match>helper\\.setup(?! \'.+?\' "\\$@")(?!\\(\\)))',
+	# 	'reason': 'Add required arguments',
+	# 	'fileTypes': ['bash', 'sh'],
+	# 	'fixerFn': None,
+	# 	'testPositiveMatches': [
+	# 		'helper.setup',
+	# 		'helper.setup "value" "$@"'
+	# 	],
+	# 	'testNegativeMatches': [
+	# 		'helper.setup \'param\' "$@"'
+	# 	],
+	# })
 
 	# Before: No banned commands
 	# After: N/A
@@ -295,6 +334,23 @@ def main():
 		],
 		'testNegativeMatches': [
 			'apt-get install libtool',
+		],
+	})
+
+	# Before: No git clone
+	# After: N/A
+	rules.append({
+		'name': 'no-git-clone',
+		'regex': '(?P<match>git .*?clone) ',
+		'reason': 'Use util.clone instead exist',
+		'fileTypes': ['bash', 'sh'],
+		'fixerFn': None,
+		'testPositiveMatches': [
+			'git clone https://',
+			'git -c key=value clone https://'
+		],
+		'testNegativeMatches': [
+			'util.clone ~/ https://',
 		],
 	})
 

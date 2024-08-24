@@ -38,15 +38,27 @@ _shell_util_die() {
 }
 
 _shell_util_log_error() {
-	printf "\033[0;31m%s\033[0m %s\n" 'Error:' "$1" >&2
+	if [ -t 0 ]; then
+		printf "\033[0;31m%s\033[0m %s\n" 'Error:' "$1" >&2
+	else
+		printf "%s %s\n" 'Error:' "$1" >&2
+	fi
 }
 
 _shell_util_log_warn() {
-	printf "\033[1;33m%s\033[0m %s\n" 'Warn:' "$1" >&2
+	if [ -t 0 ]; then
+		printf "\033[1;33m%s\033[0m %s\n" 'Warn:' "$1" >&2
+	else
+		printf "%s %s\n" 'Warn:' "$1" >&2
+	fi
 }
 
 _shell_util_log_info() {
-	printf "\033[0;34m%s\033[0m %s\n" 'Info:' "$1"
+	if [ -t 0 ]; then
+		printf "\033[0;34m%s\033[0m %s\n" 'Info:' "$1"
+	else
+		printf "%s %s\n" 'Info:' "$1"
+	fi
 }
 
 _shell_util_ls() {

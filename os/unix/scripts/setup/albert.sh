@@ -3,28 +3,29 @@
 source "${0%/*}/../source.sh"
 
 main() {
-	helper.setup 'Albert' "$@"
+	helper.setup --prefix-fn=install_deps.debian 'Albert' "$@"
+	install_albert
 }
 
-install.debian() {
+install_deps.debian() {
 	sudo apt-get install -y libarchive-dev autoconf
 	sudo apt-get install -y intltool libtool libgmp-dev libmpfr-dev libcurl4-openssl-dev libicu-dev libxml2-dev # pybind11
 	sudo apt-get install -y qt6-base-dev qt6-tools-dev qt6-5compat-dev libqt6svg6-dev # albert
 }
 
-install.fedora() {
+install_deps.fedora() {
 	sudo dnf install -y libarchive-devel autoconf
 	sudo dnf install -y intltool libtool libcurl-devel gmp-devel mpfr-devel libicu-devel # pybind11
 	sudo dnf install -y qt6-qtbase-devel qt6-qttools-devel qt6-qt5compat-devel qt6-qtsvg-devel qt6-qtscxml # albert
 }
 
-install.arch() {
+install_deps.arch() {
 	sudo pacman -Syu --noconfirm libarchive autoconf
 	sudo pacman -Syu --noconfirm intltool # pybind11
 	sudo pacman -Syu --noconfirm qt6-base qt6-tools qt6-5compat qt6-scxml # albert
 }
 
-
+# Built from scratch because the version from the custom repositories it outdated.
 install_albert() {
 	local dir="$HOME/.dotfiles/.data/repos/albert"
 	util.clone "$dir" 'https://github.com/albertlauncher/albert' --recursive
@@ -67,37 +68,6 @@ install_albert() {
 	cmake -B build -S . -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=Debug
 	cmake --build build
 	sudo cmake --install build
-
-	# TODO
-	# case $pkgmngr in
-	# apt)
-	# 	local version='22.04'
-	# 	source /etc/os-release
-	# 	if [ "$ID" = 'zorin' ]; then
-	# 		if [ "$VERSION_ID" = 16 ]; then
-	# 			version='20.04'
-	# 		elif [ "$VERSION_ID" = 15 ]; then
-	# 			version='20.04'
-	# 		fi
-	# 	fi
-	# 	local gpg_file="/etc/apt/keyrings/albert"
-
-
-	# 	pkg.add_apt_key \
-	# 		"https://download.opensuse.org/repositories/home:manuelschneid3r/xUbuntu_$version/Release.key" \
-	# 		"$gpg_file"
-
-	# 	pkg.add_apt_repository \
-	# 		"deb [signed-by=$gpg_file] http://download.opensuse.org/repositories/home:/manuelschneid3r/xUbuntu_$version/ /" \
-	# 		'/etc/apt/sources.list.d/albert.list'
-
-	# 	sudo apt-get update -y
-	# 	sudo apt-get install -y albert
-	# 	;;
-	# *)
-	# 	core.print_fatal "Pakage manager '$pkgmngr' not supported"
-	# 	;;
-	# esac
 }
 
 configure.any() {

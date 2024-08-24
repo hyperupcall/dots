@@ -4,6 +4,7 @@ autofix
 autoremove
 Bashisms
 builtins
+Camino
 checkstyle
 cmds
 Codeberg

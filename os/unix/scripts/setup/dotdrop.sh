@@ -9,7 +9,7 @@ if [ -d ./repository ]; then
 	core.print_info 'Found dotdrop repository'
 else
 	core.print_info 'Downloading dotdrop repository'
-	git clone https://github.com/deadc0de6/dotdrop ./repository
+	util.clone ./repository https://github.com/deadc0de6/dotdrop
 fi
 cd ./repository
 # TODO: apt-get install -y python3-venv

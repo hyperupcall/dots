@@ -13,6 +13,10 @@ task.build() {
 	sed 's/XTerm/UXTerm/g' xterm.Xresources >> uxterm.Xresources
 }
 
+task.lint() {
+	yamllint -c ./.yamllint.yaml .
+}
+
 task.test() {
 	(cd "./os/unix/user/.config/shell/modules/common" && bats -p .)
 	~/scripts/lint/lint-scripts.sh

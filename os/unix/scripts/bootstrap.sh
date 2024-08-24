@@ -68,7 +68,7 @@ install_packages.arch() {
 install_packages.debian() {
 	sudo apt-get -y update && sudo apt-get -y upgrade
 	sudo apt-get -y install apt-transport-https build-essential
-	sudo apt-get -y install bash-completion curl rsync cmake ccache vim nano jq lvm2 # lint-ignore
+	sudo apt-get -y install bash-completion curl rsync cmake ccache vim nano jq lvm2 # lint-ignore:curl-must-have-args
 	sudo apt-get -y install pkg-config libssl-dev # For starship
 }
 

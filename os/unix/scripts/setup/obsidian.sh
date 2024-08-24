@@ -24,7 +24,7 @@ install.any() {
 		local file='Obsidian.AppImage'
 		curl -K "$CURL_CONFIG" -o "$file" "https://github.com/obsidianmd/obsidian-releases/releases/download/$latest_tag/Obsidian-$latest_version.AppImage"
 		chmod +x "$file"
-		nohup 2>/dev/null ./"$file" & # TODO (does not work)
+		exec ./"$file" # TODO: Launch background
 	)
 }
 

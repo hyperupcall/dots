@@ -60,8 +60,14 @@ helper.setup() {
 				flag_no_confirm=yes
 				shift
 				;;
-			--fn-prefix)
-				flag_fn_prefix=${arg#*=}
+			--fn-prefix*)
+				core.shopt_push -s nullglob on
+				flag_fn_prefix=${arg#--fn-prefix}
+				flag_fn_prefix=${flag_fn_prefix#=}
+				core.shopt_pop
+				if [ -z "$flag_fn_prefix" ]; then
+					core.print_die "Expected a value for --fn-prefix"
+				fi
 				shift
 				;;
 		esac
@@ -141,7 +147,7 @@ util.clone() {
 
 	if [ ! -d "$dir" ]; then
 		core.print_info "Cloning '$repo' to $dir"
-		git clone "$repo" "$dir" "$@"
+		git clone "$repo" "$dir" "$@" # lint-ignore:no-git-clone
 
 		local git_remote=
 		git_remote=$(git -C "$dir" remote)
@@ -234,6 +240,10 @@ util.update_system() {
 	update_system.debian() {
 		sudo apt-get -y update
 		sudo apt-get -y upgrade
+	}
+	update_system.neon() {
+		sudo apt-get -y update
+		sudo pkcon -y update
 	}
 	update_system.fedora() {
 		sudo dnf -y update

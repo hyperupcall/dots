@@ -7,7 +7,20 @@ main() {
 }
 
 install.any() {
-	# TODO: install gettext
+	helper.setup --no-confirm --fn-prefix=install_gettext.debian
+	install_gettext.debian() {
+		sudo apt-get -y install gettext
+	}
+	install_gettext.fedora() {
+		sudo dnf install -y gettext
+	}
+	install_gettext.opensuse() {
+		sudo zypper -n install gettext
+	}
+	install_gettext.arch() {
+		sudo pacman -Syu --noconfirm gettext
+	}
+
 	local dir="$HOME/.dotfiles/.data/repos/neovim"
 	util.clone "$dir" 'https://github.com/neovim/neovim'
 

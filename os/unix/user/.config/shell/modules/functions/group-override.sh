@@ -78,9 +78,10 @@ ping() {
 	fi
 }
 
-if [ -t 0 ]; then
-	_stty_saved_settings=$(stty -g)
-fi
+# Save tty modifications that were made on shell startup. This assumes that the modifications already happened.
+# They are saved so "stty sane" resets the tty to the custom defaults that are set during initialization.
+_stty_saved_settings=
+[ -t 0 ] && stty_saved_settings=$(stty -g)
 stty() {
 	if [ $# -eq 1 ] && [ "$1" = 'sane' ]; then
 		# Reset our modifications to the behaviors of the tty device, including the
@@ -95,8 +96,7 @@ stty() {
 			command stty sane
 			_stty_exit_code=$?
 
-			# TODO?
-			_shell_util_log_warn "stty: Variable \$_stty_saved_settings empty. Falling back to 'stty sane'" >&2
+			_shell_util_log_warn "stty: Variable \$_stty_saved_settings empty. Falling back to 'stty sane'"
 		fi
 
 		return $_stty_exit_code

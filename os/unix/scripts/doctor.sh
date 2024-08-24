@@ -2,9 +2,8 @@
 
 source "${0%/*}/source.sh"
 
-# TODO: hub.woof, nerdfonts
+# TODO: hub, woof, nerdfonts
 # TODO: git smuge etc filters are in use
-# TODO
 # if command -v autoenv_init >/dev/null 2>&1; then
 # 		autoenv_init || :
 # 	else
@@ -27,6 +26,10 @@ main() {
 	# Git
 	{
 		# TODO: Check if Git is installed. If not, install it from the repositories. Later, uninstall it
+		if ! command -v git &>/dev/null; then
+
+		fi
+
 		# if it is an older verison
 		local git_version git_version_arr
 		git_version=$(git version)
