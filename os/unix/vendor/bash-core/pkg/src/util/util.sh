@@ -70,14 +70,6 @@ core.private.util.validate_signal() {
 	fi
 }
 
-# @description Prints the current errors
-# @internal
-core.private.util.err_print() {
-	printf '%s\n' 'Error found:'
-	printf '%s\n' "  ERRCODE: $ERRCODE" >&2
-	printf '%s\n' "  ERR: $ERR" >&2
-}
-
 # @description Determine if should print color, given a file descriptor
 # @arg 1 File descriptor for terminal check
 # @internal

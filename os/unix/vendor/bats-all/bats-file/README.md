@@ -1,3 +1,7 @@
+> ⚠️ _Warning_ This repository used to be included in [hyperupcall/bats-all](https://github.com/hyperupcall/bats-all),
+> but that repository now _directly_ adds upstream bats-core repositories. Usage of this repository is deprecated.
+> Expect this repository to be either removed or moved to my [fox-archives](https://github.com/fox-archives) organization.
+
 # bats-file
 
 [![GitHub license](https://img.shields.io/badge/license-CC0-blue.svg)](https://raw.githubusercontent.com/bats-core/bats-file/master/LICENSE)

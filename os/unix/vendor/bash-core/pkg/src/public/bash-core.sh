@@ -14,9 +14,7 @@
 #   kill -USR1 $$
 #   core.trap_remove 'some_handler' 'USR1'
 core.trap_add() {
-	if ! [ ${___global_bash_core_has_init__+x} ]; then
-		core.private.util.init
-	fi
+	core.private.util.init
 	local function="$1"
 
 	core.private.util.validate_args "$function" $#
@@ -57,9 +55,7 @@ core.trap_add() {
 #   kill -USR1 $$
 #   core.trap_remove 'some_handler' 'USR1'
 core.trap_remove() {
-	if ! [ ${___global_bash_core_has_init__+x} ]; then
-		core.private.util.init
-	fi
+	core.private.util.init
 	local function="$1"
 
 	core.private.util.validate_args "$function" $#
@@ -106,9 +102,7 @@ core.trap_remove() {
 #   [[ 'variable' == @(foxtrot|golf|echo|variable) ]] && printf '%s\n' 'Woof!'
 #   core.shopt_pop
 core.shopt_push() {
-	if ! [ ${___global_bash_core_has_init__+x} ]; then
-		core.private.util.init
-	fi
+	core.private.util.init
 	local shopt_action="$1"
 	local shopt_name="$2"
 
@@ -153,9 +147,7 @@ core.shopt_push() {
 #   [[ 'variable' == @(foxtrot|golf|echo|variable) ]] && printf '%s\n' 'Woof!'
 #   core.shopt_pop
 core.shopt_pop() {
-	if ! [ ${___global_bash_core_has_init__+x} ]; then
-		core.private.util.init
-	fi
+	core.private.util.init
 
 	if (( ${#___global_shopt_stack___[@]} == 0 )); then
 		core.panic 'Unable to pop as nothing is in the shopt stack'
@@ -235,8 +227,11 @@ core.panic() {
 	fi
 
 	if core.err_exists; then
-		core.private.util.err_print
+		printf '%s\n' 'Error found:' >&2
+		printf '%s\n' "  ERRCODE: $ERRCODE" >&2
+		printf '%s\n' "  ERR: $ERR" >&2
 	fi
+
 	core.print_stacktrace
 	exit "$code"
 }
@@ -383,6 +378,17 @@ core.print_debug() {
 	if [[ -v DEBUG ]]; then
 		printf "%s: %s\n" 'Debug' "$msg"
 	fi
+}
+
+core.ifs_save() {
+	local new_ifs="$1"
+
+	___global_ifs_variable_saved___=$IFS
+	IFS=$new_ifs
+}
+
+core.ifs_restore() {
+	IFS=$___global_ifs_variable_saved___
 }
 
 # @description (DEPRECATED). Determine if color should be printed. Note that this doesn't

@@ -1,19 +1,8 @@
 [package]
-type = 'bash'
+type = 'lib'
+lang = 'bash'
 name = 'bats-all'
 slug = 'bats_all'
-version = '4.6.0'
+version = '5.0.0'
 authors = ['Edwin Kofler <edwin@kofler.dev>']
 description = 'An aggregation of the three most popular Bats libraries'
-
-[run]
-dependencies = []
-sourceDirs = []
-
-[run.shellEnvironment]
-
-[run.setOptions]
-pipefail = 'on'
-
-[run.shoptOptions]
-shift_verbose = 'on'

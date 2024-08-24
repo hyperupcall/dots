@@ -217,7 +217,6 @@ term.cursor_hide() {
 term.cursor_show() {
 	unset -v REPLY
 
-
 	local flag_print='no' end=
 	term.private_util_validate_p 0 "$@"
 	shift "$REPLY_SHIFT" || core.panic 'Failed to shift'
@@ -238,8 +237,6 @@ term.cursor_getpos() {
 
 	term.private_util_set_reply $'\e[6n'
 }
-
-
 
 # -------------------------------------------------------- #
 #                           Erase                          #
@@ -290,7 +287,6 @@ term.erase_line() {
 term.erase_screen_end() {
 	unset -v REPLY
 
-
 	local flag_print='no' end=
 	term.private_util_validate_p 0 "$@"
 	shift "$REPLY_SHIFT" || core.panic 'Failed to shift'
@@ -338,8 +334,6 @@ term.erase_saved_lines() { # TODO: better name?
 	term.private_util_set_reply $'\e[3J'
 }
 
-
-
 # -------------------------------------------------------- #
 #                          Scroll                          #
 # -------------------------------------------------------- #
@@ -369,8 +363,6 @@ term.scroll_up() {
 	# REPLY=$'\e[S'
 	term.private_util_set_reply $'\e[M'
 }
-
-
 
 # -------------------------------------------------------- #
 #                            Tab                           #
@@ -412,8 +404,6 @@ term.tab_clearall() {
 	term.private_util_set_reply $'\e[3g'
 }
 
-
-
 # -------------------------------------------------------- #
 #                          Screen                          #
 # -------------------------------------------------------- #
@@ -443,8 +433,6 @@ term.screen_restore() {
 
 	term.private_util_set_reply $'\e[?1049l'
 }
-
-
 
 # -------------------------------------------------------- #
 #                           Color                          #
@@ -827,8 +815,6 @@ term.color_white() {
 	term.private_util_set_reply2 "\e[1;37m%s%s" "$text" "$end"
 }
 
-
-
 # -------------------------------------------------------- #
 #                       Miscellaneous                      #
 # -------------------------------------------------------- #
@@ -843,11 +829,8 @@ term.beep() {
 	shift "$REPLY_SHIFT" || core.panic 'Failed to shift'
 	unset -v REPLY_SHIFT
 
-
 	term.private_util_set_reply $'\a'
 }
-
-
 
 # -------------------------------------------------------- #
 #                        Deprecated                        #

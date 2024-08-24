@@ -1,0 +1,26 @@
+{
+	"name": "@hyperupcall/bats-all",
+	"version": "5.2.0",
+	"description": "Aggregation of the three most popular Bats utility libraries",
+	"author": "Edwin Kofler <edwin@kofler.dev> (https://edwinkofler.com)",
+	"license": "CC0-1.0 AND BSD-3-Clause",
+	"files": [
+		"bats-assert",
+		"bats-file",
+		"bats-support",
+		"load.bash"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/hyperupcall/bats-all.git"
+	},
+	"homepage": "https://github.com/hyperupcall/bats-all#readme",
+	"bugs": {
+		"url": "https://github.com/hyperupcall/bats-all/issues",
+		"email": "edwin@kofler.dev"
+	},
+	"keywords": [
+		"bash",
+		"shell"
+	]
+}

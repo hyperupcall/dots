@@ -6,33 +6,33 @@ Core functions for any Bash program
 
 ## Index
 
-* [core.trap_add()](#coretrap_add)
-* [core.trap_remove()](#coretrap_remove)
-* [core.shopt_push()](#coreshopt_push)
-* [core.shopt_pop()](#coreshopt_pop)
-* [core.err_set()](#coreerr_set)
-* [core.err_clear()](#coreerr_clear)
-* [core.err_exists()](#coreerr_exists)
-* [core.panic()](#corepanic)
-* [core.print_stacktrace()](#coreprint_stacktrace)
-* [core.print_fatal_fn()](#coreprint_fatal_fn)
-* [core.print_error_fn()](#coreprint_error_fn)
-* [core.print_warn_fn()](#coreprint_warn_fn)
-* [core.print_info_fn()](#coreprint_info_fn)
-* [core.print_debug_fn()](#coreprint_debug_fn)
-* [core.print_fatal()](#coreprint_fatal)
-* [core.print_error()](#coreprint_error)
-* [core.print_warn()](#coreprint_warn)
-* [core.print_info()](#coreprint_info)
-* [core.print_debug()](#coreprint_debug)
-* [core.should_output_color()](#coreshould_output_color)
-* [core.get_package_info()](#coreget_package_info)
-* [core.init()](#coreinit)
-* [core.stacktrace_print()](#corestacktrace_print)
-* [core.print_die_fn()](#coreprint_die_fn)
-* [core.print_die()](#coreprint_die)
+* [core.trap_add](#coretrap_add)
+* [core.trap_remove](#coretrap_remove)
+* [core.shopt_push](#coreshopt_push)
+* [core.shopt_pop](#coreshopt_pop)
+* [core.err_set](#coreerr_set)
+* [core.err_clear](#coreerr_clear)
+* [core.err_exists](#coreerr_exists)
+* [core.panic](#corepanic)
+* [core.print_stacktrace](#coreprint_stacktrace)
+* [core.print_fatal_fn](#coreprint_fatal_fn)
+* [core.print_error_fn](#coreprint_error_fn)
+* [core.print_warn_fn](#coreprint_warn_fn)
+* [core.print_info_fn](#coreprint_info_fn)
+* [core.print_debug_fn](#coreprint_debug_fn)
+* [core.print_fatal](#coreprint_fatal)
+* [core.print_error](#coreprint_error)
+* [core.print_warn](#coreprint_warn)
+* [core.print_info](#coreprint_info)
+* [core.print_debug](#coreprint_debug)
+* [core.should_output_color](#coreshould_output_color)
+* [core.get_package_info](#coreget_package_info)
+* [core.init](#coreinit)
+* [core.stacktrace_print](#corestacktrace_print)
+* [core.print_die_fn](#coreprint_die_fn)
+* [core.print_die](#coreprint_die)
 
-### core.trap_add()
+### core.trap_add
 
 Adds a handler for a particular `trap` signal or event. Noticably,
 unlike the 'builtin' trap, this does not override any other existing handlers. The first argument
@@ -52,7 +52,7 @@ core.trap_remove 'some_handler' 'USR1'
 * **$1** (string): Function to execute on an event. Integers are forbiden
 * **$2** (string): Event signal
 
-### core.trap_remove()
+### core.trap_remove
 
 Removes a handler for a particular `trap` signal or event. Currently,
 if the function doest not exist, it prints an error
@@ -71,7 +71,7 @@ core.trap_remove 'some_handler' 'USR1'
 * **$1** (string): Function to remove
 * **$2** (string): Signal that the function executed on
 
-### core.shopt_push()
+### core.shopt_push
 
 Modifies current shell options and pushes information to stack, so
 it can later be easily undone. Note that it does not check to see if your Bash
@@ -90,7 +90,7 @@ core.shopt_pop
 * **$1** (string): Name of shopt action. Can either be `-u` or `-s`
 * **$2** (string): Name of shopt name
 
-### core.shopt_pop()
+### core.shopt_pop
 
 Modifies current shell options based on most recent item added to stack.
 
@@ -104,7 +104,7 @@ core.shopt_pop
 
 _Function has no arguments._
 
-### core.err_set()
+### core.err_set
 
 Sets an error.
 
@@ -118,7 +118,7 @@ Sets an error.
 * **number** (ERRCODE): Error code
 * **string** (ERR): Error message
 
-### core.err_clear()
+### core.err_clear
 
 Clears any of the global error state (sets to empty string).
 This means any `core.err_exists` calls after this _will_ `return 1`
@@ -130,18 +130,18 @@ _Function has no arguments._
 * **number** (ERRCODE): Error code
 * **string** (ERR): Error message
 
-### core.err_exists()
+### core.err_exists
 
 Checks if an error exists. If `ERR` is not empty, then an error
 _does_ exist
 
 _Function has no arguments._
 
-### core.panic()
+### core.panic
 
 Use when a serious fault occurs. It will print the current ERR (if it exists)
 
-### core.print_stacktrace()
+### core.print_stacktrace
 
 Prints stacktrace
 
@@ -160,7 +160,7 @@ core.trap_add 'err_handler' ERR
 
 _Function has no arguments._
 
-### core.print_fatal_fn()
+### core.print_fatal_fn
 
 Print a fatal error message including the function name of the callee
 to standard error
@@ -169,7 +169,7 @@ to standard error
 
 * **$1** (string): message
 
-### core.print_error_fn()
+### core.print_error_fn
 
 Print an error message including the function name of the callee
 to standard error
@@ -178,7 +178,7 @@ to standard error
 
 * **$1** (string): message
 
-### core.print_warn_fn()
+### core.print_warn_fn
 
 Print a warning message including the function name of the callee
 to standard error
@@ -187,7 +187,7 @@ to standard error
 
 * **$1** (string): message
 
-### core.print_info_fn()
+### core.print_info_fn
 
 Print an informative message including the function name of the callee
 to standard output
@@ -196,7 +196,7 @@ to standard output
 
 * **$1** (string): message
 
-### core.print_debug_fn()
+### core.print_debug_fn
 
 Print a debug message including the function name of the callee
 to standard output
@@ -205,7 +205,7 @@ to standard output
 
 * **$1** (string): message
 
-### core.print_fatal()
+### core.print_fatal
 
 Print a fatal error message to standard error
 
@@ -213,7 +213,7 @@ Print a fatal error message to standard error
 
 * **$1** (string): message
 
-### core.print_error()
+### core.print_error
 
 Print an error message to standard error
 
@@ -221,7 +221,7 @@ Print an error message to standard error
 
 * **$1** (string): message
 
-### core.print_warn()
+### core.print_warn
 
 Print a warning message to standard error
 
@@ -229,7 +229,7 @@ Print a warning message to standard error
 
 * **$1** (string): message
 
-### core.print_info()
+### core.print_info
 
 Print an informative message to standard output
 
@@ -237,7 +237,7 @@ Print an informative message to standard output
 
 * **$1** (string): message
 
-### core.print_debug()
+### core.print_debug
 
 Print a debug message to standard output if the environment variable "DEBUG" is present
 
@@ -245,13 +245,13 @@ Print a debug message to standard output if the environment variable "DEBUG" is 
 
 * **$1** (string): message
 
-### core.should_output_color()
+### core.should_output_color
 
 (DEPRECATED). Determine if color should be printed. Note that this doesn't
 use tput because simple environment variable checking heuristics suffice. Deprecated because this code
 has been moved to bash-std
 
-### core.get_package_info()
+### core.get_package_info
 
 (DEPRECATED) Gets information from a particular package. If the key does not exist, then the value
 is an empty string. Deprecated as this code has been moved to bash-std
@@ -264,14 +264,14 @@ is an empty string. Deprecated as this code has been moved to bash-std
 
 * **directory** (string): The full path to the directory
 
-### core.init()
+### core.init
 
 (DEPRECATED) Initiates global variables used by other functions. Deprecated as
 this function is called automatically by functions that use global variables
 
 _Function has no arguments._
 
-### core.stacktrace_print()
+### core.stacktrace_print
 
 (DEPRECATED) Prints stacktrace
 
@@ -279,7 +279,7 @@ _Function has no arguments._
 
 * [core.print_stacktrace](#coreprint_stacktrace)
 
-### core.print_die_fn()
+### core.print_die_fn
 
 (DEPRECATED) Print a error message to standard error including the function name
 of the callee to standard error and die
@@ -288,7 +288,7 @@ of the callee to standard error and die
 
 * **$1** (string): message
 
-### core.print_die()
+### core.print_die
 
 (DEPRECATED) Print a error message to standard error and die
 

@@ -9,8 +9,8 @@ term.private_util_validate_p() {
 	elif (($# - 1 == args_excluding_flags)); then
 		if [[ $1 == -?(@(p|P)) ]]; then
 			case $1 in
-				*p*) flag_print='yes' ;;
-				*P*) flag_print='yes-newline' ;;
+			*p*) flag_print='yes' ;;
+			*P*) flag_print='yes-newline' ;;
 			esac
 			REPLY_SHIFT=1
 		else
@@ -29,8 +29,8 @@ term.private_util_validate_pd() {
 	if (($# - 1 == args_excluding_flags)); then
 		if [[ $1 == -?(d|@(p|P)|d@(p|P)|@(p|P)d) ]]; then
 			case $1 in
-				*p*) flag_print='yes' ;;
-				*P*) flag_print='yes-newline' ;;
+			*p*) flag_print='yes' ;;
+			*P*) flag_print='yes-newline' ;;
 			esac
 			if [[ $1 == *d* ]]; then
 				end=$'\e[0m'
