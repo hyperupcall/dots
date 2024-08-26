@@ -59,13 +59,15 @@ Some scripts should be executed. They include:
   - Modify `/etc/fstab`
 - Retrieve SSH, PGP keys
 - `~/scripts/doctor.sh`
-  - Install Git if current version is out of date
-- Setup neovim
-- Setup pass
-- Setup Firefox, Brave
-  - Sync data
-- Setup Maestral
-- Setup Mise
+  - Setup Hub, Launcher
+  - Setup Git
+  - Setup neovim
+  - Setup dotdrop
+  - Setup pass
+  - Setup Firefox, Brave
+    - Sync data (do manually)
+  - Setup Maestral
+  - Setup Mise
 - Setup Albert
   - Enable plugins
 - Setup Obsidian

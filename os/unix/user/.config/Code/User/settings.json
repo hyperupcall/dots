@@ -482,7 +482,7 @@
 		},
 		"editor.formatOnSave": true
 	},
-	"C_Cpp.intelliSenseEngine": "default",
+	"C_Cpp.intelliSenseEngine": "disabled",
 	"C_Cpp.default.cppStandard": "c++20",
 	"C_Cpp.default.cStandard": "c17",
 	"C_Cpp.inlayHints.autoDeclarationTypes.enabled": true,

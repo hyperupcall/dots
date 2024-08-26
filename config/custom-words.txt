@@ -40,6 +40,7 @@ hyperupcall
 initializable
 intellij
 jsonlint
+katex
 kbuild
 keymon
 kofler
@@ -50,6 +51,7 @@ NOLINT
 NOLINTNEXTLINE
 nounset
 Overconstraint
+pipx
 Positionals
 posix
 prettierrc
@@ -70,6 +72,7 @@ subschema
 subschemas
 subshell
 subshells
+taplo
 templating
 tput
 trpc

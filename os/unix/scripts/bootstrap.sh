@@ -50,10 +50,6 @@ main() {
 		printf '%s\n' "$token" > ~/.dotfiles/.data/github_token
 	fi
 
-	# Clone "core" repositories.
-	util.clone ~/.core/hub https://github.com/fox-incubating/hub
-	util.clone ~/.core/launcher https://github.com/fox-incubating/launcher
-
 	~/scripts/setup/dotdrop.sh
 
 	> ~/.bootstrap/done :

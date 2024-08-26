@@ -15,6 +15,7 @@ source "${0%/*}/source.sh"
 # 	else
 # 		_shell_util_log_warn "cd: Function is not defined: __woof_cd_hook"
 # 	fi
+
 main() {
 	local flag_fix=false
 	for arg; do case $arg in
@@ -23,53 +24,189 @@ main() {
 		;;
 	esac done
 
-	# Git
-	{
-		# TODO: Check if Git is installed. If not, install it from the repositories. Later, uninstall it
-		if ! command -v git &>/dev/null; then
+	local check=
 
+	{
+		# TODO: gpg
+		:
+	}
+
+	# Launcher
+	{
+		check=true
+
+		if check && [ ! -d ~/.core/launcher ]; then
+			failure "Expects a cloned repository at ~/.core/launcher"
+			if should_fix; then
+				util.clone ~/.core/launcher https://github.com/fox-incubating/launcher
+			fi
 		fi
 
-		# if it is an older verison
+		if check && ! command -v keymon &>/dev/null; then
+			failure "Expected to find \"keymon\" command in PATH"
+			if should_fix; then
+				cd ~/.core/launcher
+				make
+				sudo make install
+			fi
+		fi
+
+		if check && ! systemctl is-active --quiet keymon.service &>/dev/null; then
+			failure "Expected service \"keymon\" to be running"
+			if should_fix; then
+				systemctl enable --now keymon.service
+			fi
+		fi
+
+		success ".core/launcher"
+	}
+
+	# Hub
+	{
+		check=true
+
+		if check && [ ! -d ~/.core/hub ]; then
+			failure "Expects a cloned repository at ~/.core/hub"
+			if should_fix; then
+				util.clone ~/.core/hub https://github.com/fox-incubating/hub
+			fi
+		fi
+
+		success ".core/hub"
+	}
+
+	# Git
+	{
+		check=true
+
+		if check && ! command -v git &>/dev/null; then
+			failure "Expects the command \"git\" to be installed"
+			if should_fix; then
+				util.install_package 'git'
+			fi
+		fi
+
+		# Check if it is an older verison.
 		local git_version git_version_arr
 		git_version=$(git version)
 		git_version=${git_version#git version }
 		IFS='.' read -ra git_version_arr <<< "$git_version"
-		if ! (( git_version_arr[0] >= 3 || (git_version_arr[0] == 2 && git_version_arr[1] >= 37) )); then
-			failure "git/too-old: Git version of \"$git_version\" is too old. It must be at least 2.37.0 to support \"push.autoSetupRemote\""
-			if [ "$flag_fix" = true ] && util.confirm "Would you like to fix this?"; then
+		if check && ! (( git_version_arr[0] >= 3 || (git_version_arr[0] == 2 && git_version_arr[1] >= 37) )); then
+			failure "Git version of \"$git_version\" is too old. It must be at least 2.37.0 to support \"push.autoSetupRemote\""
+			if should_fix; then
+				util.remove_package 'git'
 				~/scripts/setup/git.sh
 			fi
 		fi
 
-		printf '%s\n' "GIT:"
-		check.command 'spaceman-diff'
-		check.command 'npm-merge-driver'
-		check.command 'yarn-merge-driver'
-		printf '\n'
+		# TODO
+		# printf '%s\n' "GIT:"
+		# check.command 'spaceman-diff'
+		# check.command 'npm-merge-driver'
+		# check.command 'yarn-merge-driver'
+		# printf '\n'
 	}
 
 	# Neovim
 	{
-		# TODO: later, check if nvim command actually is there
+		check=true
+
+		if check && ! command -v nvim &>/dev/null; then
+			failure "Expects the command \"nvim\" to be installed"
+			if should_fix; then
+				util.install_package 'neovim'
+			fi
+		fi
+
 		local nvim_version nvim_version_arr
 		nvim_version=$(nvim --version)
 		nvim_version=${nvim_version%%$'\n'*}
 		nvim_version=${nvim_version#NVIM v}
 		nvim_version=${nvim_version%%-*}
 		IFS='.' read -ra nvim_version_arr <<< "$nvim_version"
-		if ! (( nvim_version_arr[0] >= 1 || (nvim_version_arr[0] == 0 && nvim_version_arr[1] >= 10) )); then
-			failure "nvim/too-old Nvim version of \"$nvim_version\" is too old. It must be at least v0.10.0"
-			if [ "$flag_fix" = true ] && util.confirm "Would you like to fix this?"; then
+		if check && ! (( nvim_version_arr[0] >= 1 || (nvim_version_arr[0] == 0 && nvim_version_arr[1] >= 10) )); then
+			failure "Neovim version of \"$nvim_version\" is too old. It must be at least v0.10.0"
+			if should_fix; then
+				util.uninstall_package 'neovim'
 				~/scripts/setup/nvim.sh
 			fi
-		else
-			success "nvim/too-old Nvim version is \"$nvim_version\""
+		fi
+	}
+
+	{
+		check=true
+		if check && ! command -v dotdrop &>/dev/null; then
+			failure "Expects the command \"dotdrop\" to be installed"
+			if should_fix; then
+				~/scripts/setup/gh.sh
+			fi
+		fi
+
+		check=true
+		if check && ! command -v pass &>/dev/null; then
+			failure "Expects the command \"pass\" to be installed"
+			if should_fix; then
+				~/scripts/setup/pass.sh
+			fi
+		fi
+
+		check=true
+		if check && ! command -v firefox &>/dev/null; then
+			failure "Expects the command \"firefox\" to be installed"
+			if should_fix; then
+				~/scripts/setup/firefox.sh
+			fi
+		fi
+
+		check=true
+		if check && ! command -v brave &>/dev/null; then
+			failure "Expects the command \"brave\" to be installed"
+			if should_fix; then
+				~/scripts/setup/brave.sh
+			fi
+		fi
+
+		check=true
+		if check && ! command -v maestral &>/dev/null; then
+			failure "Expects the command \"maestral\" to be installed"
+			if should_fix; then
+				~/scripts/setup/maestral.sh
+			fi
+		fi
+
+		check=true
+		if check && ! command -v mise &>/dev/null; then
+			failure "Expects the command \"mise\" to be installed"
+			if should_fix; then
+				~/scripts/setup/mise.sh
+			fi
+		fi
+	}
+
+	# Commands
+	{
+
+
+
+
+		check=true
+		if check && ! command -v gh &>/dev/null; then
+			failure "Expects the command \"gh\" to be installed"
+			if should_fix; then
+				~/scripts/setup/gh.sh
+			fi
+		fi
+
+		check=true
+		if check && ! command -v just &>/dev/null; then
+			failure "Expects the command \"just\" to be installed"
+			if should_fix; then
+				cargo install --locked just
+			fi
 		fi
 	}
 
 	printf '%s\n' "BINARIES:"
-	check.command dotdrop
 	check.command clang-format
 	check.command clang-tidy
 	check.command bake
@@ -78,18 +215,12 @@ main() {
 	printf '\n'
 
 	printf '%s\n' "BINARIES: DEVELOPMENT:"
-	check.command gh
-	check.command just
 	check.command 'dufs'
 	check.command 'pre-commit'
 	printf '\n'
 
-	printf '%s\n' "DROPBOX:"
-	check.process maestral
-	printf '\n'
-
 	printf '%s\n' "LATEX:"
-	check.process latexindent
+	check.command latexindent
 	printf '\n'
 
 	printf '%s\n' "FISH:"
@@ -153,6 +284,22 @@ check.process() {
 		else
 			failure "Syntax or memory error when calling pgrep"
 		fi
+	fi
+}
+
+check() {
+	if [ "$check" = true ]; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+should_fix() {
+	if [ "$flag_fix" = true ] && util.confirm "Would you like to fix this?"; then
+		return 0
+	else
+		return 1
 	fi
 }
 

@@ -165,5 +165,4 @@ fi
 source "$XDG_CONFIG_HOME/shell/modules/common/line-editing.sh"
 source "$XDG_CONFIG_HOME/bash/modules/readline.sh"
 source "$XDG_CONFIG_HOME/bash/modules/util.sh"
-source "$HOME/.core/launcher/keymon.sh" # TODO
 # ---

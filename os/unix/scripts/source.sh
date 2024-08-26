@@ -255,3 +255,41 @@ util.update_system() {
 		sudo pacman -Syyu --noconfirm
 	}
 }
+
+util.install_package() {
+	local package="$1"
+
+	helper.setup --no-confirm --fn-prefix=install_package
+
+	install_package.debian() {
+		sudo apt-get install -y "$package"
+	}
+	install_package.fedora() {
+		sudo dnf install -y "$package"
+	}
+	install_package.opensuse() {
+		sudo zypper -n install "$package"
+	}
+	install_package.arch() {
+		sudo pacman -Syu --noconfirm "$package"
+	}
+}
+
+util.remove_package() {
+	local package="$1"
+
+	helper.setup --no-confirm --fn-prefix=remove_package
+
+	remove_package.debian() {
+		sudo apt-get remove -y "$package"
+	}
+	remove_package.fedora() {
+		sudo dnf remove -y "$package"
+	}
+	remove_package.opensuse() {
+		sudo zypper -n remove "$package"
+	}
+	remove_package.arch() {
+		sudo pacman -R --noconfirm "$package"
+	}
+}
