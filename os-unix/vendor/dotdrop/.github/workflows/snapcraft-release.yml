@@ -1,0 +1,22 @@
+name: Release to Snapcraft
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: snapcraft setup
+      run: |
+        cp -r "${GITHUB_WORKSPACE}/packages/snap" "${GITHUB_WORKSPACE}"
+        sed -i 's#source: ../../#source: \.#g' "${GITHUB_WORKSPACE}/snap/snapcraft.yaml"
+    - uses: snapcore/action-build@v1
+      id: build
+    - uses: snapcore/action-publish@v1
+      env:
+        SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_LOGIN }}
+      with:
+        snap: ${{ steps.build.outputs.snap }}
+        release: stable

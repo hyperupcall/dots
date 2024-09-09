@@ -1,6 +1,0 @@
-# ~/.tcshrc
-
-test -x ~/.login && source ~/.login
-
-eval `direnv hook tcsh`
-

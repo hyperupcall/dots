@@ -1,0 +1,41 @@
+name: tests
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r tests-requirements.txt
+        pip install -r requirements.txt
+        npm install -g remark-cli remark-validate-links
+        sudo apt-get install shellcheck
+    - name: Run with 1 worker
+      run: |
+        ./tests.sh
+      env:
+        DOTDROP_WORKERS: 1
+    - name: Run with 4 workers
+      run: |
+        ./tests.sh
+      env:
+        DOTDROP_WORKERS: 4
+    - name: Coveralls
+      run: |
+        pip install coveralls
+        coveralls --service=github
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

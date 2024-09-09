@@ -1,6 +1,0 @@
----
-- hosts: 'localhost'
-  tasks:
-    - name: 'Run tasks'
-      ansible.builtin.include_tasks:
-        file: 'tasks.yml'

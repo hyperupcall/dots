@@ -1,0 +1,1 @@
+set cdpath ":~:/usr/local"

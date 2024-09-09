@@ -2,6 +2,7 @@ appname
 arxiv
 autofix
 autoremove
+Avalonia
 Bashisms
 builtins
 Camino
@@ -51,6 +52,7 @@ NOLINT
 NOLINTNEXTLINE
 nounset
 Overconstraint
+pipefail
 pipx
 Positionals
 posix

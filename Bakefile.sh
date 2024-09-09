@@ -2,9 +2,9 @@
 
 # config: big-print=off
 task.init() {
-	git config --local filter.npmrc-clean.clean "$PWD/os/unix/user/.config/npm/npmrc-clean.sh"
-	git config --local filter.slack-term-config-clean.clean "$PWD/os/unix/user/.config/slack-term/slack-term-config-clean.sh"
-	git config --local filter.oscrc-clean.clean "$PWD/os/unix/user/.config/osc/oscrc-clean.sh"
+	git config --local filter.npmrc-clean.clean './os-unix/config-lang/.config/npm/npmrc-clean.sh'
+	git config --local filter.slack-term-config-clean.clean './os-unix/config-application/.config/slack-term/slack-term-config-clean.sh'
+	git config --local filter.oscrc-clean.clean './os-unix/config-tools/.config/osc/oscrc-clean.sh'
 }
 
 task.build() {
