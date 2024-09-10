@@ -16,7 +16,7 @@
 		"**/venv/**": true,
 		"**/.venv/**": true,
 		"**/vendor/**": true,
-		"os/unix/user/.config/bash/frameworks/bash-it.sh": false,
+		"os-unix/config-shell/.config/bash/frameworks/bash-it.sh": false,
 	},
 	"npm.exclude": "**/.*",
 	"files.watcherExclude": {

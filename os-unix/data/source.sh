@@ -14,10 +14,10 @@
 	fi
 
 	# Source libraries.
-	source ~/.dotfiles/os/unix/scripts/xdg.sh
+	source ~/.dotfiles/os-unix/data/xdg.sh
 	for _f in \
-		~/.dotfiles/os/unix/vendor/bash-core/pkg/**/*.sh \
-		~/.dotfiles/os/unix/vendor/bash-term/pkg/**/*.sh; \
+		~/.dotfiles/os-unix/vendor/bash-core/pkg/**/*.sh \
+		~/.dotfiles/os-unix/vendor/bash-term/pkg/**/*.sh; \
 	do
 		source "$_f"
 	done; unset -v _f
@@ -41,7 +41,7 @@
 	}
 	core.trap_add 'err_handler' SIGINT
 
-	CURL_CONFIG="$HOME/.dotfiles/os/unix/config/curl_config.conf"
+	CURL_CONFIG="$HOME/.dotfiles/os-unix/data/curl_config.conf"
 }
 
 # TODO: Better support ID_LIKE multiple values.

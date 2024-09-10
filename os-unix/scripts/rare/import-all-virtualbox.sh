@@ -3,7 +3,7 @@
 # Registers all VirtualBox virtual machine. Optionally
 # enables unregistering all virtual machines
 
-source "${0%/*}/../source.sh"
+source ~/.dotfiles/os-unix/data/source.sh
 
 main() {
     local virtualbox_dir=/storage/bigfiles/VirtualBox_Machines

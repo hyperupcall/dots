@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-source "${0%/*}/../source.sh"
+source ~/.dotfiles/os-unix/data/source.sh
 
 main() {
 	local download_url=

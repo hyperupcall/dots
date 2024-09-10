@@ -2,7 +2,7 @@
 
 # Generates shell scripts for different shells from a nicer directory hierarchy
 
-source "${0%/*}/../source.sh"
+source ~/.dotfiles/os-unix/data/source.sh
 
 main() {
 	local flag_clear='no'
@@ -13,8 +13,8 @@ main() {
 	esac done
 
 
-	local dotshellgen_config_dir="$HOME/.dotfiles/os/unix/config/dotgen"
-	local dotshellgen_state_dir="$HOME/.dotfiles/os/unix/config/dotgen-output"
+	local dotshellgen_config_dir="$HOME/.dotfiles/os-unix/config-dotfile-manager/.config/dotgen"
+	local dotshellgen_state_dir="$HOME/.dotfiles/os-unix/config-dotfile-manager/.config/dotgen-output"
 	mkdir -p "$dotshellgen_config_dir" "$dotshellgen_state_dir"
 
 	local concatenated_bash_file="$dotshellgen_state_dir/concatenated.bash"

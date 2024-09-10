@@ -3,7 +3,7 @@
 # Extracts functions and alises from current dotfiles
 # These can be copied to remote machines or to root shell profiless
 
-source "${0%/*}/../source.sh"
+source ~/.dotfiles/os-unix/data/source.sh
 
 main() {
 	# Bash is the most featureful lowest common denominator in shells
@@ -50,7 +50,7 @@ main() {
 	exec 6> "$generated_dir/.bashrc-user-functions.sh"
 	util_print_autogen_info >&6
 	find "$XDG_CONFIG_HOME/shell/modules/functions/" -ignore_readdir_race -type f -name "*.sh" \
-			-exec sh -c "\"$HOME/.dotfiles/os/unix/scripts/utility/extract_functions.pl\" 'user' < \"\$0\"" {} \; >&6
+			-exec sh -c "\"$HOME/.dotfiles/os-unix/scripts/utility/extract_functions.pl\" 'user' < \"\$0\"" {} \; >&6
 	util_print_file "$profile_dir/modules/util.sh" >&6
 	exec 6<&-
 
@@ -74,7 +74,7 @@ main() {
 	exec 6> "$generated_dir/.bashrc-root-functions.sh"
 	util_print_autogen_info >&6
 	find "$XDG_CONFIG_HOME/shell/modules/functions/" -ignore_readdir_race -type f -name "*.sh" \
-			-exec sh -c "\"$HOME/.dotfiles/os/unix/scripts/utility/extract_functions.pl\" 'root' < \"\$0\"" {} \; >&6
+			-exec sh -c "\"$HOME/.dotfiles/os-unix/scripts/utility/extract_functions.pl\" 'root' < \"\$0\"" {} \; >&6
 	util_print_file "$profile_dir/modules/util.sh" >&6
 	exec 6<&-
 

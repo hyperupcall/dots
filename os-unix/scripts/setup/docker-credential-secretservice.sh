@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "${0%/*}/../source.sh"
+source ~/.dotfiles/os-unix/data/source.sh
 
 main() {
 	helper.setup 'docker secretservice credential store version v0.6.4' "$@"

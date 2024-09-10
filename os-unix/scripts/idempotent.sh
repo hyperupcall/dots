@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "${0%/*}/source.sh"
+source ~/.dotfiles/os-unix/data/source.sh
 
 main() {
 	~/.dotfiles/bake -f ~/.dotfiles/Bakefile.sh init
@@ -26,10 +26,9 @@ main() {
 	util.add_user_to_group "$USER" 'kvm'
 	util.add_user_to_group "$USER" 'input'
 
-	~/.dotfiles/os/unix/scripts/utility/create-dirs.sh
-	~/.dotfiles/os/unix/scripts/utility/generate-aliases.sh
-	~/.dotfiles/os/unix/scripts/utility/generate-dotgen.sh
-	~/.dotfiles/os/unix/scripts/utility/generate-dotconfig.sh
+	~/.dotfiles/os-unix/scripts/utility/create-dirs.sh
+	~/.dotfiles/os-unix/scripts/utility/generate-aliases.sh
+	~/.dotfiles/os-unix/scripts/utility/generate-dotgen.sh
 }
 
 main "$@"

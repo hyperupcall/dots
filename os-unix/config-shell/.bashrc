@@ -105,7 +105,7 @@ is_16million_colors() {
 	[ "$COLORTERM" = "truecolor" ] || [ "$COLORTERM" = "24bit" ]
 }
 
-source "$HOME/.dotfiles/os/unix/config/dotgen-output/concatenated.bash"
+source "$HOME/.dotfiles/os-unix/config-dotfile-manager/.config/dotgen-output/concatenated.bash"
 
 if is_16million_colors; then
 	if ((EUID == 0)); then
@@ -164,6 +164,3 @@ source "$XDG_CONFIG_HOME/shell/modules/common/line-editing.sh"
 source "$XDG_CONFIG_HOME/bash/modules/readline.sh"
 source "$XDG_CONFIG_HOME/bash/modules/util.sh"
 # ---
-
-# Created by `pipx` on 2024-09-08 01:13:42
-export PATH="$PATH:/home/edwin/.local/state/pipx/bin"

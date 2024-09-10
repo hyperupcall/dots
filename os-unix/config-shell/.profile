@@ -3,7 +3,7 @@
 # ------------------------- Basic ------------------------ #
 umask 022
 
-. ~/.dotfiles/os/unix/scripts/xdg.sh
+. ~/.dotfiles/os-unix/data/xdg.sh
 
 # XDG variables should have been read by PAM from ~/.pam_environment
 if [ -z "$XDG_CONFIG_HOME" ] || [ -z "$XDG_DATA_HOME" ] || [ -z "$XDG_STATE_HOME" ] || [ -z "$XDG_CACHE_HOME" ]; then

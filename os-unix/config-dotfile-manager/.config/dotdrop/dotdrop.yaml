@@ -4,7 +4,7 @@ config:
   banner: false
   check_version: true
   create: true
-  dotpath: '~/.dotfiles/os/unix/user'
+  dotpath: '~/.dotfiles/something'
   link_dotfile_default: 'relative'
   link_on_import: 'relative'
   template_dotfile_default: false

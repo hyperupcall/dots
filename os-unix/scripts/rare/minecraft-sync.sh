@@ -3,7 +3,7 @@
 # Syncs subdirectories like 'resourcepacks', 'saves', 'screenshots' of
 # the most common .minecraft directories for all major launchers.
 
-source "${0%/*}/../source.sh"
+source ~/.dotfiles/os-unix/data/source.sh
 
 main() {
 	local mc_common_data="$HOME/.dotfiles/.home/Documents/Games/Minecraft_Common_Data"

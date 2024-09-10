@@ -9,7 +9,7 @@
 # - Removing broken symlinks
 # - Removing autoappended content to `~/.{profile,bashrc}`, etc.
 
-source "${0%/*}/../source.sh"
+source ~/.dotfiles/os-unix/data/source.sh
 
 main() {
 	local profile="$(<~/.dotfiles/.data/profile)"
@@ -108,6 +108,7 @@ main() {
 	# -------------------------------------------------------- #
 	#                 CREATE HOME DIR SYMLINKS                 #
 	# -------------------------------------------------------- #
+	must.link -fs ~/.dotfiles/os-unix/scripts ~/Q
 	if [ "$profile" = 'desktop' ]; then
 		must.link "$HOME/.dotfiles/.home/Documents/Projects/Programming/Organizations/fox-forks" "$HOME/forks"
 		must.link "$HOME/.dotfiles/.home/Documents/Projects/Programming/Git" "$HOME/git"
@@ -127,7 +128,7 @@ main() {
 		else
 			local filename='user-dirs-other.conf'
 		fi
-		cp -f "$HOME/.dotfiles/os/unix/user/.config/user-dirs.dirs/$filename" "$XDG_CONFIG_HOME/user-dirs.dirs"
+		cp -f "$HOME/.dotfiles/os-unix/config-linux-core/.config/user-dirs.dirs/$filename" "$XDG_CONFIG_HOME/user-dirs.dirs"
 		unset -v filename
 	}
 

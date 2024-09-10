@@ -138,7 +138,7 @@ unset -f is_8_colors is_256_colors is_16million_colors
 # ─── MODULES ────────────────────────────────────────────────────────────────────
 #
 
-source "$HOME/.dotfiles/os/unix/config/dotgen-output/concatenated.zsh"
+source "$HOME/.dotfiles/os-unix/config-dotfile-manager/.config/dotgen-output/concatenated.zsh"
 for f in "$XDG_CONFIG_HOME"/zsh/modules/?*.zsh; do
 	source "$f"
 done

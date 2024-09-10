@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "${0%/*}/../source.sh"
+source ~/.dotfiles/os-unix/data/source.sh
 
 # Behavior: Show desktop menu / home
 case $XDG_CURRENT_DESKTOP in

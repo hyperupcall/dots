@@ -38,7 +38,7 @@ main() {
 	run cd
 
 	# Symlink ~/scripts.
-	run ln -fs ~/.dotfiles/os/unix/scripts ~/
+	run ln -fs ~/.dotfiles/os-unix/scripts ~/
 
 	# Export variables.
 	cat > ~/.bootstrap/bootstrap-out.sh <<EOF
@@ -50,10 +50,10 @@ export EDITOR='vim'
 export VISUAL="\$EDITOR"
 export PATH="\$HOME/.dotfiles/.data/bin:\$PATH"
 
-if [ -f ~/.dotfiles/os/unix/scripts/xdg.sh ]; then
-	. ~/.dotfiles/os/unix/scripts/xdg.sh
+if [ -f ~/.dotfiles/os-unix/data/xdg.sh ]; then
+	. ~/.dotfiles/os-unix/data/xdg.sh
 else
-	printf '%s\n' 'Error: ~/.dotfiles/os/unix/scripts/xdg.sh not found'
+	printf '%s\n' 'Error: ~/.dotfiles/os-unix/data/xdg.sh not found'
 	return 1
 fi
 EOF
@@ -64,7 +64,7 @@ EOF
 	. ~/.bootstrap/bootstrap-out.sh
 	~/scripts/doctor.sh
 	~/scripts/bootstrap.sh
-	dotdrop install -c ~/.dotfiles/os/unix/config/dotdrop/dotdrop.yaml -p nullptr
+	~/scripts/dotfile.mjs deploy
 	~/scripts/idempotent.sh
 	---
 	EOF

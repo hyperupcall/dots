@@ -25,7 +25,7 @@ Download and execute `bootstrap.sh` to begin the bootstrap process:
 
 ```sh
 mkdir -p ~/.bootstrap
-curl -#fsSLo ~/.bootstrap/bootstrap.sh 'https://raw.githubusercontent.com/hyperupcall/dotfiles/trunk/os/unix/bootstrap.sh'
+curl -#fsSLo ~/.bootstrap/bootstrap.sh 'https://raw.githubusercontent.com/hyperupcall/dotfiles/trunk/os-unix/bootstrap.sh'
 chmod +x ~/.bootstrap/bootstrap.sh
 ~/.bootstrap/bootstrap.sh
 ```
@@ -39,7 +39,7 @@ The `bootstrap.sh` script performs the following steps:
 - Creates a `~/.bootstrap/bootstrap-out.sh`; sourcing it does the following:
   - Sets `NAME`, `EMAIL`, `EDITOR`, `VISUAL`
   - Appends `$HOME/.dotfiles/.data/bin` to `PATH`
-  - Sources `~/.dotfiles/os/unix/scripts/xdg.sh`, if it exists
+  - Sources `~/.dotfiles/os-unix/data/xdg.sh`, if it exists
 
 Now, execute:
 
@@ -47,7 +47,7 @@ Now, execute:
 . ~/.bootstrap/bootstrap-out.sh
 ~/scripts/doctor.sh
 ~/scripts/bootstrap.sh
-dotdrop install -c ~/.dotfiles/os/unix/config/dotdrop/dotdrop.yaml -p nullptr
+~/scripts/dotfile.mjs deploy
 ~/scripts/idempotent.sh
 ```
 

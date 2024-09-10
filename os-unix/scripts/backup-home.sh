@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "${0%/*}/source.sh"
+source ~/.dotfiles/os-unix/data/source.sh
 
 main() {
 	local backup_dir="/storage/vault/rodinia/Backups/backup_storage_home"
