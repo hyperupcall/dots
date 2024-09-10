@@ -197,6 +197,7 @@ declare -ga g_dotfiles=(
 	data:'sdkman/etc/config'
 	data:'albert/python/plugins'
 )
+
 {
 	# Print dotfiles programatically
 	source "$g_dotfiles_dir/os/unix/scripts/xdg.sh" --set-type
