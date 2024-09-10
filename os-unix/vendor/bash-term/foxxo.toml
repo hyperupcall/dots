@@ -1,9 +1,0 @@
-[project]
-ecosystem = "basalt"
-form = "unknown"
-for = "anyone"
-status = "experimental"
-
-[discovery]
-categories = []
-tags = []

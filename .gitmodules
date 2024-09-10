@@ -1,3 +1,9 @@
-[submodule "os-unix/vendor/dotdrop"]
-	path = os-unix/vendor/dotdrop
-	url = https://github.com/deadc0de6/dotdrop
+[submodule "os-unix/vendor/bash-core"]
+	path = os-unix/vendor/bash-core
+	url = gh:bash-bastion/bash-core
+[submodule "os-unix/vendor/bash-term"]
+	path = os-unix/vendor/bash-term
+	url = gh:bash-bastion/bash-term
+[submodule "os-unix/vendor/bats-all"]
+	path = os-unix/vendor/bats-all
+	url = gh:bash-bastion/bats-all
