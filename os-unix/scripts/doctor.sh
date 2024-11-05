@@ -135,14 +135,6 @@ main() {
 
 	{
 		check=true
-		if check && ! command -v dotdrop &>/dev/null; then
-			failure "Expects the command \"dotdrop\" to be installed"
-			if should_fix; then
-				~/scripts/setup/gh.sh
-			fi
-		fi
-
-		check=true
 		if check && ! command -v pass &>/dev/null; then
 			failure "Expects the command \"pass\" to be installed"
 			if should_fix; then
@@ -154,7 +146,7 @@ main() {
 		if check && ! command -v firefox &>/dev/null; then
 			failure "Expects the command \"firefox\" to be installed"
 			if should_fix; then
-				~/scripts/setup/firefox.sh
+				~/scripts/setup/app/firefox.sh
 			fi
 		fi
 
@@ -162,7 +154,7 @@ main() {
 		if check && ! command -v brave &>/dev/null; then
 			failure "Expects the command \"brave\" to be installed"
 			if should_fix; then
-				~/scripts/setup/brave.sh
+				~/scripts/setup/app/brave.sh
 			fi
 		fi
 
@@ -170,7 +162,7 @@ main() {
 		if check && ! command -v maestral &>/dev/null; then
 			failure "Expects the command \"maestral\" to be installed"
 			if should_fix; then
-				~/scripts/setup/maestral.sh
+				~/scripts/setup/app/maestral.sh
 			fi
 		fi
 

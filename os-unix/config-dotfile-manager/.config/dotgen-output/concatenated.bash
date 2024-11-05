@@ -85,9 +85,9 @@ fi
 # concatenated.bash
 
 # pipx.bash
-if command -v register-python-argcomplete &>/dev/null; then
-    eval "$(register-python-argcomplete pipx)"
-fi
+# if command -v register-python-argcomplete &>/dev/null; then
+#     eval "$(register-python-argcomplete pipx)"
+# fi
 
 # rho.bash
 if command -v rho &>/dev/null; then

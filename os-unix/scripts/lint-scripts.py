@@ -263,6 +263,7 @@ def main():
 		],
 	})
 
+	# TODO: test for if condition before and exit condition 5
 	# Before: pkcon
 	# After: pkcon -y
 	def pkconMustYes(line: str, m: any) -> str:

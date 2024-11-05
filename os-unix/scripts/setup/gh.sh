@@ -27,4 +27,8 @@ install.any() {
 	)
 }
 
+installed() {
+	command -v gh &>/dev/null
+}
+
 main "$@"

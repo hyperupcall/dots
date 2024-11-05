@@ -133,7 +133,6 @@ fi
 
 unset -f is_8_colors is_256_colors is_16million_colors
 
-
 #
 # ─── MISCELLANEOUS ──────────────────────────────────────────────────────────────
 #

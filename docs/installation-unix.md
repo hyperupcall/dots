@@ -47,8 +47,8 @@ Now, execute:
 . ~/.bootstrap/bootstrap-out.sh
 ~/scripts/doctor.sh
 ~/scripts/bootstrap.sh
-~/scripts/dotfile.mjs deploy
 ~/scripts/idempotent.sh
+~/scripts/dotfile.mjs deploy
 ```
 
 ## Next Steps
@@ -62,7 +62,6 @@ Some scripts should be executed. They include:
   - Setup Hub, Launcher
   - Setup Git
   - Setup neovim
-  - Setup dotdrop
   - Setup pass
   - Setup Firefox, Brave
     - Sync data (do manually)

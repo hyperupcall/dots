@@ -12,4 +12,8 @@ install.any() {
 	sudo apt-get install -y git
 }
 
+installed() {
+	command -v git &>/dev/null
+}
+
 main "$@"

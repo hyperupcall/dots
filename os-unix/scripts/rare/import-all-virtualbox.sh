@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# Registers all VirtualBox virtual machine. Optionally
-# enables unregistering all virtual machines
-
 source ~/.dotfiles/os-unix/data/source.sh
 
 main() {

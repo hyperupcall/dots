@@ -5,6 +5,8 @@ source ~/.dotfiles/os-unix/data/source.sh
 main() {
 	~/.dotfiles/bake -f ~/.dotfiles/Bakefile.sh init
 
+	~/scripts/.dotfiles/os-unix/scripts/setup/dev.sh
+
 	local part_uuid="c875b5ca-08a6-415e-bc11-fc37ec94ab8f"
 	local mnt='/storage/short'
 	if ! grep -q "$mnt" /etc/fstab; then
@@ -26,9 +28,9 @@ main() {
 	util.add_user_to_group "$USER" 'kvm'
 	util.add_user_to_group "$USER" 'input'
 
-	~/.dotfiles/os-unix/scripts/utility/create-dirs.sh
-	~/.dotfiles/os-unix/scripts/utility/generate-aliases.sh
-	~/.dotfiles/os-unix/scripts/utility/generate-dotgen.sh
+	~/.dotfiles/os-unix/scripts/lib/util-create-dirs.sh
+	~/.dotfiles/os-unix/scripts/lib/util-generate-aliases.sh
+	~/.dotfiles/os-unix/scripts/lib/util-generate-dotgen.sh
 }
 
 main "$@"

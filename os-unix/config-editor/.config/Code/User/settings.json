@@ -405,6 +405,13 @@
 	"rust-analyzer.inlayHints.typeHints.enable": false,
 
 	//
+	// LATEX
+	"[latex]": {
+		"editor.defaultFormatter": "James-Yu.latex-workshop"
+	},
+	"latex-utilities.message.update.show": false,
+
+	//
 	// EMMET
 	"emmet.excludeLanguages": [],
 	"emmet.includeLanguages": {
@@ -572,8 +579,8 @@
 			"source.fixAll": "never"
 		}
 	},
-	"latex-utilities.message.update.show": false,
 	"git.openRepositoryInParentFolders": "never",
 	"github.copilot.editor.enableAutoCompletions": true,
-	"cmake.showOptionsMovedNotification": false
+	"cmake.showOptionsMovedNotification": false,
+	"latex-workshop.formatting.latex": "latexindent"
 }

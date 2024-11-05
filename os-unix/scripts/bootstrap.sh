@@ -50,8 +50,6 @@ main() {
 		printf '%s\n' "$token" > ~/.dotfiles/.data/github_token
 	fi
 
-	~/scripts/setup/dotdrop.sh
-
 	> ~/.bootstrap/done :
 	printf '%s\n' 'Done.'
 }

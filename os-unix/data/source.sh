@@ -44,11 +44,11 @@
 	CURL_CONFIG="$HOME/.dotfiles/os-unix/data/curl_config.conf"
 }
 
-# TODO: Better support ID_LIKE multiple values.
 helper.setup() {
 	local flag_force_install=no
 	local flag_no_confirm=no
 	local flag_fn_prefix=install
+	local program_name=
 
 	local arg=
 	for arg; do
@@ -71,13 +71,17 @@ helper.setup() {
 				fi
 				shift
 				;;
+			-*)
+				core.print_die "Invalid flag \"$arg\""
+				;;
+			*)
+				if [ -n "$program_name" ]; then
+					core.print_die "Expected a single positional argument"
+				fi
+				program_name=$arg
+				;;
 		esac
 	done
-
-	local program_name="$1"
-	if [ -n "$program_name" ]; then
-		shift
-	fi
 
 	(
 		# A list of 'os-release' files can be found at https://github.com/which-distro/os-release.
@@ -92,11 +96,11 @@ helper.setup() {
 		[[ "$ID_LIKE" == +(*fedora*|*centos*|*rhel*) ]] && ID_LIKE=fedora
 		[[ "$ID_LIKE" == +(*opensuse*|*suse*) ]] && ID_LIKE=opensuse
 
-		local has_function=no
+		local ran_function=no
 		local id=
 		for id in "$ID" "$ID_LIKE" any; do
 			if declare -f "$flag_fn_prefix.$id" &>/dev/null; then
-				has_function=yes
+				ran_function=yes
 				if ! declare -f installed &>/dev/null || ! installed || [ "$flag_force_install" = yes ]; then
 					if [ "$flag_no_confirm" = yes ] || util.confirm "Install $program_name?"; then
 						"$flag_fn_prefix.$id" "$@"
@@ -107,8 +111,8 @@ helper.setup() {
 				fi
 			fi
 		done; unset -v id
-		if [ "$has_function" = no ] && ! declare -f install.any &>/dev/null; then
-			core.print_warn "Application has no installation function for this distribution"
+		if [ "$ran_function" = no ] && ! declare -f install.any &>/dev/null; then
+			core.print_warn "Application has no installation function for this distribution for prefix \"$flag_fn_prefix\""
 		fi
 
 
@@ -236,15 +240,18 @@ util.add_user_to_group() {
 }
 
 util.update_system() {
-	helper.system --no-confirm --fn-prefix=update_system
-
 	update_system.debian() {
 		sudo apt-get -y update
 		sudo apt-get -y upgrade
 	}
 	update_system.neon() {
 		sudo apt-get -y update
-		sudo pkcon -y update
+		if sudo pkcon -y update; then :; else
+			# Exit code for "Nothing useful was done".
+			if (($? != 5)); then
+				core.print_die "Failed to run 'pkgcon'"
+			fi
+		fi
 	}
 	update_system.fedora() {
 		sudo dnf -y update
@@ -255,12 +262,12 @@ util.update_system() {
 	update_system.arch() {
 		sudo pacman -Syyu --noconfirm
 	}
+
+	helper.setup --no-confirm --fn-prefix=update_system
 }
 
 util.install_package() {
 	local package="$1"
-
-	helper.setup --no-confirm --fn-prefix=install_package
 
 	install_package.debian() {
 		sudo apt-get install -y "$package"
@@ -274,12 +281,12 @@ util.install_package() {
 	install_package.arch() {
 		sudo pacman -Syu --noconfirm "$package"
 	}
+
+	helper.setup --no-confirm --fn-prefix=install_package
 }
 
 util.remove_package() {
 	local package="$1"
-
-	helper.setup --no-confirm --fn-prefix=remove_package
 
 	remove_package.debian() {
 		sudo apt-get remove -y "$package"
@@ -293,4 +300,6 @@ util.remove_package() {
 	remove_package.arch() {
 		sudo pacman -R --noconfirm "$package"
 	}
+
+	helper.setup --no-confirm --fn-prefix=remove_package
 }

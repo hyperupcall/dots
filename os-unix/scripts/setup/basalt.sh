@@ -25,4 +25,5 @@ installed() {
 	command -v basalt &>/dev/null
 
 }
+
 main "$@"
