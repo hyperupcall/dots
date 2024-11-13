@@ -14,15 +14,15 @@ install.any() {
 	mkdir -p ~/.dev/.data/nodejs
 	cd ~/.dev/.data/nodejs
 
-	local nodejs_version='22.11.0'
-	local file="node-v$nodejs_version-linux-x64.tar.xz"
+	local nodejs_version='22.11.0' # TODO: Update
+	local file="./node-v$nodejs_version.tar.xz"
 	if [ ! -f "$file" ]; then
 		core.print_info "Downloading NodeJS $nodejs_version"
-		curl -K "$CURL_CONFIG" "https://nodejs.org/dist/v$nodejs_version/$file"
+		curl -K "$CURL_CONFIG" -o "$file" "https://nodejs.org/dist/v$nodejs_version/node-v$nodejs_version-linux-x64.tar.xz"
 		core.print_info "Extracting..."
-		tar xf ./"node-v$nodejs_version"*
+		tar xf "$file"
 	fi
-	cd ./"node-v$nodejs_version"*/
+	cd ./node-v*/
 
 	local bin_dir="$PWD"
 	bin_dir=${bin_dir#/home/}

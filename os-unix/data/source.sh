@@ -92,7 +92,8 @@ helper.setup() {
 		[ "$ID" = +(arch|blackarch) ] && ID_LIKE=arch
 		[ "$ID" = 'debian' ] && ID_LIKE=debian
 		[ "$ID" = 'Deepin' ] && ID=deepin
-		[[ "$ID_LIKE" == +(*debian*|*ubuntu*) ]] && ID_LIKE=debian
+		[[ "$ID_LIKE" == +(*debian*|*ubuntu*) ]] && ID_LIKE=ubuntu
+		[[ "$ID_LIKE" == *debian* ]] && ID_LIKE=debian
 		[[ "$ID_LIKE" == +(*fedora*|*centos*|*rhel*) ]] && ID_LIKE=fedora
 		[[ "$ID_LIKE" == +(*opensuse*|*suse*) ]] && ID_LIKE=opensuse
 
@@ -206,9 +207,9 @@ util.get_latest_github_tag() {
 
 	local token=
 	token="$(<~/.dotfiles/.data/github_token)"
-	local url="https://api.github.com/repos/$repo/releases/latest"
+
 	local tag_name=
-	tag_name=$(curl -K "$CURL_CONFIG" -H "Authorization: token: $token" "$url" | jq -r '.tag_name')
+	tag_name=$(curl -K "$CURL_CONFIG" -H "Authorization: token: $token" "https://api.github.com/repos/$repo/releases/latest" | jq -r '.tag_name')
 
 	REPLY=$tag_name
 }
