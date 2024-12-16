@@ -25,7 +25,7 @@ main() {
 
 	# Set current system profile.
 	if [ -f ~/.dotfiles/.data/profile ]; then
-		core.print_info 'Already downloaded GitHub token'
+		core.print_info 'Already set system profile'
 	else
 		local cur=
 		local options='desktop|laptop'
@@ -35,6 +35,48 @@ main() {
 		done
 		mkdir -p ~/.dotfiles/.data
 		printf '%s\n' "$cur" > ~/.dotfiles/.data/profile
+	fi
+
+	# Download and install NodeJS runtime.
+	local dir=("./node-v"*/)
+	if [ -d "${dir[0]}" ]; then
+		core.print_info 'Already installed NodeJS to ~/.dotfiles/.data/nodejs'
+	else
+		pushd ~/.dotfiles/.data >/dev/null
+		local nodejs_version='22.12.0' # TODO: Update
+		local file="./node-v$nodejs_version.tar.xz"
+		core.print_info "Downloading NodeJS v$nodejs_version"
+		curl -K "$CURL_CONFIG" -o "$file" "https://nodejs.org/dist/v$nodejs_version/node-v$nodejs_version-linux-x64.tar.xz"
+		core.print_info "Extracting $file"
+		tar xf "$file"
+		rm -rf "$file"
+		popd >/dev/null
+	fi
+	if [ ! -f ~/.dotfiles/.data/node ]; then
+		ln -sf ~/.dotfiles/.data/node-v*/bin/node ~/.dotfiles/.data/node
+	fi
+
+	# Download and install "dev".
+	if [ ! -d ~/.dev ]; then
+		git clone git@github.com:fox-incubating/dev ~/.dev
+	fi
+	if [ ! -f ~/.dotfiles/.data/bin/dev ]; then
+		cd ~/.dotfiles/.data/nodejs
+		local bin_dir="$PWD"
+		bin_dir=${bin_dir#/home/}
+		bin_dir=${bin_dir#*/}
+		bin_dir="\$HOME/$bin_dir/bin"
+		PATH="$bin_dir:$PATH"
+		cd ~/.dev/
+		npm i -g pnpm
+		pnpm install
+
+		cat <<-EOF > ~/.dotfiles/.data/bin/dev
+		#!/usr/bin/env sh
+		set -e
+		PATH="$bin_dir:\$PATH" ~/.dev/bin/dev.js "\$@"
+	EOF
+		chmod +x ~/.dotfiles/.data/bin/dev
 	fi
 
 	# Fetch GithHub authorization tokens.

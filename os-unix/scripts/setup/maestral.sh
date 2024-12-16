@@ -42,8 +42,9 @@ install.any() {
 }
 
 install_maestral() {
-	mkdir -p ~/.dotfiles/.data/workspace/maestral
-	cd ~/.dotfiles/.data/workspace/maestral
+	mkdir -p ~/.dotfiles/.data/maestral
+	cd ~/.dotfiles/.data/maestral
+	~/scripts/setup/python-tools.sh --no-confirm
 
 	if [ -f ./venv/bin/activate ]; then
 		core.print_info 'Found virtualenv'

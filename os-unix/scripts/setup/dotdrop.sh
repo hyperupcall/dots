@@ -7,16 +7,15 @@ main() {
 }
 
 install.any() {
-	mkdir -p ~/.dotfiles/.data/workspace/dotdrop
-	cd ~/.dotfiles/.data/workspace/dotdrop
+	cd ~/.dotfiles/.data/workspace/
 
-	if [ -d ./repository ]; then
+	if [ -d ./dotdrop ]; then
 		core.print_info 'Found dotdrop repository'
 	else
 		core.print_info 'Downloading dotdrop repository'
-		util.clone ./repository https://github.com/deadc0de6/dotdrop
+		util.clone ./dotdrop https://github.com/deadc0de6/dotdrop
 	fi
-	cd ./repository
+	cd ./dotdrop
 	# TODO: apt-get install -y python3-venv
 	if [ -f ./venv/bin/activate ]; then
 		core.print_info 'Found virtualenv'

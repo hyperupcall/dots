@@ -168,27 +168,13 @@ util.confirm() {
 	local message=${1:-Confirm?}
 
 	local input=
-	until [[ "$input" =~ ^[yn]$ ]]; do
+	until [[ "$input" =~ ^[yYnN]$ ]]; do
 		read -rN1 -p "$message "
-		if [ -n "$BASH_VERSION" ]; then
-			if (( ${BASH_VERSINFO[0]} >= 6 || ( ${BASH_VERSINFO[0]} == 5 && ${BASH_VERSINFO[1]} >= 1 ) )); then
-				input=${REPLY@L}
-			else
-				# Ksh fails parse without eval.
-				eval 'input=${REPLY,,}'
-			fi
-		elif [ -n "$ZSH_VERSION" ]; then
-			input=${REPLY:l}
-		elif [ -n "$KSH_VERSION" ]; then
-			# shellcheck disable=SC2034
-			typeset -M toupper input="$REPLY"
-		else
-			input=$(printf '%s\n' "$REPLY" | tr '[:upper:]' '[:lower:]')
-		fi
+		input=$REPLY
+		printf '\n'
 	done
-	printf '\n'
 
-	if [ "$input" = 'y' ]; then
+	if [ "$input" = 'y' ] || [ "$input" = 'Y' ]; then
 		return 0
 	else
 		return 1
