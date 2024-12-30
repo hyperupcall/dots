@@ -17,4 +17,4 @@ install.any() {
 	fi
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

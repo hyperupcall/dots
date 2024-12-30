@@ -22,4 +22,4 @@ install.arch() {
 	sudo pacman -Syu --noconfirm borgbackup
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

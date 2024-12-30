@@ -40,4 +40,4 @@ install.opensuse() {
 	install.fedora "$@"
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

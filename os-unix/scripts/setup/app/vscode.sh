@@ -43,4 +43,4 @@ install.opensuse() {
 	sudo zypper -n install code code-insiders
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

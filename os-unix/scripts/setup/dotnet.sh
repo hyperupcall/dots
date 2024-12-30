@@ -10,4 +10,4 @@ install.ubuntu() {
 	sudo add-apt-repository 'ppa:dotnet/backports'
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

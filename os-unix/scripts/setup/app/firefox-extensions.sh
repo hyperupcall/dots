@@ -37,4 +37,4 @@ util.install() {
 	firefox -install -extension ./extension.xpi
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

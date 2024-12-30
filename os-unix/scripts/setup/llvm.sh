@@ -24,4 +24,4 @@ deb-src [signed-by=$gpg_file] http://apt.llvm.org/$dist/ llvm-toolchain-$dist-$v
 	sudo apt-get -y install clang-17
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

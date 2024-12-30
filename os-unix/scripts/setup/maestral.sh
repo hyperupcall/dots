@@ -65,7 +65,7 @@ install_maestral() {
 	cat <<'EOF' > ~/.dotfiles/.data/bin/maestral
 #!/usr/bin/env sh
 set -e
-. ~/.dotfiles/.data/workspace/maestral/venv/bin/activate
+. ~/.dotfiles/.data/maestral/venv/bin/activate
 maestral "$@"
 EOF
 	chmod +x ~/.dotfiles/.data/bin/maestral
@@ -77,4 +77,4 @@ EOF
 	maestral start
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

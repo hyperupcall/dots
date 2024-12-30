@@ -15,5 +15,4 @@ install.any() {
 	cp ./arch-chroot ~/.local/bin
 }
 
-main "$@"
-
+util.is_executing_as_script && main "$@"

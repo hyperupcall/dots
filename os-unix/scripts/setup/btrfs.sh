@@ -25,4 +25,4 @@ install.arch() {
 	yay -Syu --noconfirm btrfs-progs
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

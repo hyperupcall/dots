@@ -14,4 +14,4 @@ install.any() {
 	python3 -m pipx ensurepath
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

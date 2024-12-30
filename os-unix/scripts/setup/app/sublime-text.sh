@@ -17,8 +17,8 @@ install.debian() {
 		"deb [signed-by=$gpg_file] https://download.sublimetext.com/ apt/stable/" \
 		'/etc/apt/sources.list.d/sublime-text.list'
 
-	sudo apt-get update -y 
+	sudo apt-get update -y
 	sudo apt-get install -y sublime-text
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

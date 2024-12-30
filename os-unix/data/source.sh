@@ -290,3 +290,16 @@ util.remove_package() {
 
 	helper.setup --no-confirm --fn-prefix=remove_package
 }
+
+util.is_executing_as_script() {
+	if [ -n "$BASH_VERSION" ]; then
+		[ "${BASH_SOURCE[1]}" = "$0" ]
+	elif [ -n "$ZSH_VERSION" ]; then
+  		case $ZSH_EVAL_CONTEXT in
+			toplevel:file*) return 1 ;;
+			*) return 0
+    	esac
+    else
+		return 1
+	fi
+}

@@ -7,7 +7,7 @@ main() {
 }
 
 install.any() {
-	cd ~/.dotfiles/.data/workspace/
+	cd ~/.dotfiles/.data/
 
 	if [ -d ./dotdrop ]; then
 		core.print_info 'Found dotdrop repository'
@@ -33,8 +33,8 @@ install.any() {
 	cat <<'EOF' > ~/.dotfiles/.data/bin/dotdrop
 	#!/usr/bin/env sh
 	set -e
-	. ~/.dotfiles/.data/workspace/dotdrop/repository/venv/bin/activate
-	~/.dotfiles/.data/workspace/dotdrop/repository/dotdrop.sh "$@"
+	. ~/.dotfiles/.data/dotdrop/repository/venv/bin/activate
+	~/.dotfiles/.data/dotdrop/repository/dotdrop.sh "$@"
 EOF
 	chmod +x ~/.dotfiles/.data/bin/dotdrop
 }

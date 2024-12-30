@@ -22,4 +22,4 @@ install.debian() {
 		sudo apt-get install -y mongodb-org
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

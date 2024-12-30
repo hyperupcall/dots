@@ -37,7 +37,7 @@ The `bootstrap.sh` script performs the following steps:
 - Clones `hyperupcall/dotfiles` to `~/.dotfiles`
 - Symlinks scripts to `~/scripts`
 - Creates a `~/.bootstrap/bootstrap-out.sh`; sourcing it does the following:
-  - Sets `NAME`, `EMAIL`, `EDITOR`, `VISUAL`
+  - Sets `NAME`, `EMAIL`, `EDITOR`, and `VISUAL`
   - Appends `$HOME/.dotfiles/.data/bin` to `PATH`
   - Sources `~/.dotfiles/os-unix/data/xdg.sh`, if it exists
 
@@ -45,8 +45,8 @@ Now, execute:
 
 ```sh
 . ~/.bootstrap/bootstrap-out.sh
-~/scripts/doctor.sh
 ~/scripts/bootstrap.sh
+~/scripts/doctor.sh
 ~/scripts/idempotent.sh
 ~/scripts/dotfile.mjs deploy
 ```
@@ -59,11 +59,10 @@ Some scripts should be executed. They include:
   - Modify `/etc/fstab`
 - Retrieve SSH, PGP keys
 - `~/scripts/doctor.sh`
-  - Setup Hub, Launcher
-  - Setup Git
-  - Setup neovim
+  - Setup Git (at least v2.37.0)
+  - Setup neovim (at least v0.10.0)
   - Setup pass
-  - Setup Firefox, Brave
+  - Setup Browsers (Firefox, Brave)
     - Sync data (do manually)
   - Setup Maestral
   - Setup Mise

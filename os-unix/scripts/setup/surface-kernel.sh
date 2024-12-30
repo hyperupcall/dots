@@ -25,4 +25,4 @@ install.debian() {
 	sudo apt-get install -y linux-image-surface linux-headers-surface libwacom-surface iptsd
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

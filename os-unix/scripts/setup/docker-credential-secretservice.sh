@@ -30,4 +30,4 @@ obj['credsStore'] = 'secretservice'
 file.write_text(json.dumps(obj, indent='\t'))"
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

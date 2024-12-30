@@ -132,8 +132,8 @@ unlink() {
 
 #clone(user, root)
 less() {
-	# On OpenSUSE (Tumbleweed), 'less' is a function that opens "xdg-open". Ovverride
-	# that because it's annoying.
+	# On OpenSUSE (Tumbleweed), 'less' is a function that opens "xdg-open".
+	# This overrides that.
 
 	_less_cmd=$(type -fp less)
 

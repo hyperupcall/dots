@@ -48,4 +48,4 @@ install.arch() {
 	yay -S --noconfirm neovim
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

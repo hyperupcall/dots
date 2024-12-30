@@ -43,4 +43,4 @@ install.arch() {
 	sudo pacman -Syu --noconfirm lutris
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

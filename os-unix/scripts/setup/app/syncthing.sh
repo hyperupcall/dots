@@ -21,4 +21,4 @@ install.debian() {
 	sudo apt-get install -y syncthing
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

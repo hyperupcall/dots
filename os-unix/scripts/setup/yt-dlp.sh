@@ -11,4 +11,4 @@ install.any() {
 	chmod +x ~/.local/bin/yt-dlp
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

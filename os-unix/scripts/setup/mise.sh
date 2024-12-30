@@ -10,4 +10,4 @@ install.any() {
 	curl -K "$CURL_CONFIG" https://mise.jdx.dev/install.sh | sh
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

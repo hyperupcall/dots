@@ -25,4 +25,4 @@ install.any() {
 	core.print_warn 'Do not know how to handle tarball on non-deb Linux'
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

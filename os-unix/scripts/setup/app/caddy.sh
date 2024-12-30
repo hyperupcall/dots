@@ -22,4 +22,4 @@ deb-src [signed-by=$gpg_file] https://dl.cloudsmith.io/public/caddy/stable/deb/d
 	sudo apt-get install -y caddy
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

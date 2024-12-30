@@ -30,4 +30,4 @@ install.any() {
 	sudo usermod -aG docker "$USER"
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

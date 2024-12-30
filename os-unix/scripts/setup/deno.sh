@@ -20,4 +20,4 @@ installed() {
 	command -v deno &>/dev/null
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

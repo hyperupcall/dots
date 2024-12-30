@@ -21,4 +21,4 @@ install.opensuse() {
 	sudo zypper -n install steam-devices
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

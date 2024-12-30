@@ -65,7 +65,7 @@ _mkt_util_git_clone() {
 }
 
 _mkt_util_log() {
-	printf "%s\n" "$(date '+%b %d - %I:%M:%S') | $_mkt_dir | $1" >> "${XDG_STATE_HOME:-$HOME/.local/state}/history/mkt_history"
+	printf "%s\n" "$(date '+%Y.%m.%d - %I:%M:%S') | $_mkt_dir | $1" >> "${XDG_STATE_HOME:-$HOME/.local/state}/history/mkt_history"
 }
 
 mkt() {

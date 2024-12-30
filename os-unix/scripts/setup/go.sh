@@ -15,4 +15,4 @@ install.any() {
 	go install github.com/mdempsky/gocode@latest
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

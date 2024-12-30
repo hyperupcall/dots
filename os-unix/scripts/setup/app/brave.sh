@@ -65,4 +65,4 @@ install.arch() {
 	yay -S brave-bin brave-beta-bin
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

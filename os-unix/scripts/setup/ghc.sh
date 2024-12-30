@@ -16,4 +16,4 @@ install.any() {
 	curl -K "$CURL_CONFIG" 'https://get.haskellstack.org' | sh
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

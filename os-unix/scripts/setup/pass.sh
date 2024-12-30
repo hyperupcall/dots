@@ -88,4 +88,4 @@ install_native_extension() {
 	)
 }
 
-main "$@"
+util.is_executing_as_script && main "$@"

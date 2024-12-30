@@ -21,4 +21,8 @@ configure.any() {
 	cargo install --locked bat
 }
 
-main "$@"
+installed() {
+	command -v rustup &>/dev/null
+}
+
+util.is_executing_as_script && main "$@"
