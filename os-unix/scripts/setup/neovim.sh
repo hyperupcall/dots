@@ -28,12 +28,13 @@ install.any() {
 	git switch master
 	git pull --ff-only me master
 
-	local channel='nightly' # or stable
-	git fetch me "$channel"
-	if git show-ref --quiet refs/heads/build; then
+	# Use "nightly" or "stable".
+	local tag='stable'
+	git fetch --tags --force me "$tag"
+	if git show-ref --quiet 'refs/heads/build'; then
 		git branch -D 'build'
 	fi
-	git switch -c 'build' "tags/$channel"
+	git switch -c 'build' "tags/$tag"
 
 	rm -rf './build'
 	mkdir -p './build'

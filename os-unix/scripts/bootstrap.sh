@@ -3,6 +3,13 @@
 source ~/.dotfiles/os-unix/data/source.sh
 
 main() {
+	local flag_no_upgrade=false
+	for arg; do case $arg in
+	--no-upgrade)
+		flag_no_upgrade=true
+		;;
+	esac done; unset -v arg
+
 	if [ -f ~/.bootstrap/done ]; then
 		if util.confirm "You have already bootstraped your dotfiles. Do you wish to do it again?"; then :; else
 			core.print_info 'Exiting'
@@ -10,8 +17,10 @@ main() {
 		fi
 	fi
 
-	util.update_system
-	helper.setup --no-confirm --fn-prefix=install_packages 'Bootstrap' "$@"
+	if [ "$flag_no_upgrade" != 'true' ]; then
+		util.update_system
+		helper.setup --no-confirm --fn-prefix=install_packages 'Bootstrap' "$@"
+	fi
 
 	mkdir -p "$XDG_CONFIG_HOME"
 
@@ -38,13 +47,22 @@ main() {
 	fi
 
 	# Download and install NodeJS runtime.
-	local dir=("./node-v"*/)
-	if [ -d "${dir[0]}" ]; then
-		core.print_info 'Already installed NodeJS to ~/.dotfiles/.data/nodejs'
+	local dir=(~/.dotfiles/.data/node-v*/)
+	dir=${dir%/}
+	local old_nodejs_version="${dir[0]##*/}"
+	old_nodejs_version=${old_nodejs_version#node-v}
+	old_nodejs_version=${old_nodejs_version%%-*}
+	local nodejs_version='23.6.0' # TODO: Update
+	if [ -d "${dir[0]}" ] && [ "$old_nodejs_version" = "$nodejs_version" ]; then
+		local dir_nice="~${dir[0]#$HOME}"
+		core.print_info "Already installed NodeJS to $dir_nice"
 	else
 		pushd ~/.dotfiles/.data >/dev/null
-		local nodejs_version='22.12.0' # TODO: Update
 		local file="./node-v$nodejs_version.tar.xz"
+		if [ "$old_nodejs_version" != "$nodejs_version" ] && [ -n "$old_nodejs_version" ]; then
+			core.print_info "Removing outdated NodeJS v$old_nodejs_version"
+			rm -rf "${dir[0]}"
+		fi
 		core.print_info "Downloading NodeJS v$nodejs_version"
 		curl -K "$CURL_CONFIG" -o "$file" "https://nodejs.org/dist/v$nodejs_version/node-v$nodejs_version-linux-x64.tar.xz"
 		core.print_info "Extracting $file"
@@ -75,9 +93,26 @@ main() {
 		#!/usr/bin/env sh
 		set -e
 		PATH="$bin_dir:\$PATH" ~/.dev/bin/dev.js "\$@"
-	EOF
+		EOF
 		chmod +x ~/.dotfiles/.data/bin/dev
 	fi
+	cat > "${XDG_DATA_HOME:-$HOME/.local/share}/systemd/user/dev.service" <<-'EOF'
+[Unit]
+Description=Dev
+ConditionPathIsDirectory=%h/.dev
+
+[Service]
+Type=simple
+WorkingDirectory=%h/.dev
+ExecStart=%h/.dotfiles/.data/node %h/.dev/bin/dev.js start-dev-server
+Environment=PORT=40008
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+EOF
+	systemctl --user daemon-reload
+	systemctl --user enable --now dev.service
 
 	# Fetch GithHub authorization tokens.
 	if [ -f ~/.dotfiles/.data/github_token ]; then

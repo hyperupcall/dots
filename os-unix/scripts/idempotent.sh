@@ -27,26 +27,6 @@ main() {
 	util.add_user_to_group "$USER" 'kvm'
 	util.add_user_to_group "$USER" 'input'
 
-	{
-		cat > "${XDG_DATA_HOME:-$HOME/.local/share}/systemd/user/dev.service" <<-'EOF'
-[Unit]
-Description=Dev
-ConditionPathIsDirectory=%h/.dev
-
-[Service]
-Type=simple
-WorkingDirectory=%h/.dev
-ExecStart=%h/.dotfiles/.data/node %h/.dev/bin/dev.js start-dev-server
-Environment=PORT=40008
-Restart=on-failure
-
-[Install]
-WantedBy=default.target
-EOF
-		systemctl --user daemon-reload
-		systemctl --user enable --now dev.service
-	}
-
 	~/.dotfiles/os-unix/scripts/lib/util-create-dirs.sh
 	~/.dotfiles/os-unix/scripts/lib/util-generate-aliases.sh
 	~/.dotfiles/os-unix/scripts/lib/util-generate-dotgen.sh

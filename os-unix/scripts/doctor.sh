@@ -22,7 +22,7 @@ main() {
 	--prompt-to-fix)
 		flag_fix=true
 		;;
-	esac done
+	esac done; unset -v arg
 
 	local check=
 

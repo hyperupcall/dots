@@ -38,6 +38,7 @@ godotenv
 gulpfile
 healthcheck
 hyperupcall
+importmap
 initializable
 intellij
 jsonlint

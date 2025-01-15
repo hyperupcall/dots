@@ -28,8 +28,10 @@ main() {
 			--exclude '**/cargo/registry' \
 			--exclude '**/mise/installs' \
 			--exclude '**/pnpm/store' \
-			--exclude '**/node_modules' \
 			--exclude '**/__pycache__' \
+			--exclude '**/.npm/_cacache' \
+			--exclude '**/.conan2/p' \
+			--exclude '**/node_modules' \
 			--exclude '**/target' \
 			--exclude '**/dist' \
 			--exclude '**/output' \

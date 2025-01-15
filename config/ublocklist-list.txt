@@ -1,3 +1,5 @@
+@2*://*.freecodecamp.org/*
+
 @1*://*.codegrepper.com/*
 @1*://*.w3schools.com/*
 @1*://*.geeksforgeeks.org/*
